@@ -1,0 +1,29 @@
+.banner2{
+    margin-top: 40px;
+}
+.cardDiv{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #efefef;
+    height: 65px;
+    .title{
+        font-weight: bold;
+        font-size: 16px;
+    }
+    .gray{
+        font-size: 12px;
+        color: rgba(0,0,0,0.4);
+    }
+}
+.input-div {
+    width: 450px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 5px 10px;
+}
+.input-width{
+    width: 330px;
+}

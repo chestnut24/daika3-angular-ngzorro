@@ -1,0 +1,67 @@
+<div class="container" >
+    <div nzType="flex" nz-row nzJustify="space-between">
+        <div nz-col>
+            <button  nz-button nzType="primary" (click)="addUser()">新增用户</button>
+        </div>
+        <div nz-col>
+            <nz-input-group nzSuffixIcon="anticon anticon-search">
+                <input (keyup)="keyUpSearch()" [(ngModel)]="searchText" type="text" nz-input placeholder="输入用户名进行搜索">
+            </nz-input-group>
+        </div>
+    </div>
+    <div class="content">
+        <app-batch-delete [checkedNumber]="checkedNumber" (batchDelete)="batchDelete()"></app-batch-delete>
+
+        <nz-table #nzTable [nzData]="dataSet"
+                  [nzFrontPagination]="false"
+                  [(nzPageIndex)]="pageNum"
+                  [nzTotal]="tableTotal"
+                  [nzShowSizeChanger]="true"
+                  [nzPageSizeOptions]="[10,20,30,40]"
+                  [(nzPageSize)]="pageSize"
+                  (nzPageIndexChange)="InitTable(false);pageChange()"
+                  (nzPageSizeChange)="InitTable(false);pageChange()">
+            <thead>
+            <tr>
+                <th nzShowCheckbox [(nzChecked)]="allChecked" [nzIndeterminate]="indeterminate" (nzCheckedChange)="checkAll($event)"></th>
+                <th>用户名</th>
+                <th>工号</th>
+                <th>电话</th>
+                <th>所属角色</th>
+                <th>备注</th>
+                <th>创建时间</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <ng-template ngFor let-data [ngForOf]="nzTable.data">
+                <tr>
+                    <td nzShowCheckbox [(nzChecked)]="data.checked" (nzCheckedChange)="refreshStatus()"></td>
+                    <td>{{data.name}}</td>
+                    <td>{{data.staffNo}}</td>
+                    <td>{{data.phone}}</td>
+                    <td>
+                      <span [innerHTML]="data.role?.isDeleted=='DELETED'?'<del>'+data.role?.name+'</del>':data.role?.name"></span>
+                        <!--<span *ngFor="let role of data.roles">{{role.name}} &nbsp;</span>-->
+                    </td>
+                    <td>{{data.remark}}</td>
+                    <td>{{data.createdDt | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                    <td>
+                        <a (click)="modifyUser(data)">修改</a>&nbsp;
+                        <a [hidden]="data.authority === 'ADMINISTRATOR'" (click)="deleteUsers([data.id])">删除</a>
+                    </td>
+                </tr>
+            </ng-template>
+            </tbody>
+        </nz-table>
+
+        <!--<div style="margin-top: 20px;">-->
+            <!--<nz-pagination [(nzPageIndex)]="pageNum"-->
+                           <!--[nzTotal]="tableTotal"-->
+                           <!--nzShowSizeChanger-->
+                           <!--[(nzPageSize)]="pageSize"-->
+                           <!--(nzPageIndexChange)="InitTable(false)"-->
+                           <!--(nzPageSizeChange)="InitTable(false)"></nz-pagination>-->
+        <!--</div>-->
+    </div>
+</div>

@@ -1,0 +1,52 @@
+
+.container{
+  background-color: #fff;
+  padding:14px;
+  .top-container{
+    display: flex;
+    align-items: center;
+    .search-container{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 32px;
+      width: 260px;
+      .search-left{
+        width: 150px;
+      }
+      input{
+        width: 105px;
+        height: 32px;
+      }
+    }
+  }
+}
+.content{
+    margin-top:10px;
+    overflow-x: auto;
+    .operation{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      p{
+        color: #1592E6;
+        margin-bottom: 0;
+        cursor: pointer;
+      }
+      span{
+        color: #aaa;
+        padding: 0 5px;
+      }
+    }
+  }
+  // 表格内换行使用css
+.css-word{
+  word-break: break-word; /* 文本行的任意字内断开 */
+}
+.b{
+  font-weight: bold;
+}
+.table_div_word{
+  text-align: center;
+  margin: 0 auto;
+}

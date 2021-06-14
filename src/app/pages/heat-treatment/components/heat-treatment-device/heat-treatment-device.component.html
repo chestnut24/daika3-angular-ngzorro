@@ -1,0 +1,20 @@
+<div class="device-info">
+    <div class="title">
+        {{htInfo.production.name}}
+    </div>
+    <div class="img" (click)="routerLink('/heatTreatment/', deviceId)">
+<!--        <a [routerLink]="['heatTreatment/:id', deviceId]"></a>-->
+        <img *ngIf="htInfo?.production.fatherNode[2] != 4" src="../../../../../assets/images/resistance-furnace.png" style="width: 100%;"/>
+
+        <img *ngIf="htInfo?.production.fatherNode[2] == 4" src="../../../../../assets/images/gas-furnace.png" style="width: 100%;"/>
+    </div>
+    <div class="button-and-info">
+        <button nz-button (click)="detailInfo(htInfo?.production.htStatus)" [ngStyle]="{color:htStatus2info(htInfo?.production.htStatus).color, borderColor: htStatus2info(htInfo?.production.htStatus).color}">{{htStatus2info(htInfo?.production.htStatus).label}}</button>
+        <div>
+            <div *ngIf="htStatus2info(htInfo?.production.htStatus).label === '加热结束'">炉温： — ℃</div>
+            <div *ngIf="htStatus2info(htInfo?.production.htStatus).label !== '加热结束'">炉温： {{htInfo?.htRecord?.furnaceTemp ? htInfo.htRecord.furnaceTemp : '—'}} ℃</div>
+            <div *ngIf="htStatus2info(htInfo?.production.htStatus).label === '加热结束'">辊温：  — ℃</div>
+            <div *ngIf="htStatus2info(htInfo?.production.htStatus).label !== '加热结束'">辊温： {{htInfo?.htRecord?.rollTemp ? htInfo.htRecord.rollTemp : '—'}} ℃</div>
+        </div>
+    </div>
+</div>

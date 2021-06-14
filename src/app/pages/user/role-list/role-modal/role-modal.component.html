@@ -1,0 +1,37 @@
+<div [formGroup]="roleTableModal">
+    <div nz-row>
+        <div nz-col [nzSpan]="6" style="text-align: right">
+            <span>角色名称：</span>
+        </div>
+        <div nz-col [nzSpan]="18">
+            <nz-form-item>
+                <nz-form-control [nzSm]="18">
+                    <input nz-input formControlName="roleName" id="roleName">
+                    <nz-form-explain *ngIf="roleTableModal.get('roleName').dirty && roleTableModal.get('roleName').errors">不能为空</nz-form-explain>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+    </div>
+    <div nz-row>
+        <div nz-col [nzSpan]="6" style="text-align: right">
+            <span>权限：</span>
+        </div>
+        <div nz-col [nzSpan]="18">
+            <app-access-list [(accesses)]="accesses" [accessList]="accessList" [isDisable]="false"></app-access-list>
+        </div>
+    </div>
+    <div nz-row style="margin-top:20px;">
+        <div nz-col [nzSpan]="6" style="text-align: right">
+            <span>备注：</span>
+        </div>
+        <div nz-col [nzSpan]="18">
+            <nz-form-item>
+                <nz-form-control [nzSm]="18">
+                    <textarea nz-input formControlName="remark" id="remark"></textarea>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+    </div>
+
+
+</div>

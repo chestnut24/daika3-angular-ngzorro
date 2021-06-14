@@ -1,0 +1,33 @@
+<div class="quality-result">
+    <div class="freight-info">
+        <span>货号：{{data.freight.freightNumber}}</span>
+        <span>生产号：{{data.productNo}}</span>
+    </div>
+    <div class="quality-info">
+        <nz-card nzType="inner" nzTitle="质检结果处理">
+            <div class="title">
+                <span><b>质检人：</b>{{data.beforeQualityCheck ? data.beforeQualityCheck?.checkUser?.name : data.afterQualityCheck?.checkUser?.name }}</span>
+                <span><b>质检时间：</b>{{(data.beforeQualityCheck ? data.beforeQualityCheck?.updatedDt : data.afterQualityCheck?.updatedDt) | date:'yyyy.MM.dd HH:mm:ss'}}</span>
+            </div>
+            <div class="radio-groups">
+                <div>
+                    <div>结果处理：</div>
+                    <nz-radio-group [(ngModel)]="result">
+                        <label nz-radio nzValue="IGNORE">忽略</label>
+                        <label nz-radio nzValue="SECOND_CHECK">二次质检</label>
+                        <label nz-radio nzValue="SCRAPPED">报废</label>
+                        <label nz-radio nzValue="SECOND_HT" *ngIf="qualityInspectionManagement.getCurrentUrl() === 'afterUnqualified'">二次热处理</label>
+                    </nz-radio-group>
+                </div>
+            </div>
+            <div>
+                <div>
+                    <b>备注信息（选填）：</b>
+                </div>
+                <div>
+                    <input style="margin-top:5px;" nz-input [(ngModel)]="remark">
+                </div>
+            </div>
+        </nz-card>
+    </div>
+</div>

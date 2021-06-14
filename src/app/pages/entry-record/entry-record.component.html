@@ -1,0 +1,72 @@
+<div class="tableContent">
+    <div class="table-content-frame">
+        <div class="table-search-content">
+            <div class="search-content-left" nz-col>
+                <span style="margin-left: 0px">入厂时间：<nz-range-picker [nzFormat]="dateFormat"
+                        [(ngModel)]="listSelection.selectData" id="rangePicker" (keyup.enter)="searchEntryRecord()">
+                    </nz-range-picker></span>
+                <span>货号：<input nz-input placeholder="请输入货号" nzSize="default" style="width: 150px"
+                        [(ngModel)]="listSelection.itemNumber" (keyup.enter)="searchEntryRecord()" /></span>
+                <span>生产号：<input nz-input placeholder="请输入生产号" nzSize="default" style="width: 150px"
+                        [(ngModel)]="listSelection.productNumber" id="productNum"
+                        (keyup.enter)="searchEntryRecord()" /></span>
+            </div>
+            <div nz-col class="search-content-right">
+                <button nz-button nzType="primary" id="search" (click)="searchEntryRecord()">查询</button>
+                <button nz-button nzType="primary" (click)="addRecord()"><i nz-icon nzType="plus"></i>入厂登记</button>
+            </div>
+        </div>
+        <app-delong-table [titleList]="titleList" class="delongTable" [nzScrollX]="'830px'"
+            [nzScrollY]="getIframeHeight()" (pageChange)="pageChange()">
+            <tr *ngFor="let data of delongTable.tableData ">
+                <td>
+                    <div class="css-word table_div_word" [ngStyle]="{'width': 147-tablePadding +'px'}">
+                        {{ data.createdDt | date:'yyyy-MM-dd HH:mm:ss'}}
+                    </div>
+                </td>
+                <td>
+                    <div class="css-word b table_div_word" [ngStyle]="{'width': 100-tablePadding +'px'}">
+                        {{ data.freight?.freightNumber}}
+                    </div>
+                </td>
+                <td>
+                    <div class="css-word b table_div_word" [ngStyle]="{'width': 60-tablePadding +'px'}">
+                        {{ data.productNo}}
+                    </div>
+                </td>
+                <td>
+                    <div class="css-word table_div_word" [ngStyle]="{'width': 60-tablePadding +'px'}">
+                        {{ data.isBlank | isBlank}}
+                    </div>
+                </td>
+                <td>
+                    <div class="css-word table_div_word" [ngStyle]="{'width': 60-tablePadding +'px'}">
+                        {{ data.submitUser.name}}
+                    </div>
+                </td>
+                <td>
+                    <div class="css-word table_div_word" [ngStyle]="{'width': 60-tablePadding +'px'}">
+                        {{ data.user.name}}
+                    </div>
+                </td>
+                <td>
+                    <div class="css-word table_div_word" [ngStyle]="{'width': 150-tablePadding +'px'}">
+                        {{ data.remark}}
+                    </div>
+                </td>
+                <td nzRight="0" nzWidth="157px">
+                    <div class="operation css-word table_div_word" [ngStyle]="{'width': 157-tablePadding +'px'}">
+                        <p (click)="modify(data)">修改</p>
+                        <span>|</span>
+                        <p [routerLink]="['/rollDetail/rollResume/entry', data.id]">轧辊履历</p>
+                        <span>|</span>
+                        <p (click)="delList(data)">删除</p>
+                    </div>
+                </td>
+            </tr>
+        </app-delong-table>
+    </div>
+</div>
+
+<!-- 方案一 -->
+<!-- <a nz-button nzType="link" (click)="modify(data)" disabled>修改</a> -->

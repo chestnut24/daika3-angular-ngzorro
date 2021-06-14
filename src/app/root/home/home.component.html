@@ -1,0 +1,129 @@
+<nz-layout class="app-layout">
+  <nz-sider class="menu-sidebar" nzCollapsible nzWidth="256px" nzBreakpoint="md" [(nzCollapsed)]="isCollapsed"
+    [nzTrigger]="null">
+    <div class="sidebar-logo cur-P" [style.padding]="isCollapsed?'8px 16px':'8px 24px'" (click)="goLogo()">
+      <img *ngIf="!isCollapsed" src="../../../assets/images/logo.png" style="width:208px;" />
+      <img *ngIf="isCollapsed" src="../../../assets/images/logo-small.png" style="width: 48px;" />
+    </div>
+    <ul nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
+      <ng-container *ngFor="let menu of menuBadge|async;index as cnum">
+        <li nz-menu-item nzMatchRouter *ngIf="!(menu.children && menu.children.length)" (click)="chilsMenu(menu)">
+          <a [routerLink]="menu.url">
+            <!-- <a> // 跳转放到清除快照之后 -->
+            <i class="spanI" [ngClass]="menu.icon"></i>
+            <span class="spanFontFirst" style="transition: opacity 0.3s"
+              [style.opacity]="!isCollapsed?1:0">{{menu.text}}</span>
+            <nz-badge [nzCount]="menu.BadgeNumber" [nzStyle]="{
+                        background: '#FF5F56', boxShadow: 'none', float: 'right',
+                        marginTop: isCollapsed?'-20px':'-5px', marginLeft: isCollapsed?'-5px':'0px'}"></nz-badge>
+          </a>
+        </li>
+        <li nz-submenu [nzTitle]="titleTpl" *ngIf="menu.children && menu.children.length">
+          <ng-template #titleTpl>
+            <div (click)="ipadClick(menu,cnum,$event)">
+              <i class="spanI" [ngClass]="menu.icon"></i>
+              <span class="spanFont" style="transition: opacity 0.3s"
+                [style.opacity]="!isCollapsed?1:0">{{menu.text}}</span>
+              <nz-badge [nzCount]="menu.BadgeNumber" [nzStyle]="{
+                          background: '#FF5F56', boxShadow: 'none', float: 'right',
+                          marginTop: isCollapsed?'-20px':'-5px', marginLeft: isCollapsed?'-5px':'0px'}"></nz-badge>
+              <!-- 热处理特情 -->
+              <span *ngIf="!Number(menu.BadgeNumber)">
+                <nz-badge [nzCount]="heatTreatment" [nzStyle]="{
+                              background: '#FF5F56', boxShadow: 'none', float: 'right', 
+                              marginTop: isCollapsed?'-20px':'-5px', marginLeft: isCollapsed?'-5px':'0px'}"></nz-badge>
+                <ng-template #heatTreatment>
+                  <div [class]="isCollapsed?'heatBadgeTop':'heatBadge'">!</div>
+                </ng-template>
+              </span>
+            </div>
+            <!-- <i class="spanI" [ngClass]="menu.icon"></i>
+            <span class="spanFont" style="transition: opacity 0.3s"
+              [style.opacity]="!isCollapsed?1:0">{{menu.text}}</span>
+            <nz-badge [nzCount]="menu.BadgeNumber" [nzStyle]="{
+                        background: '#FF5F56', boxShadow: 'none', float: 'right',
+                        marginTop: isCollapsed?'-20px':'-5px', marginLeft: isCollapsed?'-5px':'0px'}"></nz-badge>
+            <span *ngIf="!Number(menu.BadgeNumber)">
+              <nz-badge [nzCount]="heatTreatment" [nzStyle]="{
+                            background: '#FF5F56', boxShadow: 'none', float: 'right', 
+                            marginTop: isCollapsed?'-20px':'-5px', marginLeft: isCollapsed?'-5px':'0px'}"></nz-badge>
+              <ng-template #heatTreatment>
+                <div [class]="isCollapsed?'heatBadgeTop':'heatBadge'">!</div>
+              </ng-template>
+            </span> -->
+          </ng-template>
+          <ul *ngIf="menu.children && menu.children.length">
+            <li nzMatchRouter *ngFor="let children of menu.children">
+              <!-- <a [routerLink]="children.url">{{children.text}}</a> -->
+              <ul>
+                <li nz-menu-item nzMatchRouter *ngIf="!(children.children && children.children.length)" (click)="chilsMenu(children)">
+                  <a [routerLink]="children.url">
+                    <span class="spanFontSecson" style="transition: opacity 0.3s">{{children.text}}</span>
+                    <nz-badge [nzCount]="children.BadgeNumber" [nzStyle]="{
+                                        background: '#FF5F56', boxShadow: 'none', float: 'right', 
+                                        marginLeft: isCollapsed?'-5px':'0px'}"></nz-badge>
+                    <!-- 热处理特情 -->
+                    <span *ngIf="!Number(children.BadgeNumber)">
+                      <nz-badge [nzCount]="heatTreatment"
+                        [nzStyle]="{
+                                                background: '#FF5F56', boxShadow: 'none', float: 'right', 
+                                            marginTop: isCollapsed?'-20px':'-5px', marginLeft: isCollapsed?'-5px':'0px'}"></nz-badge>
+                      <ng-template #heatTreatment>
+                        <div class="heatBadge">!</div>
+                      </ng-template>
+                    </span>
+                  </a>
+                </li>
+                <li nz-submenu [nzTitle]="children.text" [nzIcon]="children.icon"
+                  *ngIf="children.children && children.children.length">
+                  <ul *ngIf="menu.children && children.children.length">
+                    <li nz-menu-item nzMatchRouter *ngFor="let child3 of children.children">
+                      <a [routerLink]="child3.url">{{child3.text}}</a>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ng-container>
+    </ul>
+    <div *ngIf="isCollapsed" class="navTeXiao" [ngStyle]="{'height':navTeXiaoH+'px'}"></div>
+  </nz-sider>
+  <nz-layout>
+    <nz-header>
+      <div class="app-header">
+        <div style="display: flex;align-items: center;">
+          <span class="header-trigger" (click)="isCollapsed = !isCollapsed">
+            <i class="trigger" nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"></i>
+          </span>
+          <nz-breadcrumb [nzAutoGenerate]="true" style="margin-left:16px;"></nz-breadcrumb>
+        </div>
+        <div>
+          <i style="font-size: 20px;padding-right: 4px" nz-icon nzType="user" nzTheme="outline"></i>
+          <span style="padding-right: 20px;">
+            <a nz-dropdown nzTrigger="click" [nzDropdownMenu]="dropMenu">
+              {{username}}
+            </a>
+            <nz-dropdown-menu #dropMenu="nzDropdownMenu">
+              <ul nz-menu>
+                <li nz-menu-item><a routerLink="/upPassword">更新用户信息</a></li>
+                <li nz-menu-item (click)="logout()">退出登录</li>
+              </ul>
+            </nz-dropdown-menu>
+          </span>
+        </div>
+      </div>
+    </nz-header>
+    <nz-content>
+      <div class="inner-content">
+        <router-outlet></router-outlet>
+      </div>
+      <nz-footer style="text-align: center;">
+        天津开发区精诺瀚海数据科技有限公司
+        <br>
+        Tianjin JINGNUO Technology Co, . Ltd
+      </nz-footer>
+    </nz-content>
+  </nz-layout>
+</nz-layout>

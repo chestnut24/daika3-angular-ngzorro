@@ -1,0 +1,148 @@
+<div class="mainBox">
+    <div class="leftBox">
+        <div class="l_banner1">
+            <label>
+                货号：
+                <div class="input-width m-r-20">
+                    <input nz-input placeholder="请输入货号" [(ngModel)]="sendData.freightNumber" (keyup.enter)="getList()" />
+                </div>
+            </label>
+            <label>
+                生产号：
+                <div class="input-width m-r-20">
+                    <input nz-input placeholder="请输入生产号" [(ngModel)]="sendData.productNo" (keyup.enter)="getList()" />
+                </div>
+            </label>
+            <button nz-button nzType="primary" (click)="getList()">查询</button>
+        </div>
+        <div class="l_banner2">
+            <nz-table class="container" #basicTable [nzData]="leftRollsList" nzBordered [nzFrontPagination]="false"
+                [nzShowPagination]="false">
+                <thead>
+                    <tr>
+                        <th nzWidth="120px">热前质检时间</th>
+                        <th nzWidth="110px">货号</th>
+                        <th nzWidth="110px">生产号</th>
+                        <th>尺寸(mm)</th>
+                        <th>材质</th>
+                        <th>材质代码</th>
+                        <th>毛坯辊</th>
+                        <th>其他</th>
+                        <th nzWidth="80px">操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of leftRollsList">
+                        <!-- 版本一 -->
+                        <!-- <td>
+                            {{data.beforeQualityCheck?.updatedDt | date:'yyyy-MM-dd'}}
+                        </td>
+                        <td>{{data.freight.freightNumber}}</td>
+                        <td>{{data.productNo}}</td>
+                        <td>{{data.freight.size}}</td>
+                        <td>{{data.freight.material}}</td>
+                        <td>{{data.freight.materialCode}}</td>
+                        <td>{{{'YES':'是','NO':'否'}[data.isBlank]}}</td>
+                        <td>{{data.remark}}</td> -->
+
+                        <!-- 版本二 -->
+                        <td>
+                            <div class="css-word table_div_word" [ngStyle]="{'width': 120-tablePadding +'px'}">
+                                {{data.createdDt | date:'yyyy-MM-dd'}}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="css-word table_div_word" [ngStyle]="{'width': 110-tablePadding +'px'}">
+                                {{data.freightNumber}}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="css-word table_div_word" [ngStyle]="{'width': 110-tablePadding +'px'}">
+                                {{data.productNo}}
+                            </div>
+                        </td>
+                        <td>{{data.size}}</td>
+                        <td>{{data.material}}</td>
+                        <td>{{data.materialCode}}</td>
+                        <td>{{{'YES':'是','NO':'否'}[data.isBlank]}}</td>
+                        <td>{{data.remark}}</td>
+
+                        <td>
+                            <a (click)="addRightList(data)">添加</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </nz-table>
+        </div>
+
+    </div>
+    <div class="rightBox f-l">
+        <div class="title">
+            <div class="f-r titleFont">已选</div>
+        </div>
+        <div class="img">
+            <div class="cardBox">
+                <div class="banner m-b-15" *ngFor="let data of rightChooseList;index as datai">
+                    <div class="houNum">{{data.number}}</div>
+                    <div class="numInput">
+                        <div class="box">
+                            <nz-select style="min-width: 195px;" [nzMaxTagCount]="2"
+                                [nzMaxTagPlaceholder]="tagPlaceHolder" [nzMenuItemSelectedIcon]="tagOnly"
+                                nzMode="multiple" nzPlaceHolder="货号" [(ngModel)]="data.numChoose"
+                                (ngModelChange)="selectChange($event,datai)">
+                                <nz-option *ngFor="let item of data.numChoose" nzCustomContent [nzLabel]="item"
+                                    [nzValue]="item">
+                                    <div>
+                                        {{item}}
+                                        <i class="f-r l-h-25 m-r-10" title="点击删除" nz-icon nzType="delete"
+                                            (click)="delList(item,data.numChoose)"></i>
+                                    </div>
+                                </nz-option>
+                            </nz-select>
+                            <ng-template #tagPlaceHolder let-selectedList> ... </ng-template>
+                            <ng-template #tagOnly> </ng-template>
+                        </div>
+                    </div>
+                    <div class="m-l-10">
+                        <button nz-button nzType="danger" nzGhost (click)="delBanner(data)"><i nz-icon
+                                nzType="delete"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="rightBox">
+        <nz-card style="min-width:300px;min-height:274px;height: 100%;" nzTitle=" " [nzExtra]="extraTemplate">
+            <div class="cardBox">
+                <div class="banner m-b-15" *ngFor="let data of rightChooseList">
+                    <div class="houNum">{{data.number}}</div>
+                    <div class="numInput">
+                        <div class="box">
+                            <nz-select style="min-width: 195px;" [nzMaxTagCount]="2"
+                                [nzMaxTagPlaceholder]="tagPlaceHolder" [nzMenuItemSelectedIcon]="tagOnly"
+                                nzMode="multiple" nzPlaceHolder="货号" [(ngModel)]="data.numChoose">
+                                <nz-option *ngFor="let item of data.numChoose" nzCustomContent [nzLabel]="item"
+                                    [nzValue]="item">
+                                    <div>
+                                        {{item}}
+                                        <i class="f-r l-h-25 m-r-10" title="点击删除" nz-icon nzType="delete"
+                                            (click)="delList(item,data.numChoose)"></i>
+                                    </div>
+                                </nz-option>
+                            </nz-select>
+                            <ng-template #tagPlaceHolder let-selectedList> ... </ng-template>
+                            <ng-template #tagOnly> </ng-template>
+                        </div>
+                    </div>
+                    <div class="m-l-10">
+                        <button nz-button nzType="danger" nzGhost (click)="delBanner(data)"><i nz-icon
+                                nzType="delete"></i></button>
+                    </div>
+                </div>
+            </div>
+        </nz-card>
+        <ng-template #extraTemplate>
+            <span>已选</span>
+        </ng-template>
+    </div> -->
+</div>

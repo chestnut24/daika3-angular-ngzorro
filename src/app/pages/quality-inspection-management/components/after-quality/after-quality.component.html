@@ -1,0 +1,22 @@
+<app-qim-search-params></app-qim-search-params>
+<app-delong-table [titleList]="titleList">
+    <tr *ngFor="let data of delongTable.tableData">
+        <td>{{data.beforeQualityCheck['updatedDt'] | date:'yyyy.MM.dd HH:mm:ss'}}</td>
+        <td>{{data.freight.freightNumber}}</td>
+        <td>{{data.productNo}}</td>
+        <td>{{data.freight.material}}</td>
+        <td>{{data.freight.materialCode}}</td>
+        <td>{{data.freight.size}}</td>
+        <td>{{data.freight.netWeight}}</td>
+        <td>{{data.beforeQualityCheck.checkUser.name}}</td>
+        <td><button nz-button (click)="qualityResult(data)"><a>{{data.beforeQualityCheck.result | qimResult}}</a></button></td>
+        <td>
+            <a style="color: #fff;" [routerLink]="['/configuration/addCraft', data.id]">
+                <button nz-button nzType="primary">
+                    查看
+                </button>
+            </a>
+        </td>
+    </tr>
+</app-delong-table>
+

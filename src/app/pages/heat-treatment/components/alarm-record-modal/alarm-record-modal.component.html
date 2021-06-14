@@ -1,0 +1,31 @@
+<nz-table #basicTable [nzData]="htAlarms">
+    <thead>
+    <tr>
+        <th>开始报警时间</th>
+        <th>结束报警时间</th>
+        <th>阶段</th>
+        <th>温度类型(℃)</th>
+        <th>实际温度(℃)</th>
+        <th>监控标准</th>
+        <th>目标值(℃)</th>
+        <th>差值(℃)</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let data of basicTable.data">
+        <td>{{data.startTime | date:'yyyy.MM.dd HH:mm:ss'}}</td>
+        <td>{{data.endTime | date:'yyyy.MM.dd HH:mm:ss'}}</td>
+        <td>{{data.curve.speedupType | speedupType}}</td>
+        <td>{{data.curve.temperatureType === 'FURNACE_TEMPERATURE' ? '炉温' : '辊温'}}</td>
+        <td>{{data.actualTemp}}</td>
+        <td>{{data.monitorStandard | monitorStandard}}</td>
+        <td>{{data.targetTemp}}</td>
+        <td>{{data.alarmDeviation}}</td>
+        <td>
+            <button *ngIf="data.status == 'ACTIVE'" nz-button nzType="primary" (click)="ignoreAlarm(data)">忽略</button>
+            <span *ngIf="data.status == 'CLEARED'">已忽略</span>
+        </td>
+    </tr>
+    </tbody>
+</nz-table>

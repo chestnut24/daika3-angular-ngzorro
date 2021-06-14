@@ -1,0 +1,33 @@
+.container{
+  background-color: #fff;
+  padding:20px 32px;
+  .top-container{
+    display: flex;
+    align-items: center;
+    .search-container{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 32px;
+      .search-item{
+        padding-right: 50px;
+      }
+      input{
+        width: 150px;
+        height: 32px;
+      }
+    }
+  }
+}
+.table-content{
+  margin-top:20px;
+  .router-link {
+    color: #1890FF;
+    cursor: pointer;
+  }
+  .router-link-process {
+    color: #aaaaaa;
+  }
+  overflow-x: auto;
+}
+

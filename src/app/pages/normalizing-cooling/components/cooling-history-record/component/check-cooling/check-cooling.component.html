@@ -1,0 +1,54 @@
+<div class="cooling-frame">
+    <div class="product-information">
+        <div class="information-title">
+            <span>轧辊基本信息</span>
+        </div>
+        <div class="information-frame">
+            <div *ngFor="let item of itemList" class="product-attribute" nz-row>
+                <span nz-col nzSpan="8">{{item.title}} </span>
+                <span nz-col nzSpan="16">{{item.content}}</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="temp-control">
+        <div class="temp-title">
+            <span>温度监测</span>
+        </div>
+        <div class="temp-frame">
+            <div *ngFor="let list of tempList; let key = index" class="temp-item" >
+                <p>{{list.title}}</p>
+                <div class="temp-input">
+                        <input nz-input placeholder="请输入"  style="width: 80%"  [(ngModel)]="list.content" disabled="true"/>
+                </div>
+            </div>
+        </div>
+        <div class="temp-select">
+            <span>实际温度（℃）</span>
+            <div class="select-frame">
+                <nz-radio-group [(ngModel)]="selectTemp" [disabled]="true">
+                    <label nz-radio nzValue="MAX">最高温度</label>
+                    <label nz-radio nzValue="MIN" style="display:none;">最低温度</label>
+                </nz-radio-group>
+            </div>
+        </div>
+        <div class="temp-gun">
+            <div class="temp-gun-frame" >
+                <div class="gun-title">
+                    <span>{{name}}</span>
+                </div>
+                <div class="control-temp"  >
+                    <div class="temp">
+                        <span>{{temperature}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="temp-footer">
+            <div class="cooling-time">冷却时长：{{time}}</div>
+        </div>
+    </div>
+
+</div>
+
+

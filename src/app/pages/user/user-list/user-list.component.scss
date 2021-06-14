@@ -1,0 +1,28 @@
+.content{
+    margin-top:12px;
+}
+.batch-deleting{
+    padding:6px;
+    border-radius:5px;
+    border:1px solid #91D5FF;
+    background:#E6F7FF;
+    margin-bottom:10px;
+}
+.delete-text{
+    color:#108EE9;
+    margin-right:5px;
+}
+.delete-text:hover{
+    cursor:pointer;
+}
+.content nz-table th,td{
+    text-align: center;
+}
+::ng-deep .ant-table-thead > tr > th, .ant-table-tbody > tr > td{
+    padding: 8px;
+}
+.container{
+  background-color: #fff;
+  padding:16px;
+}
+

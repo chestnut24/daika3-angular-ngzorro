@@ -1,0 +1,38 @@
+<a (click)="createTplModal(tplTitle, tplContent, tplFooter)">查看</a>
+<ng-template #tplTitle>
+    <span>修改日志详情</span>
+</ng-template>
+<ng-template #tplContent>
+   <div class="tplContent-title">
+       <div class="title-content" nz-row>
+           <span nz-col nzSpan="8">变更时间：{{showContent.createdDt | date:'yyyy-MM-dd HH:mm:ss'}}</span>
+           <span nz-col nzSpan="8"><span style="margin-right: 25px">变更人: </span>{{showContent.user.name}}</span>
+           <span nz-col nzSpan="8">货号：{{showContent.freightNumber}}</span>
+       </div>
+       <div class="title-content" nz-row>
+           <span nz-col nzSpan="8"><span style="margin-right: 15px">生产号： </span>{{showContent.productNo}}</span>
+           <span nz-col nzSpan="8">所属模块：{{showContent.moduleName}}</span>
+       </div>
+   </div>
+    <table *ngFor="let list of modifyList">
+            <tbody>
+            <tr>
+                <td style="width: 120px;background-color: #FAFAFA">修改字段</td>
+                <td>{{list.name}}</td>
+            </tr>
+            <tr>
+                <td style="width: 120px;background-color: #FAFAFA">修改前</td>
+                <td>{{list.updateBefore}}</td>
+            </tr>
+            <tr>
+                <td style="width: 120px;background-color: #FAFAFA">修改后</td>
+                <td>{{list.updateAfter}}</td>
+            </tr>
+            </tbody>
+    </table>
+</ng-template>
+<ng-template #tplFooter>
+    <button nz-button nzType="default" (click)="destroyTplModal()" >
+        取消
+    </button>
+</ng-template>

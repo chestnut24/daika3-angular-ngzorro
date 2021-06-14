@@ -1,0 +1,123 @@
+.mainBox {
+  padding: 0 0 0 20px;
+
+  display: flex;
+  flex-flow: row nowrap;
+
+  .leftBox {
+    width: 70%;
+    max-height: 500px;
+    overflow-y: auto;
+  }
+  .rightBox {
+    width: 30%;
+    max-height: 500px;
+    overflow-y: auto;
+    border-left: 1px solid #e8e8e8;
+    .title {
+      height: 50px;
+      line-height: 50px;
+      border-bottom: 1px solid #e8e8e8;
+      padding-right: 20px;
+    }
+    .img {
+      margin: 20px;
+      width: calc(30% - 40px);
+      height: 200px;
+    }
+  }
+}
+
+.m-l-10 {
+  margin-left: 10px;
+}
+.houNum {
+  line-height: 30px;
+  margin-right: 10px;
+  min-width: 60px;
+}
+.banner {
+  display: flex;
+}
+.l-h-25 {
+  line-height: 25px;
+}
+.m-r-10 {
+  margin-right: 10px;
+}
+.m-b-15 {
+  margin-bottom: 15px;
+}
+
+.l_banner1 {
+  overflow: hidden;
+  padding: 10px 0;
+}
+.input-width {
+  width: 150px;
+  display: inline-block;
+}
+.m-r-10 {
+  margin-right: 10px;
+}
+.m-r-20 {
+  margin-right: 20px;
+}
+.m-b-20 {
+  margin-bottom: 20px;
+}
+.m-l-20 {
+  margin-left: 20px;
+}
+
+.f-l {
+  float: left;
+}
+.f-r {
+  float: right;
+}
+
+.chooseCraft {
+  background: #fafafa;
+}
+
+
+.container{
+  background-color: #fff;
+  width: 100%;
+  tr{
+    td,th{
+      padding:7.5px;
+      text-align: center;
+      overflow: hidden;
+      // white-space: nowrap;
+      text-overflow: ellipsis;
+      min-width:80px;
+      max-width:300px;
+    }
+    &:hover{
+      background-color: #e6f7ff;
+    }
+  }
+  tr:nth-child(even){
+    background-color: #f9f9f9;
+    // background-color: #fff;
+  }
+
+}
+
+tr:nth-child(even) td.ant-table-td-right-sticky,tr:nth-child(even) td.ant-table-td-left-sticky{
+  background: #f9f9f9;
+  // background: #fff;
+}
+// 表格内换行使用css
+.css-word{
+  word-break: break-word; /* 文本行的任意字内断开 */
+}
+.b{
+  font-weight: bold;
+}
+.table_div_word{
+  text-align: center;
+  margin: 0 auto;
+}

@@ -1,0 +1,136 @@
+<div class="device">
+    <div class="banner_left_11 f-l">
+        <nz-tabset>
+            <nz-tab nzTitle="类型">
+                <div *ngIf=!nodes.length class="loadingDiv">
+                    <nz-spin nzSimple></nz-spin>
+                </div>
+                <div *ngIf=nodes.length>
+                    <nz-tree nzExpandAll [nzData]="nodes" nzAsyncData (nzClick)="activeNode($event)"
+                        (nzDblClick)="openFolder($event)" [nzTreeTemplate]="nzTreeTemplate"></nz-tree>
+
+                    <ng-template #nzTreeTemplate let-node>
+                        <span class="tree" [class.active]="activedNode?.key === node.key">
+                            <span *ngIf="!node.isLeaf" class="hang">
+                                <span class="title w-80" [title]="node.title">{{ node.title }}</span>
+                                <span class="iconBtnW-80">
+                                    <i title="添加下属分类" nz-icon nzType="plus-square" nzTheme="outline"
+                                        (click)="getNode(node)"></i>
+                                </span>
+                            </span>
+                            <span *ngIf="node.isLeaf" class="hang">
+                                <span class="title w-120" [title]="node.title">{{ node.title }}</span>
+                                <span class="iconBtnW-120" [class.active]="activedNode?.key === node.key">
+                                    <i title="修改本条" nz-icon nzType="edit" nzTheme="outline"
+                                        (click)="editNode(node)"></i>
+                                    <i title="删除本条" nz-icon nzType="minus-square" nzTheme="outline"
+                                        (click)="delNode(node.key)"></i>
+                                </span>
+                            </span>
+                        </span>
+                    </ng-template>
+                </div>
+
+            </nz-tab>
+            <nz-tab nzTitle="区域">
+                <div *ngIf="!nodes2.length" class="loadingDiv">
+                    <nz-spin nzSimple></nz-spin>
+                </div>
+                <div *ngIf="nodes2.length">
+                    <nz-tree nzExpandAll [nzData]="nodes2" (nzClick)="activeNode2($event)"
+                        (nzDblClick)="openFolder($event)" [nzTreeTemplate]="nzTreeTemplate"></nz-tree>
+                    <ng-template #nzTreeTemplate let-node>
+                        <div class="tree" [class.active]="activedNode?.key === node.key">
+                            <span *ngIf="!node.isLeaf" class="hang">
+                                <span class="folder-name">{{ node.title }}</span>
+                                <span class="folder-desc">
+                                    <!-- 添加应该放在这里 -->
+                                </span>
+                            </span>
+                            <span *ngIf="node.isLeaf" class="hang">
+                                <span class="title w-120" [title]="node.title">{{ node.title }}</span>
+                                <span class="iconBtnW-80" [class.active]="activedNode?.key === node.key">
+                                    <i title="修改本条" nz-icon nzType="edit" nzTheme="outline"
+                                        (click)="editNodeArea(node)"></i>
+                                    <i title="新增分类" nz-icon nzType="plus-square" nzTheme="outline"
+                                        (click)="getNodeArea(node)"></i>
+                                </span>
+                            </span>
+                        </div>
+                    </ng-template>
+                </div>
+            </nz-tab>
+        </nz-tabset>
+    </div>
+    <div class="banner_right f-l bgFFF">
+        <div class="banner1 m-b-20">
+            <label>
+                搜索：
+                <div class="input-width m-r-20">
+                    <input nz-input placeholder="请搜索设备名称或者编号" [(ngModel)]="sendData.nameOrNumber"
+                        (keyup.enter)="getList()" />
+                </div>
+            </label>
+            <button nz-button nzType="primary" (click)="getList()">查询</button>
+            <div class="f-r">
+                <button nz-button nzType="primary" (click)="addListData()"><i nz-icon nzType="plus"></i>添加生产设备</button>
+            </div>
+
+        </div>
+        <div>
+            <app-delong-table [titleList]="titleList" [nzScrollX]="'1040px'" [nzScrollY]="getIframeHeight()" (pageChange)="pageChange()">
+                <tr *ngFor="let data of delongTable.tableData">
+                    <td>
+                        <div class="css-word table_div_word" [ngStyle]="{'width': 147-tablePadding +'px'}">
+                            {{data.createdDt | date:'yyyy-MM-dd HH:mm:ss'}}
+                        </div>
+                    </td>
+                    <td>
+                        <div *ngIf="data.user" class="css-word table_div_word"
+                            [ngStyle]="{'width': 60-tablePadding +'px'}">{{data.user.name}}</div>
+                    </td>
+                    <td>
+                        <div class="css-word table_div_word" [ngStyle]="{'width': 110-tablePadding +'px'}">
+                            {{data.name}}
+                        </div>
+                    </td>
+                    <td>
+                        <div class="css-word table_div_word" [ngStyle]="{'width': 75-tablePadding +'px'}">
+                            {{data.number}}
+                        </div>
+                    </td>
+                    <td>
+                        <div class="css-word table_div_word" [ngStyle]="{'width': 100-tablePadding +'px'}">
+                            {{data.productionType.typeName}}
+                        </div>
+                    </td>
+                    <td>
+                        <div class="css-word table_div_word" [ngStyle]="{'width': 110-tablePadding +'px'}">
+                            {{data.productionType.areaName}}
+                        </div>
+                    </td>
+                    <td>
+                        <div *ngIf="data.monitorList" class="css-word table_div_word" [ngStyle]="{'width': 300-tablePadding +'px'}">
+                            <span *ngFor="let val of data.monitorList;let i = index">{{val.name}}
+                                <span *ngIf="data.monitorList.length-1 !== getNumber(i)">/</span>
+                            </span>
+                        </div>
+                    </td>
+                    <td nzWidth="120px" nzRight="0px">
+                        <a (click)="editListData(data)">查看/编辑</a>
+                        <nz-divider nzType="vertical"></nz-divider>
+                        <a (click)="delListData(data.id)">删除</a>
+                    </td>
+                </tr>
+            </app-delong-table>
+        </div>
+    </div>
+</div>
+<!-- 树节点的修改/添加名称 -->
+<nz-modal [(nzVisible)]="editNodeDialog" [nzTitle]="(editData.isAdd?'添加':'编辑') + (editData.isType?'类型':'区域') + '信息'"
+    (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+    <label>
+        名称：
+        <input class="input-width-415" nz-input placeholder="请输入名称" [(ngModel)]="editData.typeName" />
+    </label>
+</nz-modal>

@@ -1,0 +1,27 @@
+.freight-info{
+  display: flex;
+  background-color: #FAFAFA;
+  border: 1px solid #e8e8e8;
+  padding: 15px;
+  &>span{
+    width: 50%;
+  }
+}
+.quality-info{
+  margin-top:20px;
+  .title{
+    display: flex;
+    margin-bottom: 20px;
+    &>span{
+      width: 50%;
+    }
+  }
+  .radio-groups{
+    display: flex;
+    flex-wrap: wrap;
+    &>div{
+      width:50%;
+      margin-bottom:16px;
+    }
+  }
+}

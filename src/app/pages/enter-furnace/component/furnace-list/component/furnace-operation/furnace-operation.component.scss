@@ -1,0 +1,309 @@
+
+ul,li {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+@mixin flex-center{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+@mixin  border-frame{
+  border: solid 1px #E8E8E8;
+  border-radius: 5px;
+}
+
+.container{
+  background-color: #fff;
+  margin-bottom: 20px;
+  .content-title{
+    display: flex;
+    align-items: center;
+    height: 60px;
+    border-bottom: solid 1px #E9E9E9;
+    font-size: 16px;
+    span{
+      margin-left: 30px;
+    }
+  }
+}
+.content{
+  width: 100%;
+  display: flex;
+  padding: 20px 30px;
+  justify-content: space-between;
+  .table-content{
+    width: 75%;
+    overflow-x: auto;
+  }
+  .router-link {
+    color: #1890FF;
+    cursor: pointer;
+  }
+  .right-detail-container{
+    width: 25%;
+    //height: 330px;
+    margin-left: 20px;
+    background: #FAFAFA;
+    @include border-frame;
+    span{
+      color: #858585;
+    }
+    .detail{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 10px 0 20px 0;
+      border-bottom: solid 1px #E8E8E8;
+      li{
+        width: 90%;
+        background: white;
+        margin-top: 10px;
+        @include border-frame;
+        div{
+          padding: 10px;
+          display: flex;
+          justify-content: space-between;
+          p{
+            margin: 0;
+          }
+        }
+      }
+    }
+    .reading-container{
+      width: 90%;
+      margin: 0 auto 20px auto;
+      p{
+        margin: 10px 0;
+        .router-link {
+          color: #1890FF !important;
+          cursor: pointer;
+        }
+      }
+      .reading-group{
+        display: flex;
+        justify-content: space-between;
+        input{
+          width: 70%;
+          height: 32px;
+        }
+      }
+    }
+  }
+}
+
+.content{
+  .furnace-container{
+    width: 80%;
+    @include border-frame;
+    display: flex;
+    flex-direction: column;
+    .top-direction{
+      height: 50px;
+      margin: 0 40px;
+      display: flex;
+      justify-content: flex-end;
+      span{
+        width: 33%;
+        display: flex;
+        align-items: center;
+      }
+    }
+    .bottom-direction{
+      height: 50px;
+      @include flex-center;
+    }
+    .center-content{
+      display: flex;
+      align-items: center;
+      height: 100%;
+      span{
+        width: 40px;
+        @include flex-center;
+      }
+      .furnace-group{
+        width: 100%;
+        display: flex;
+        justify-content:space-around;
+        .furnace{
+          width: 30%;
+          height: 100%;
+          border: solid 1px #E8E8E8;
+          border-right: none;
+          .furnace-title{
+            height: 40px;
+            border-right: solid 1px #E8E8E8;
+            @include flex-center;
+            span{
+              width: 33%;
+            }
+          }
+          .furnace-item{
+            background: white;
+            border-top: solid 1px #E8E8E8;
+            ul{
+              @include flex-center;
+              flex-wrap: wrap;
+              width: 33.33%;
+              height: 96px;
+              border-right: solid 1px #E8E8E8;
+              border-bottom: solid 1px #E8E8E8;
+              li{
+                width: 92%;
+                height: 86px;
+                @include border-frame;
+                background: repeating-linear-gradient(135deg, #E8E8E8, white 10px);
+              }
+              .furnace-put{
+                border: solid 1px #253559;
+                background: repeating-linear-gradient(135deg, #E8E8E8, white 30px);
+                .furnace-img{
+                  height: 54px;
+                  width: 100%;
+                  @include flex-center;
+                  img{
+                    width: 50px;
+                    height: 40px;
+                  }
+                }
+              }
+              .furnace-put-freight{
+                width: 100%;
+                height: 30px;
+                @include flex-center;
+                background: #253559;
+                color: white;
+              }
+            }
+            .furnace-select{
+              background: repeating-linear-gradient(135deg, #218DFF, white 10px) !important;
+            }
+            .furnace-put-select{
+             border: solid 1px #218DFF!important;
+              .furnace-put-freight{
+                background: #218DFF!important;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  .number-container{
+    width: 20%;
+    margin-left: 20px;
+    .freight-item-ready{
+      display: flex;
+      align-items: center;
+      height: 100px;
+      width: 100%;
+      @include border-frame;
+      margin-bottom: 10px;
+    }
+    .freight-item-put{
+      background: #F5F5F5;
+      display: flex;
+      align-items: center;
+      height: 100px;
+      width: 100%;
+      @include border-frame;
+      margin-bottom: 10px;
+      .put-detail{
+        display: flex;
+        justify-content:space-between;
+      }
+    }
+    img{
+      width: 75px;
+      height: 60px;
+      margin: 10px;
+    }
+    .freight-detail{
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      width: 100%;
+      justify-content: space-around;
+      margin-right: 20px;
+      padding: 10px 0;
+      .freight-number{
+        font-size: 16px;
+        color: #000000;
+      }
+      .fre-state{
+        display: flex;
+        align-items: center;
+        .fre-dot-ready{
+          width: 6px;
+          height: 6px;
+          border-radius: 50%;
+          background: #F5222D;
+          margin-right: 10px;
+        }
+        .fre-dot-put{
+          width: 6px;
+          height: 6px;
+          border-radius: 50%;
+          margin-right: 10px;
+          background: #D2D2D2;
+        }
+      }
+    }
+    .item-select{
+      background: #218DFF;
+    }
+  }
+}
+@media screen and (max-width: 1200px) {
+  .reading-group{
+    input{
+      width: 50%!important;
+    }
+  }
+  .center-content{
+    span{
+      width: 20px!important;
+    }
+  }
+  .furnace-item{
+    ul{
+      height: 62px!important;
+      li{
+        height: 56px!important;
+      }
+      .furnace-img{
+        height: 34px!important;
+        img{
+          width: 35px!important;
+          height: 28px!important;
+        }
+      }
+      .furnace-put-freight{
+        height: 20px!important;
+        font-size: 12px;
+      }
+    }
+  }
+  .number-container{
+    img{
+      width: 50px!important;
+      height: 40px!important;
+      margin: 5px!important;
+    }
+    .freight-detail{
+      margin-right: 5px!important;
+      padding: 0!important;
+    }
+    .put-detail{
+      flex-direction: column;
+    }
+    .freight-item-put{
+      height: 130px!important;
+    }
+    .freight-item-ready{
+      height: 130px!important;
+    }
+  }
+}
+

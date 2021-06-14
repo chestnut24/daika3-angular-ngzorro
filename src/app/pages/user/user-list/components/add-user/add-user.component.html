@@ -1,0 +1,70 @@
+<form nz-form [formGroup]="userForm">
+    <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="userName">用户名</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+            <input nz-input formControlName="name" id="name">
+            <nz-form-explain *ngIf="userForm.get('name').dirty && userForm.get('name').errors">不能为空</nz-form-explain>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="staffNo">工号</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+            <input nz-input formControlName="staffNo" id="staffNo">
+            <nz-form-explain *ngIf="userForm.get('staffNo').dirty && userForm.get('staffNo').errors">不能为空</nz-form-explain>
+        </nz-form-control>
+    </nz-form-item>
+    <!--<nz-form-item [hidden]="hidePassword">-->
+    <nz-form-item>
+        <nz-form-label  [nzSm]="6" [nzXs]="24" nzRequired nzFor="password">密码</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+            <input nz-input [required]="switchValue" [hidden]="!switchValue" type="password"  formControlName="password" id="password">
+            <div [hidden]="!this.hidePassword">
+                <span>是否修改密码：</span><nz-switch [(ngModel)]="switchValue" [ngModelOptions]="{standalone: true}"></nz-switch>
+            </div>
+            <nz-form-explain *ngIf="password.dirty && password.errors">
+                <div *ngIf="password.hasError('required')">不能为空</div>
+                <div *ngIf="password.hasError('minlength') || password.hasError('maxlength')">密码应该在6-16位之间</div>
+                <!--<div *ngIf="password.hasError('pattern')">密码只能为数字或字母</div>-->
+            </nz-form-explain>
+        </nz-form-control>
+    </nz-form-item>
+    <!--<nz-form-item>-->
+        <!--<nz-form-label [nzSm]="6" [nzXs]="24" nzRequired="{{dataSource.isNew?true:false}}" nzFor="repeatPwd">重复密码</nz-form-label>-->
+        <!--<nz-form-control [nzSm]="14" [nzXs]="24">-->
+            <!--<input nz-input type="password"  formControlName="repeatPwd" id="repeatPwd" placeholder="{{dataSource.isNew?'':'••••••'}}">-->
+            <!--<nz-form-explain *ngIf="userForm.get('repeatPwd').dirty && userForm.get('repeatPwd').errors">-->
+                <!--<div *ngIf="repeatPwd.hasError('required')">不能为空</div>-->
+                <!--<div *ngIf="repeatPwd.hasError('minlength') || repeatPwd.hasError('maxlength')">密码应该在6-16位之间</div>-->
+                <!--<div *ngIf="repeatPwd.hasError('pattern')">密码只能为数字或字母</div>-->
+                <!--<div *ngIf="repeatPwd.hasError('confirm')">两次密码不相同</div>-->
+            <!--</nz-form-explain>-->
+        <!--</nz-form-control>-->
+    <!--</nz-form-item>-->
+    <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="phone">电话</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+            <input nz-input formControlName="phone" id="phone">
+            <nz-form-explain *ngIf="userForm.get('phone').dirty && userForm.get('phone').errors">不能为空</nz-form-explain>
+        </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="roles">所属角色</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+            <nz-select formControlName="roles" id="roles" style="width: 100%"  nzPlaceHolder="请选择角色">
+                <nz-option *ngFor="let option of rolesList" [nzLabel]="option.name" [nzValue]="option.id"></nz-option>
+            </nz-select>
+            <nz-form-explain *ngIf="userForm.get('roles').dirty && userForm.get('roles').errors">不能为空</nz-form-explain>
+        </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24"  nzFor="remark">备注信息</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+            <textarea row="4" nz-input formControlName="remark" id="remark"></textarea>
+        </nz-form-control>
+    </nz-form-item>
+</form>
+
+
+

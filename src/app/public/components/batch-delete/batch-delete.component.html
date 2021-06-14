@@ -1,0 +1,10 @@
+<div class="batch-delete" nzType="flex" nz-row nzJustify="space-between">
+    <div nz-col>
+        <i class="anticon anticon-exclamation-circle" style="color:#108EE9"></i>
+        &nbsp;
+        <span>已选择 <span style="color:#108EE9">{{checkedNumber}}</span> 项</span>
+    </div>
+    <div nz-col class="delete-text" *ngIf="checkedNumber">
+        <span (click)="delete()">批量删除</span>
+    </div>
+</div>

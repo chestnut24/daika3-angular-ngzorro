@@ -1,0 +1,79 @@
+.mainBox {
+
+  display: flex;
+  flex-flow: row nowrap;
+
+  .leftBox {
+    width: 49%;
+    margin-right: 15px;
+  }
+  .rightBox {
+    width: 50%;
+    min-height: 300px;
+    border-left: 1px solid #e8e8e8;
+  }
+}
+
+.m-l-10 {
+  margin-left: 10px;
+}
+.houNum {
+  line-height: 30px;
+  margin-right: 10px;
+  min-width: 60px;
+}
+.banner {
+  display: flex;
+}
+.l-h-25 {
+  line-height: 25px;
+}
+.m-r-10 {
+  margin-right: 10px;
+}
+.m-b-15 {
+  margin-bottom: 15px;
+}
+
+.f-r {
+  float: right;
+}
+.l_banner1 {
+  overflow: hidden;
+  padding: 10px 0;
+}
+.input-width {
+  width: 150px;
+  display: inline-block;
+}
+.m-r-10 {
+  margin-right: 10px;
+}
+.m-r-20 {
+  margin-right: 20px;
+}
+.m-b-20 {
+  margin-bottom: 20px;
+}
+.m-l-20 {
+  margin-left: 20px;
+}
+
+.list_ul {
+  margin: 10px 0;
+  font-weight: 700;
+}
+.list_li {
+  padding: 10px 20px;
+  font-weight: normal;
+  cursor: pointer;
+}
+.colorGray {
+  background: #fafafa;
+}
+.tipBox{
+    color: #fafafa;
+    padding-top: 30px;
+    text-align: center;
+    width: 100%;
+}

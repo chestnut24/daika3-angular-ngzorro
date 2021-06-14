@@ -1,0 +1,5 @@
+<nz-card *ngFor="let card of deviceList" [nzTitle]="card.areaName" style="margin-bottom: 20px;">
+    <div class="card-container">
+        <app-heat-treatment-device *ngFor="let htInfo of card.htInfo" [htInfo]="htInfo" [deviceId]="htInfo.production.id" style="margin-right:20px;margin-bottom:6px;"></app-heat-treatment-device>
+    </div>
+</nz-card>

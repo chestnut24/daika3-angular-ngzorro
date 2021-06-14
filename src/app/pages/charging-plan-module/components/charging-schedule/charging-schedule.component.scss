@@ -1,0 +1,122 @@
+.chargingSchedule {
+  position: relative;
+  min-height: 100px;
+  border: 1px solid transparent;
+  .hearder {
+    width: 100%;
+    min-height: 60px;
+    line-height: 60px;
+    background: #fff;
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    padding: 0 20px;
+  }
+
+  .mainer {
+    margin-top: 80px;
+    width: 100%;
+    min-height: 600px;
+    background: #fff;
+    padding: 20px;
+  }
+}
+
+.f-r {
+  float: right;
+}
+.f-l {
+  float: left;
+}
+.m-r-50 {
+  margin-right: 50px;
+}
+// 改装多列
+.padding0 {
+  padding: 0;
+}
+.padding0 > div {
+  // padding: 7.5px 0;
+  padding-bottom: 7.5px;
+  text-align: center;
+}
+.padding0 > div:last-child{
+  padding-bottom: 0;
+}
+.table-inner {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-around;
+  height: 100%;
+  div {
+    padding: 12px 20px;
+    text-align: center;
+  }
+}
+.border-b {
+  border-bottom: 1px solid #e8e8e8;
+}
+.action {
+  div {
+    padding: 5px 0;
+    text-align: center;
+  }
+}
+.padding0-10 {
+  padding: 0 10px;
+}
+.textCenter {
+  text-align: center;
+}
+.gray-font {
+  color: #999;
+  font-size: 14px;
+  text-align: center;
+}
+.dis-block {
+  display: block;
+  text-align: center;
+}
+.fontB{
+  font-weight: bold;
+}
+
+.container{
+  background-color: #fff;
+  width: 100%;
+  tr{
+    td,th{
+      padding:7.5px;
+      text-align: center;
+      overflow: hidden;
+      // white-space: nowrap;
+      text-overflow: ellipsis;
+      min-width:80px;
+      max-width:300px;
+    }
+    &:hover{
+      background-color: #e6f7ff;
+    }
+  }
+  tr:nth-child(even){
+    background-color: #fff;
+  }
+
+}
+
+tr:nth-child(even) td.ant-table-td-right-sticky,tr:nth-child(even) td.ant-table-td-left-sticky{
+  background: #fff;
+}
+
+// 表格内换行使用css
+.css-word{
+  word-break: break-word; /* 文本行的任意字内断开 */
+}
+.b{
+  font-weight: bold;
+}
+.table_div_word{
+  text-align: center;
+  margin: 0 auto;
+}

@@ -1,0 +1,44 @@
+<form nz-form [formGroup]="profileForm">
+    <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="groupName">组名</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+            <input nz-input formControlName="groupName" id="groupName">
+            <nz-form-explain *ngIf="profileForm.get('groupName').dirty && profileForm.get('groupName').errors">不能为空</nz-form-explain>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="team">班组</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+            <input nz-input formControlName="team" id="team">
+            <nz-form-explain *ngIf="profileForm.get('team').dirty && profileForm.get('team').errors">不能为空</nz-form-explain>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="powerType">权限类型</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+            <nz-select formControlName="powerType" id="powerType" style="width: 140px;" nzAllowClear nzPlaceHolder="选择权限类型">
+                <ng-container *ngFor="let value of authority">
+                    <nz-option  nzValue="{{value.value}}" nzLabel="{{value.label}}"></nz-option>
+                </ng-container>
+            </nz-select>
+            <nz-form-explain *ngIf="profileForm.get('powerType').dirty && profileForm.get('powerType').errors">不能为空</nz-form-explain>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="powerArea">管理设备</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+            <nz-select nzMode="multiple" formControlName="powerArea" id="powerArea" style="width: 100%" nzAllowClear nzPlaceHolder="选择设备">
+                <nz-option *ngFor="let opt of falseOpt" nzValue="{{opt}}" nzLabel="{{opt}}"></nz-option>
+            </nz-select>
+            <nz-form-explain *ngIf="profileForm.get('powerArea').dirty && profileForm.get('powerArea').errors">不能为空</nz-form-explain>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24"  nzFor="remarks">备注信息</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+            <textarea row="4" nz-input formControlName="remarks" id="remarks"></textarea>
+        </nz-form-control>
+    </nz-form-item>
+</form>
+
+

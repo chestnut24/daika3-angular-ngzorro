@@ -1,0 +1,40 @@
+.cm-container{
+  padding: 14px;
+  background-color: #fff;
+  //min-width: 1500px;
+  .top-search{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    input{
+      width: 200px;
+      margin-right: 20px
+    }
+  }
+}
+
+// -32
+.w-150{
+  width: 117px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  text-align: center;
+}
+.css-word{
+  word-break: break-word; /* 文本行的任意字内断开 */
+}
+.b{
+  font-weight: bold;
+}
+.table_div_word{
+  text-align: center;
+  margin: 0 auto;
+  line-height: 23px;
+}
+
+.disF{
+  display: flex;
+}
+.m-l-10{
+  margin-left: 10px;
+}

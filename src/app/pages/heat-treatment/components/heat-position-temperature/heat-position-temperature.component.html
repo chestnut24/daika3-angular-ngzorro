@@ -1,0 +1,19 @@
+<div class="temperature-container" (click)="deviceClick()"  [style.borderColor]="monitorList.borderColor === 'active'?'#1890FF':'#e8e8e8'">
+    <div style="padding-bottom:5px;">{{monitorList.monitorPostion}}</div>
+    <table>
+        <tr>
+            <td>实际</td>
+            <td *ngIf="monitorList.otherInfo?.targetTemp !== '-' && monitorList.otherInfo?.deviation && monitorList.otherInfo.speedupType === 'CONSTANT'">
+            <!-- [style.color]="((monitorList.otherInfo?.actualTemp > monitorList.otherInfo?.targetTemp + monitorList.otherInfo?.deviation) ||
+             (monitorList.otherInfo?.actualTemp < monitorList.otherInfo?.targetTemp - monitorList.otherInfo?.deviation)) ? 'red' : 'green'"-->
+                {{monitorList.otherInfo?.actualTemp}}℃
+            </td>
+            <td *ngIf="!(monitorList.otherInfo?.targetTemp !== '-' && monitorList.otherInfo?.deviation && monitorList.otherInfo.speedupType === 'CONSTANT')">
+                {{monitorList.otherInfo?.actualTemp}}
+            </td>
+        </tr>
+        <tr>
+            <td>目标</td><td>{{monitorList.otherInfo?.targetTemp}}℃</td>
+        </tr>
+    </table>
+</div>

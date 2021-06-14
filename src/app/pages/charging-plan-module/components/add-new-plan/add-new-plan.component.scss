@@ -1,0 +1,95 @@
+.mainBox {
+  width: 100%;
+  background: #fff;
+  min-height: 700px;
+  margin-top: -16px;
+  border: 1px solid #e8e8e8;
+  border-top: 0;
+  padding: 20px;
+
+  .banner1 {
+    overflow: hidden;
+    margin-bottom: 15px;
+  }
+}
+
+.f-r {
+  float: right;
+}
+.m-r-20 {
+  margin-right: 20px;
+}
+.m-t-10 {
+  margin-top: 10px;
+}
+.m-t-20 {
+  margin-top: 20px;
+}
+.m-b-20 {
+  margin-bottom: 20px;
+}
+
+.addBtn {
+  float: left;
+  border: 1px solid #e8e8e8;
+  background: #fafafa;
+}
+.ant-table-placeholder {
+  padding: 0;
+}
+.fontRed {
+  color: #ff5f56;
+}
+
+.deviceBtn {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  min-height: 32px;
+  line-height: 32px;
+  border: 1px solid #d9d9d9;
+  border-radius: 3.5px;
+  padding-left: 10px;
+  margin-top: 4px;
+}
+.deviceBtnFont {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  width: calc(100% - 35px);
+  max-width: 200px;
+  display: flex;
+  flex-flow: row wrap;
+}
+.selectBtn{
+  background-color: #253559;
+  color: #fff;
+  border-radius: 2px;
+  margin: 3px 4px 3px 0;
+  padding: 0 10px;
+  height: 24px;
+  line-height: 24px;
+}
+.deviceBtn:hover {
+  border: 1px solid #1890ff;
+  cursor: pointer;
+  transition: all 0.8s;
+}
+.chooseBtn {
+  color: #bfbfbf;
+  padding-right: 12px;
+  font-size: 12px;
+}
+.fontGary {
+  color: #bfbfbf;
+}
+
+// 覆盖-组件颜色
+::ng-deep.ant-select-selection__choice {
+  background-color: #253559 !important;
+  color: #fff !important;
+  border: 1px solid #253559 !important;
+}
+::ng-deep.ant-select-selection__choice__remove {
+  color: #fff !important;
+}

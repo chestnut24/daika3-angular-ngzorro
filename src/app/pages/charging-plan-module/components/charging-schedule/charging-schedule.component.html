@@ -1,0 +1,92 @@
+<div class="chargingSchedule">
+    <div class="hearder">
+        <div class="f-l m-r-50" *ngIf="planInfo?.createdDt">计划时间：{{planInfo.createdDt | date:'yyyy-MM-dd HH:mm:ss'}}
+        </div>
+        <div class="f-l m-r-50" *ngIf="planInfo?.planner">调度员：{{planInfo.planner.name}}</div>
+        <div class="f-l" *ngIf="planInfo?.technician">技术员：{{planInfo.technician.name}}</div>
+        <div class="f-r">
+            <button nz-button nzType="primary" (click)="goLookPlan()">查看装炉计划单</button>
+        </div>
+
+    </div>
+    <div class="mainer" *ngIf="planInfo?.links">
+        <nz-table class="container" #basicTable [nzData]="planInfo.links" nzBordered [nzShowPagination]="false">
+            <thead>
+                <tr>
+                    <th nzWidth="120px">计划生产时间</th>
+                    <th nzWidth="120px">预计结束时间</th>
+                    <th nzWidth="95px">工艺环节</th>
+                    <th>使用设备</th>
+                    <th>加工工艺</th>
+                    <th nzWidth="300px">加工轧辊</th>
+                    <th>入炉记录</th>
+                    <th>热处理执行记录</th>
+                    <th>出炉记录</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let roll of tableList">
+                    <td [attr.rowspan]="roll.detailRowspan" *ngIf="roll.detailRowspan">
+                        <div class="css-word table_div_word" [ngStyle]="{'width': 120-tablePadding +'px'}">
+                            {{roll.detailStartTime | date:'yyyy-MM-dd'}}
+                        </div>
+                    </td>
+                    <td [attr.rowspan]="roll.detailRowspan" *ngIf="roll.detailRowspan">
+                        <div class="css-word table_div_word" [ngStyle]="{'width': 120-tablePadding +'px'}">
+                            {{roll.detailEndTime | date:'yyyy-MM-dd'}}
+                        </div>
+                    </td>
+                    <td [attr.rowspan]="roll.craftRowspan" *ngIf="roll.craftRowspan">
+                        <div class="css-word table_div_word" [ngStyle]="{'width': 95-tablePadding +'px'}">
+                            {{roll.craftName}}
+                        </div>
+                    </td>
+                    <td class="fontB" [attr.rowspan]="roll.detailRowspan" *ngIf="roll.detailRowspan">
+                        <div class="css-word table_div_word" [ngStyle]="{'width': 110-tablePadding +'px'}">
+                            {{roll.detailDevice}}
+                        </div>
+                    </td>
+                    <td [attr.rowspan]="roll.detailRowspan" *ngIf="roll.detailRowspan">
+                        <div *ngIf="!roll.detailCraft">————</div>
+                        <a class="css-word table_div_word" [ngStyle]="{'width': 110-tablePadding +'px'}"
+                            *ngIf="roll.detailCraft" (click)="goAddCraft(roll.detail.craft)">{{roll.detailCraft}}</a>
+                    </td>
+                    <td class="fontB">
+                        {{roll.freightNumber}} (
+                        <span *ngFor="let product of roll.freightList;index as productI">{{product.roll.productNo}}
+                            <span *ngIf="productI !== roll.freightList.length-1">&nbsp;&nbsp;</span>
+                        </span>
+                        )
+                    </td>
+                    <td class="padding0">
+                        <div *ngFor="let product of roll.status1;index as i"
+                            [class]="i === (roll.status1.length - 1)?'':'border-b'">
+                            <a class="dis-block" (click)="goEntryPage(roll.detailID, 1)">{{roll.freightNumber}}
+                                ({{product.roll.productNo}})</a>
+                            <!-- <div class="gray-font">{{product.date}} craftID</div> -->
+                        </div>
+                        <div *ngIf="!roll.status1.length">————</div>
+                    </td>
+                    <td class="padding0">
+                        <div *ngFor="let product of roll.status2;index as i"
+                            [class]="i === (roll.status2.length - 1)?'':'border-b'">
+                            <a class="dis-block" (click)="goEntryPage(roll.detail.device.id, 2)">{{roll.freightNumber}}
+                                ({{product.roll.productNo}})</a>
+                            <!-- <div class="gray-font">{{product.date}}</div> -->
+                        </div>
+                        <div *ngIf="!roll.status2.length">————</div>
+                    </td>
+                    <td class="padding0">
+                        <div *ngFor="let product of roll.status3;index as i"
+                            [class]="i === (roll.status3.length - 1)?'':'border-b'">
+                            <a class="dis-block" (click)="goEntryPage(roll.detailID, 3)">{{roll.freightNumber}}
+                                ({{product.roll.productNo}})</a>
+                            <!-- <div class="gray-font">{{product.date}}</div> -->
+                        </div>
+                        <div *ngIf="!roll.status3.length">————</div>
+                    </td>
+                </tr>
+            </tbody>
+        </nz-table>
+    </div>
+</div>

@@ -1,0 +1,9 @@
+.approvals-info{
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  border: 1px solid #e8e8e8;
+  &>div{
+    padding: 16px;
+  }
+}

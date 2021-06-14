@@ -1,0 +1,12 @@
+<div class="outside-frame">
+    <app-delong-table [titleList]="titleList" class="delongTable" [nzScrollX]="'800px'">
+        <tr *ngFor="let data of delongTable.tableData ">
+            <td>{{ data.startTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+            <td>{{ data.endTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+            <td>{{ data.cd}}</td>
+            <td>{{ data.targetTemp }}</td>
+            <td>{{ data.username}}</td>
+        </tr>
+    </app-delong-table>
+</div>
+

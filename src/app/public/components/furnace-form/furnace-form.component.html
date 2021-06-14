@@ -1,0 +1,102 @@
+<div class="container">
+    <div class="content-title">
+        <span *ngIf="putOrTake == 'put'">入炉作业单</span>
+        <span *ngIf="putOrTake == 'take'">出炉作业单</span>
+    </div>
+    <div class="content">
+        <div class="table-content">
+            <nz-table
+                    class="table-container container_t"
+                    [nzBordered]="1"
+                    [nzShowSizeChanger]="true"
+                    [nzFrontPagination]="false"
+                    [nzData]="tableData?.freights">
+                <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>货号</th>
+                    <th>生产号</th>
+                    <th>材质</th>
+                    <th>材质代码</th>
+                    <th>尺寸</th>
+                    <th>数量</th>
+                    <th>单净重</th>
+                    <th>总净重</th>
+                </tr>
+                </thead>
+                <tbody *ngIf="tableData?.freights">
+                    <ng-container *ngFor="let freight of tableData.freights; let freightIndex = index">
+                        <tr *ngIf="freight.detailRolls.length!=0">
+                            <td>{{ freightIndex + 1 }}</td>
+                            <td>{{ freight.freightNumber }}</td>
+                            <td>
+                            <span *ngFor="let detailRoll of freight.detailRolls">
+                                {{ detailRoll.roll.productNo }}
+                            </span> &nbsp;
+                            </td>
+                            <td>{{ freight.material }}</td>
+                            <td>{{ freight.materialCode }}</td>
+                            <td>{{ freight.size }}</td>
+                            <td>{{ freight.detailRolls.length }}</td>
+                            <td>{{ freight.netWeight | number:"0.1-2" }}</td>
+                            <td>{{ myNumber(freight.netWeight * freight.detailRolls.length) | number:"0.1-2" }}</td>
+                        </tr>
+                    </ng-container>
+                        <tr>
+                            <td [colSpan]="9" *ngIf="tableData?.remark">备注：{{ tableData?.remark }}</td>
+                        </tr>
+                </tbody>
+            </nz-table>
+        </div>
+        <div class="right-detail-container">
+            <ul class="detail">
+                <li>
+                    <div>
+                        <span>作业区域：</span>
+                        <p>{{ tableData?.area.areaName }}</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="date-item">
+                        <span>生产日期：</span>
+                        <p>{{ tableData?.startTime | date:'yyyy.MM.dd'}}-{{ tableData?.endTime | date:'yyyy.MM.dd' }}</p>
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <span>使用设备：</span>
+                        <p>{{ tableData?.device?.name }}</p>
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <span>工艺名称：</span>
+                        <p class="router-link">{{ tableData?.craft?.name }}</p>
+                    </div>
+                    <div>
+                        <span>工艺编号：</span>
+                        <p>{{ tableData?.craft?.craftNo }}</p>
+                    </div>
+                </li>
+            </ul>
+            <div class="reading-container">
+                <p *ngIf="putOrTake == 'put'">入炉抄表：</p>
+                <p *ngIf="putOrTake == 'take'">出炉抄表：</p>
+                <div class="reading-group" nz-form [formGroup]="checkReading">
+                    <nz-form-control style="width: 100%">
+                        <input type="text"
+                               [(ngModel)]="readingText"
+                               [disabled]="readOnly"
+                               nz-input
+                               placeholder="请输入电表读数"
+                               formControlName="furnaceReading"
+                               id="furnaceReading"
+                        >
+                        <nz-form-explain *ngIf="checkReading.get('furnaceReading').hasError('isNum')">请输入数字</nz-form-explain>
+                    </nz-form-control>
+                    <button nz-button nzType="primary" (click)="saveReading()" [disabled]="readOnly">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

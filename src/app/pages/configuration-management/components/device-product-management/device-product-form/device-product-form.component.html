@@ -1,0 +1,195 @@
+<form nz-form class="ant-advanced-search-form" [formGroup]="dataForm">
+    <!-- 第一部分 -->
+    <nz-card nzType="inner" nzTitle="设备基本信息">
+        <div nz-row [nzGutter]="24">
+            <div nz-col [nzSpan]="8">
+                <nz-form-item>
+                    <nz-form-label nzRequired>设备名称</nz-form-label>
+                    <nz-form-control>
+                        <input nz-input placeholder="请填写设备名称" formControlName="name" name="name" maxlength="13"
+                            onkeyup="this.value=this.value.replace(/^ +| +$/g,'')" />
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+            <div nz-col [nzSpan]="8">
+                <nz-form-item>
+                    <nz-form-label nzRequired>设备编号</nz-form-label>
+                    <nz-form-control>
+                        <input nz-input placeholder="请填写设备编号" formControlName="number" name="number" />
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+            <div nz-col [nzSpan]="8">
+                <nz-form-item>
+                    <nz-form-label nzRequired>设备类型</nz-form-label>
+                    <nz-form-control>
+                        <nz-select nzAllowClear nzShowSearch nzPlaceHolder="请选择设备类型" formControlName="typeid"
+                            name="typeid">
+                            <nz-option-group *ngFor="let data of typeList" [nzLabel]="data.typeName">
+                                <nz-option *ngFor="let item of data.list" [nzValue]="item.id" [nzLabel]="item.typeName">
+                                </nz-option>
+                            </nz-option-group>
+                        </nz-select>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+        </div>
+        <div nz-row [nzGutter]="24">
+            <div nz-col [nzSpan]="8">
+                <nz-form-item>
+                    <nz-form-label>生产厂家</nz-form-label>
+                    <nz-form-control>
+                        <input nz-input placeholder="请输入备注信息" formControlName="productionManufacturers"
+                            name="productionManufacturers" />
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+            <div nz-col [nzSpan]="8">
+                <nz-form-item>
+                    <nz-form-label>负责人</nz-form-label>
+                    <nz-form-control>
+                        <input nz-input placeholder="请输入备注信息" formControlName="responsibleUser"
+                            name="responsibleUser" />
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+            <div nz-col [nzSpan]="8">
+                <nz-form-item>
+                    <nz-form-label nzRequired>所有区域</nz-form-label>
+                    <nz-form-control>
+                        <nz-select nzShowSearch nzAllowClear nzPlaceHolder="请选择所有区域" formControlName="areaid"
+                            name="areaid">
+                            <nz-option *ngFor="let data of areaList" [nzLabel]="data.areaName" [nzValue]="data.id">
+                            </nz-option>
+                        </nz-select>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+        </div>
+        <div nz-row [nzGutter]="24">
+            <div nz-col [nzSpan]="8">
+                <nz-form-item>
+                    <nz-form-label>设备UUID</nz-form-label>
+                    <nz-form-control>
+                        <input nz-input placeholder="请输入设备UUID" formControlName="jcUuid" name="jcUuid" />
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+            <div nz-col [nzSpan]="8">
+                <nz-form-item>
+                    <nz-form-label>设备属性</nz-form-label>
+                    <nz-form-control>
+                        <input nz-input placeholder="请输入设备属性" formControlName="jcAttribute" name="jcAttribute" />
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+            <div nz-col [nzSpan]="8">
+
+            </div>
+        </div>
+    </nz-card>
+    <!-- 第二部分 -->
+    <div class="table">
+        <h3 class="title">相关监控设备-炉温：</h3>
+        <div formArrayName="ListFurnaceTemperature">
+            <nz-table #basicTable [nzData]="ListFurnaceTemperature.controls" nzBordered [nzFrontPagination]="false"
+                [nzShowPagination]="false">
+                <thead>
+                    <tr>
+                        <th nzWidth="70px">序号</th>
+                        <th nzWidth="150px"><span class="required">*</span>监控位名称</th>
+                        <th><span class="required">*</span>炉温关联设备</th>
+                        <th nzWidth="100px">操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of ListFurnaceTemperature.controls;let i = index" [formGroupName]="i">
+                        <td><button style="background-color: #253559;border-color: #253559;" nz-button nzType="primary"
+                                nzShape="circle">{{getNumber(i)+1}}</button></td>
+                        <td>
+                            <input nz-input type="text" formControlName="monitorName" nzPlaceHolder="请填写名称" />
+                        </td>
+                        <td *ngIf="isAdd">
+                            <nz-select
+                                (nzFocus)="isNotSelected(ListFurnaceTemperature.controls, MillRollTemperature.controls)"
+                                nzMode="multiple" formControlName="monitorId" nzPlaceHolder="请选择关联设备">
+                                <nz-option *ngFor="let option of monitorList" [nzLabel]="option.name"
+                                    [nzValue]="option.id" [nzHide]="option.isHide">
+                                </nz-option>
+                            </nz-select>
+                        </td>
+                        <td *ngIf="!isAdd">
+                            <nz-select
+                                (nzFocus)="isNotSelected(ListFurnaceTemperature.controls, MillRollTemperature.controls)"
+                                nzMode="multiple" formControlName="monitorId" nzPlaceHolder="请选择关联设备">
+                                <nz-option *ngFor="let option of monitorList" [nzLabel]="option.name"
+                                    [nzValue]="option.id" [nzHide]="option.isHide">
+                                </nz-option>
+                                <nz-option *ngFor="let option of monitorListAll" [nzLabel]="option.name"
+                                    [nzValue]="option.id" nzHide></nz-option>
+                            </nz-select>
+                        </td>
+                        <td>
+                            <a (click)="delFormOne(i)" *ngIf="ListFurnaceTemperature.controls.length !== 1">删除</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </nz-table>
+        </div>
+        <div class="m-t-10">
+            <button nz-button (click)="addFormOne()"><i nz-icon nzType="plus"></i>添加设备</button>
+        </div>
+    </div>
+    <!-- 第三部分 -->
+    <div class="table">
+        <h3 class="title">相关监控设备-辊温：</h3>
+        <div formArrayName="millRollTemperature">
+            <nz-table #basicTable [nzData]="MillRollTemperature.controls" nzBordered [nzFrontPagination]="false"
+                [nzShowPagination]="false">
+                <thead>
+                    <tr>
+                        <th nzWidth="70px">序号</th>
+                        <th nzWidth="150px"><span class="required">*</span>监控位名称</th>
+                        <th><span class="required">*</span>辊温关联设备</th>
+                        <th nzWidth="100px">操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of MillRollTemperature.controls;let i = index" [formGroupName]="i">
+                        <td><button style="background-color: #253559;border-color: #253559;" nz-button nzType="primary"
+                                nzShape="circle">{{getNumber(i)+1}}</button></td>
+                        <td>
+                            <input nz-input type="text" formControlName="monitorName" nzPlaceHolder="请填写名称" />
+                        </td>
+                        <td *ngIf="isAdd">
+                            <nz-select
+                                (nzFocus)="isNotSelected(ListFurnaceTemperature.controls, MillRollTemperature.controls)"
+                                nzMode="multiple" formControlName="monitorId" nzPlaceHolder="请选择关联设备">
+                                <nz-option *ngFor="let option of monitorList" [nzLabel]="option.name"
+                                    [nzValue]="option.id" [nzHide]="option.isHide">
+                                </nz-option>
+                            </nz-select>
+                        </td>
+                        <td *ngIf="!isAdd">
+                            <nz-select
+                                (nzFocus)="isNotSelected(ListFurnaceTemperature.controls, MillRollTemperature.controls)"
+                                nzMode="multiple" formControlName="monitorId" nzPlaceHolder="请选择关联设备">
+                                <nz-option *ngFor="let option of monitorList" [nzLabel]="option.name"
+                                    [nzValue]="option.id" [nzHide]="option.isHide">
+                                </nz-option>
+                                <nz-option *ngFor="let option of monitorListAll" [nzLabel]="option.name"
+                                    [nzValue]="option.id" nzHide></nz-option>
+                            </nz-select>
+                        </td>
+                        <td>
+                            <a (click)="delFormTwo(i)" *ngIf="MillRollTemperature.controls.length !== 1">删除</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </nz-table>
+        </div>
+        <div class="m-t-10">
+            <button nz-button (click)="addFormTwo()"><i nz-icon nzType="plus"></i>添加设备</button>
+        </div>
+    </div>
+</form>

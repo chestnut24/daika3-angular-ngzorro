@@ -1,0 +1,33 @@
+.mainBox{
+    display: flex;
+    flex-flow: row wrap;
+}
+.div{
+    padding: 20px 30px;
+    margin-bottom: 20px;
+    background: #fff;
+    width: 250px;
+    height: 255px;
+    z-index: 2;
+}
+.divImg{
+    display: block;
+    margin: 0 auto;
+}
+.divImg:hover{
+    transform: scale(0.9);
+    opacity: 0.9;
+    transition: all 0.5s;
+}
+.title{
+    text-align: center;
+    font-weight: bold;
+    font-size: 20px;
+    color: #000;
+}
+.paddingBottom{
+    height: 255px;
+    background: #fff;
+    margin-top: -275px;
+    z-index: 1;
+}

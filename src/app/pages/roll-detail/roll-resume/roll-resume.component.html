@@ -1,0 +1,27 @@
+<div class="top-message">
+    <div class="message-container">
+        <div class="resume-title">
+            <img src="../../../../assets/images/resume-title.png"/>
+            <div>轧辊基本信息</div>
+        </div>
+        <div class="message-content" nz-row>
+            <div class="message-item" nz-col nzSpan="6">货号：{{roll?.freightNumber}}</div>
+            <div class="message-item" nz-col nzSpan="6">材质：{{roll?.material}}</div>
+            <div class="message-item" nz-col nzSpan="6">净重(t)：{{roll?.netWeight}}</div>
+            <div class="message-item" nz-col nzSpan="6">用户信息：{{roll?.client}}</div>
+            <div class="message-item" nz-col nzSpan="6">生产号：{{roll?.productNo}}</div>
+            <div class="message-item" nz-col nzSpan="6">材质代码：{{roll?.materialCode}}</div>
+            <div class="message-item" nz-col nzSpan="6">尺寸(mm)：{{roll?.size}}</div>
+            <div class="message-item" nz-col nzSpan="6">生产单位：{{roll?.productionUnit}}</div>
+        </div>
+    </div>
+    <nz-tabset nzLinkRouter>
+        <nz-tab  *ngFor="let tabPage of tabList; let tabIndex = index">
+<!--            <a nz-tab-link [routerLink]="['/rollDetail/rollResume/' + tabList[tabIndex].route + '/' + rollId, rollId]" >{{ tabPage.name }}</a>-->
+            <a nz-tab-link [routerLink]="['/rollDetail/rollResume/' + tabList[tabIndex].route, rollId]" >{{ tabPage.name }}</a>
+        </nz-tab>
+    </nz-tabset>
+</div>
+<div class="tab-content">
+    <router-outlet></router-outlet>
+</div>

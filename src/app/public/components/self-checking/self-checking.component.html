@@ -1,0 +1,241 @@
+<div class="self-checking-frame">
+    <div class="checking-title">
+        <span>{{title}}</span>
+    </div>
+    <div class="checking-input" *ngIf="IfChecking">
+        <div class="self-checking-title" nz-row>
+            <span nz-col nzSpan="8">外观检验:</span>
+            <div nz-col nzSpan="8">
+                <span>自检人：</span>
+                <span>{{checkUser}}</span>
+            </div>
+            <div *ngIf="showTime" nz-col nzSpan="8">
+                <span>自检时间：</span>
+                <span>{{currentTime | date:'yyyy-MM-dd HH:mm:ss'}}</span>
+            </div>
+        </div>
+        <input nz-input placeholder="请输入检验信息" id="checkInformation" [readOnly]="disabled.canInput3"
+            [disabled]="disabled.canInput3" [(ngModel)]="EntryRecord.exteriorCheck">
+    </div>
+    <div class="hard-checking-input">
+        <div class="hard-checking-title" nz-row>
+            <span nz-col nzSpan="8">硬度检验(选填):</span>
+            <div nz-col nzSpan="8">
+                <span>自检人：</span>
+                <span>{{hardnessUser}}</span>
+            </div>
+            <div *ngIf="showTime" nz-col nzSpan="8">
+                <span>自检时间：</span>
+                <span>{{hardnessTime | date:'yyyy-MM-dd HH:mm:ss'}}</span>
+            </div>
+        </div>
+        <!-- 硬度检验 -->
+        <!-- <div class="hard-input-list">
+            <div class="back-left"></div>
+            <div class="back-middle">
+                <div class="cover"></div>
+            </div>
+            <div class="back-right"></div>
+            <div class="list-content">
+                <div class="content-left" [formGroup]="checkList">
+                    <button nz-button nzType="default" style="width: 100px;">传端</button>
+                    <nz-form-control>
+                        <input nz-input placeholder="HDS" style="width: 100px;margin-top: 5px"
+                            [(ngModel)]="EntryRecord.hardnessCheck1" [disabled]="disabled.canInput2"
+                            formControlName="hardnessCheck1" [readOnly]="disabled.canInput2" />
+                        <nz-form-explain *ngIf="checkList.get('hardnessCheck1').hasError('sizeError')">请输入正数
+                        </nz-form-explain>
+                    </nz-form-control>
+                </div>
+                <div class="content-middle">
+                    <div class="content-middle-input" [formGroup]="checkList">
+                        <button nz-button nzType="default" style="width: 70px;">1</button>
+                        <nz-form-control>
+                            <input nz-input placeholder="HDS" style="width: 70px;margin-top: 5px"
+                                [(ngModel)]="EntryRecord.hardnessCheck2" [disabled]="disabled.canInput2"
+                                formControlName="hardnessCheck2" [readOnly]="disabled.canInput2" />
+                            <nz-form-explain *ngIf="checkList.get('hardnessCheck2').hasError('sizeError')">请输入正数
+                            </nz-form-explain>
+                        </nz-form-control>
+                    </div>
+                    <div class="content-middle-input" [formGroup]="checkList">
+                        <button nz-button nzType="default" style="width: 70px;">2</button>
+                        <nz-form-control>
+                            <input nz-input placeholder="HDS" style="width: 70px;margin-top: 5px"
+                                [(ngModel)]="EntryRecord.hardnessCheck3" [disabled]="disabled.canInput2"
+                                formControlName="hardnessCheck3" [readOnly]="disabled.canInput2" />
+                            <nz-form-explain *ngIf="checkList.get('hardnessCheck3').hasError('sizeError')">请输入正数
+                            </nz-form-explain>
+                        </nz-form-control>
+                    </div>
+                    <div class="content-middle-input" [formGroup]="checkList">
+                        <button nz-button nzType="default" style="width: 70px;">3</button>
+                        <nz-form-control>
+                            <input nz-input placeholder="HDS" style="width: 70px;margin-top: 5px"
+                                [(ngModel)]="EntryRecord.hardnessCheck4" [disabled]="disabled.canInput2"
+                                formControlName="hardnessCheck4" [readOnly]="disabled.canInput2" />
+                            <nz-form-explain *ngIf="checkList.get('hardnessCheck4').hasError('sizeError')">请输入正数
+                            </nz-form-explain>
+                        </nz-form-control>
+                    </div>
+                    <div class="content-middle-input" [formGroup]="checkList">
+                        <button nz-button nzType="default" style="width: 70px;">4</button>
+                        <nz-form-control>
+                            <input nz-input placeholder="HDS" style="width: 70px;margin-top: 5px"
+                                [(ngModel)]="EntryRecord.hardnessCheck5" [disabled]="disabled.canInput2"
+                                formControlName="hardnessCheck5" [readOnly]="disabled.canInput2" />
+                            <nz-form-explain *ngIf="checkList.get('hardnessCheck5').hasError('sizeError')">请输入正数
+                            </nz-form-explain>
+                        </nz-form-control>
+                    </div>
+                    <div class="content-middle-input" [formGroup]="checkList">
+                        <button nz-button nzType="default" style="width: 70px;">5</button>
+                        <nz-form-control>
+                            <input nz-input placeholder="HDS" style="width: 70px;margin-top: 5px"
+                                [(ngModel)]="EntryRecord.hardnessCheck6" [disabled]="disabled.canInput2"
+                                formControlName="hardnessCheck6" [readOnly]="disabled.canInput2" />
+                            <nz-form-explain *ngIf="checkList.get('hardnessCheck6').hasError('sizeError')">请输入正数
+                            </nz-form-explain>
+                        </nz-form-control>
+                    </div>
+                </div>
+                <div class="content-right" [formGroup]="checkList">
+                    <button nz-button nzType="default" style="width: 100px;">非端</button>
+                    <nz-form-control>
+                        <input nz-input placeholder="HDS" style="width: 100px;margin-top: 5px"
+                            [(ngModel)]="EntryRecord.hardnessCheck7" [disabled]="disabled.canInput2"
+                            formControlName="hardnessCheck7" [readOnly]="disabled.canInput2" />
+                        <nz-form-explain *ngIf="checkList.get('hardnessCheck7').hasError('sizeError')">请输入正数
+                        </nz-form-explain>
+                    </nz-form-control>
+                </div>
+            </div>
+        </div> -->
+        <div>
+            <div class="hardCardBG">
+                <div class="disF spB">
+                    <div class="content-left" [formGroup]="checkList">
+                        <button class="color25" nz-button nzType="default" style="width: 100px;">传端</button>
+                        <nz-form-control>
+                            <input nz-input placeholder="请输入" style="width: 100px;margin-top: 5px"
+                                [(ngModel)]="EntryRecord.hardnessCheck1" [disabled]="disabled.canInput2"
+                                formControlName="hardnessCheck1" [readOnly]="disabled.canInput2" />
+                            <nz-form-explain *ngIf="checkList.get('hardnessCheck1').hasError('sizeError')">请输入正数
+                            </nz-form-explain>
+                        </nz-form-control>
+                        <div class="w_100px">
+                            <nz-form-control>
+                                <nz-select formControlName="unit1"  [nzDisabled]="disabled.canInput2"
+                                    [(ngModel)]="EntryRecord.unit1" nzPlaceHolder="HSD" class="w_100px">
+                                    <nz-option [nzValue]="oppiton.data" [nzLabel]="oppiton.data"
+                                        *ngFor="let oppiton of unitList"></nz-option>
+                                </nz-select>
+                            </nz-form-control>
+                        </div>
+                    </div>
+                    <div class="content-middle">
+                        <div class="c_m_banner1 disF spA">
+                            <div class="content-middle-input" [formGroup]="checkList">
+                                <button class="color25" nz-button nzType="default" style="width: 70px;">1</button>
+                                <nz-form-control>
+                                    <input nz-input placeholder="请输入" style="width: 70px;margin-top: 5px"
+                                        [(ngModel)]="EntryRecord.hardnessCheck2" [disabled]="disabled.canInput2"
+                                        formControlName="hardnessCheck2" [readOnly]="disabled.canInput2" />
+                                    <nz-form-explain *ngIf="checkList.get('hardnessCheck2').hasError('sizeError')">请输入正数
+                                    </nz-form-explain>
+                                </nz-form-control>
+                            </div>
+                            <div class="content-middle-input" [formGroup]="checkList">
+                                <button class="color25" nz-button nzType="default" style="width: 70px;">2</button>
+                                <nz-form-control>
+                                    <input nz-input placeholder="请输入" style="width: 70px;margin-top: 5px"
+                                        [(ngModel)]="EntryRecord.hardnessCheck3" [disabled]="disabled.canInput2"
+                                        formControlName="hardnessCheck3" [readOnly]="disabled.canInput2" />
+                                    <nz-form-explain *ngIf="checkList.get('hardnessCheck3').hasError('sizeError')">请输入正数
+                                    </nz-form-explain>
+                                </nz-form-control>
+                            </div>
+                            <div class="content-middle-input" [formGroup]="checkList">
+                                <button class="color25" nz-button nzType="default" style="width: 70px;">3</button>
+                                <nz-form-control>
+                                    <input nz-input placeholder="请输入" style="width: 70px;margin-top: 5px"
+                                        [(ngModel)]="EntryRecord.hardnessCheck4" [disabled]="disabled.canInput2"
+                                        formControlName="hardnessCheck4" [readOnly]="disabled.canInput2" />
+                                    <nz-form-explain *ngIf="checkList.get('hardnessCheck4').hasError('sizeError')">请输入正数
+                                    </nz-form-explain>
+                                </nz-form-control>
+                            </div>
+                            <div class="content-middle-input" [formGroup]="checkList">
+                                <button class="color25" nz-button nzType="default" style="width: 70px;">4</button>
+                                <nz-form-control>
+                                    <input nz-input placeholder="请输入" style="width: 70px;margin-top: 5px"
+                                        [(ngModel)]="EntryRecord.hardnessCheck5" [disabled]="disabled.canInput2"
+                                        formControlName="hardnessCheck5" [readOnly]="disabled.canInput2" />
+                                    <nz-form-explain *ngIf="checkList.get('hardnessCheck5').hasError('sizeError')">请输入正数
+                                    </nz-form-explain>
+                                </nz-form-control>
+                            </div>
+                            <div class="content-middle-input" [formGroup]="checkList">
+                                <button class="color25" nz-button nzType="default" style="width: 70px;">5</button>
+                                <nz-form-control>
+                                    <input nz-input placeholder="请输入" style="width: 70px;margin-top: 5px"
+                                        [(ngModel)]="EntryRecord.hardnessCheck6" [disabled]="disabled.canInput2"
+                                        formControlName="hardnessCheck6" [readOnly]="disabled.canInput2" />
+                                    <nz-form-explain *ngIf="checkList.get('hardnessCheck6').hasError('sizeError')">请输入正数
+                                    </nz-form-explain>
+                                </nz-form-control>
+                            </div>
+                        </div>
+                        <div class="c_m_banner2" style="margin-top: 3px;">
+                            <nz-select [(ngModel)]="EntryRecord.unit2"  [nzDisabled]="disabled.canInput2" nzPlaceHolder="HSD" class="w_400px">
+                                <nz-option [nzValue]="oppiton.data" [nzLabel]="oppiton.data"
+                                    *ngFor="let oppiton of unitList"></nz-option>
+                            </nz-select>
+                        </div>
+                    </div>
+                    <div class="content-right" [formGroup]="checkList">
+                        <button class="color25" nz-button nzType="default" style="width: 100px;">非端</button>
+                        <nz-form-control>
+                            <input nz-input placeholder="请输入" style="width: 100px;margin-top: 5px"
+                                [(ngModel)]="EntryRecord.hardnessCheck7" [disabled]="disabled.canInput2"
+                                formControlName="hardnessCheck7" [readOnly]="disabled.canInput2" />
+                            <nz-form-explain *ngIf="checkList.get('hardnessCheck7').hasError('sizeError')">请输入正数
+                            </nz-form-explain>
+                        </nz-form-control>
+                        <div class="w_100px">
+                            <nz-form-control>
+                                <nz-select formControlName="unit1" [nzDisabled]="disabled.canInput2"
+                                    [(ngModel)]="EntryRecord.unit1" nzPlaceHolder="HSD" class="w_100px">
+                                    <nz-option [nzValue]="oppiton.data" [nzLabel]="oppiton.data"
+                                        *ngFor="let oppiton of unitList"></nz-option>
+                                </nz-select>
+                            </nz-form-control>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 0721-s -->
+        <div class="Hardness0721">
+            <div>
+                <i nz-icon nzType="info-circle" nzTheme="outline"></i>
+                辊身硬度要求：{{Hardness0721.bodyHardness || '未填写'}} ；辊颈硬度要求：{{Hardness0721.neckHardness || '未填写'}} ；
+            </div>
+        </div>
+        <!-- 0721-e -->
+        <div class="hard-input-footer">
+            <label nz-checkbox [(ngModel)]="EntryRecord.isExempt" (ngModelChange)="hardExempt()"
+                [nzDisabled]="disabled.canInput4">硬度免检</label>
+            <div [formGroup]="Exmpt" class="isExempt">
+                <nz-form-control>
+                    <input nz-input placeholder="请填入免检原因" nzSize="default" style="width: 600px;margin-left: 20px"
+                        [disabled]="disabled.canInput1" [(ngModel)]="EntryRecord.exemptReason"
+                        [readOnly]="disabled.canInput1" formControlName="exemptReason" />
+                    <nz-form-explain
+                        *ngIf="Exmpt.get('exemptReason').dirty && Exmpt.get('exemptReason').errors && EntryRecord.isExempt ">
+                        不能为空</nz-form-explain>
+                </nz-form-control>
+            </div>
+        </div>
+    </div>
+</div>

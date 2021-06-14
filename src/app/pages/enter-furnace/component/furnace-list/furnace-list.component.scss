@@ -1,0 +1,61 @@
+.container{
+  background-color: #fff;
+  padding:20px 32px;
+  .top-container{
+    display: flex;
+    align-items: center;
+    .search-container{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 32px;
+      .search-item{
+        padding-right: 50px;
+      }
+      input{
+        width: 105px;
+        height: 32px;
+      }
+    }
+  }
+}
+.content{
+  margin-top:20px;
+  .router-link {
+    color: #1890FF;
+    cursor: pointer;
+  }
+  .router-link-process {
+    color: #aaaaaa;
+  }
+  overflow-x: auto;
+}
+
+// -32
+.w-180{
+  width: 147px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  text-align: center;
+}
+
+.container tr:nth-child(even){
+  // background-color: #f9f9f9;
+  background-color: #fff;
+}
+.container tr:nth-child(even) td.ant-table-td-right-sticky,tr:nth-child(even) td.ant-table-td-left-sticky{
+  // background: #f9f9f9;
+  background: #fff;
+}
+
+// 表格内换行使用css
+.css-word{
+  word-break: break-word; /* 文本行的任意字内断开 */
+}
+.b{
+  font-weight: bold;
+}
+.table_div_word{
+  text-align: center;
+  margin: 0 auto;
+}

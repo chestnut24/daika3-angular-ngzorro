@@ -1,0 +1,32 @@
+<div class="curve-container">
+    <div class="title">
+        <span>
+            执行工艺：{{dataDetail.linkDetail.craft.name}}
+        </span>
+        <span>
+            工艺编号：{{dataDetail.linkDetail.craft.craftNo}}
+        </span>
+    </div>
+    <div>
+        <img [src]="dataDetail.linkDetail.craft.curveImgPath" style="width: 100%">
+    </div>
+
+    <nz-table #borderedTable nzBordered [nzData]="dataDetail.linkDetail.craft.curves"
+              [nzFrontPagination]="false">
+        <thead>
+        <tr>
+            <th>步骤</th>
+            <th>加热类型</th>
+            <th>备注</th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let data of borderedTable.data;let index = index;">
+                <td style="width:30px;"><button style="background-color: #253559;border-color: #253559;" nz-button nzType="primary" nzShape="circle">{{index+1}}</button></td>
+                <td>{{data.speedupType | speedupType}}</td>
+                <td>{{data.remark}}</td>
+            </tr>
+        </tbody>
+    </nz-table>
+    <textarea [ngModel]="dataDetail.linkDetail.craft.remark"></textarea>
+</div>

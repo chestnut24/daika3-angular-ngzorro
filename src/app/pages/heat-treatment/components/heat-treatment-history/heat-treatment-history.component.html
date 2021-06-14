@@ -1,0 +1,69 @@
+<div class="tableContent">
+    <div class="table-content-frame">
+        <div class="table-search-content">
+            <div class="search-content-left" nz-col>
+                <span style="margin-left: 0px">热处理时间：<nz-range-picker [nzFormat]="dateFormat"
+                        [(ngModel)]="listSelection.selectData" id="rangePicker" (keyup.enter)="searchEntryRecord()">
+                    </nz-range-picker></span>
+                <span>加工货号：<input nz-input placeholder="请输入货号" nzSize="default" style="width: 150px"
+                        [(ngModel)]="listSelection.freightNumber" (keyup.enter)="searchEntryRecord()" /></span>
+                <span>生产号：<input nz-input placeholder="请输入生产号" nzSize="default" style="width: 150px"
+                        [(ngModel)]="listSelection.productNo" id="productNum"
+                        (keyup.enter)="searchEntryRecord()" /></span>
+                <span>处理设备：
+                    <nz-select style="width:150px;" [(ngModel)]="listSelection.devName" nzAllowClear nzPlaceHolder="请选择"
+                        (ngModelChange)="searchEntryRecord()">
+                        <nz-option *ngFor="let option of deviceList" [nzValue]="option.name" [nzLabel]="option.name">
+                        </nz-option>
+                    </nz-select>
+                </span>
+            </div>
+            <div nz-col class="search-content-right">
+                <button nz-button nzType="primary" id="search" (click)="searchEntryRecord()">查询</button>
+            </div>
+        </div>
+        <app-delong-table [titleList]="titleList" class="delongTable" [nzScrollX]="'1050px'"
+            [nzScrollY]="getIframeHeight()" (pageChange)="pageChange()">
+            <tr *ngFor="let data of delongTable.tableData ">
+                <td>
+                    <div class="css-word table_div_word" [ngStyle]="{'width': 147-tablePadding +'px'}">
+                        {{ data.htStartTime | date:'yyyy-MM-dd'}}
+                    </div>
+                </td>
+                <td>
+                    <div class="css-word table_div_word" [ngStyle]="{'width': 147-tablePadding +'px'}">
+                        {{ data.htEndTime | date:'yyyy-MM-dd'}}
+                    </div>
+                </td>
+                <td>
+                    <div class="css-word table_div_word" [ngStyle]="{'width': 300-tablePadding +'px'}">
+                        {{data.internalFurnacePlan?.time | date:'yyyy-MM-dd'}}
+                        <div class="internalFurnacePlan">
+                            <div *ngFor="let plan of changeArrS(data.internalFurnacePlan?.stringList)">
+                                <div *ngFor="let devO of plan.dev"
+                                    [ngStyle]="{'color': data.devName.indexOf(devO) >= 0?'#1890ff':'#000'}">{{devO}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="css-word table_div_word" [ngStyle]="{'width': 87-tablePadding +'px'}">
+                        {{ data.devName }}
+                    </div>
+                </td>
+                <td>
+                    <div class="css-word table_div_word" [ngStyle]="{'width': 300-tablePadding +'px'}">
+                        {{ changeData(data.freightList)}}
+                    </div>
+                </td>
+                <td nzRight="0" nzWidth="60px">
+                    <div class="operation css-word table_div_word" [ngStyle]="{'width': 60-tablePadding +'px'}">
+                        <a
+                            [routerLink]="['/rollDetail/rollResume/entry/'+ data.rollId +'/heatTreat/' + data['htRecordId']]">查看</a>
+                    </div>
+                </td>
+            </tr>
+        </app-delong-table>
+    </div>
+</div>

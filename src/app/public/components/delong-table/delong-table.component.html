@@ -1,0 +1,28 @@
+<nz-table class="container"
+          [nzBordered]="1"
+          [nzLoading]="dlLoading && delongTable.isLoading"
+          [nzData]="delongTable.tableData"
+          [(nzPageSize)] = "delongTable.pageSize"
+          [(nzPageIndex)] = "delongTable.pageNum"
+          (nzPageIndexChange)="delongTable.search();pageNumChange()"
+          (nzPageSizeChange)="delongTable.pageNum = 1;delongTable.search();pageNumChange()"
+          [nzShowSizeChanger]="true"
+          [nzShowTotal]="totalTemplate"
+          [nzPageSizeOptions]="[10,20,30,40,50]"
+          [nzFrontPagination]="false"
+          [nzTotal]="delongTable.tableTotal"
+          [nzScroll]="getScroll()">
+          
+  <thead (nzSortChange)="sort($event)" nzSingleSort>
+    <tr>
+      <th [nzShowSort]="title.canSort" [nzSortKey]="title.sortField"
+          *ngFor="let title of titleList" [nzWidth]="title.width" [nzRight]="title.right">{{title.name}}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <ng-content></ng-content>
+  </tbody>
+</nz-table>
+<ng-template #totalTemplate let-total>共 {{ total }} 条记录</ng-template>
+<!-- [nzScroll]="nzScrollX ? {x : nzScrollX } : {x : '1000px', y: '600px'}"> -->
+

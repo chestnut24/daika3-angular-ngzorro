@@ -1,0 +1,43 @@
+.add-craft-container{
+  .stopStatsPeople{
+    position: absolute;
+    top: 0;
+    left: 20px;
+    color: #ff5f56;
+    height: 64px;
+    line-height: 64px;
+  }
+  .top-buttons{
+    position: sticky;
+    top: 0;
+    height: 64px;
+    background-color: #fff;
+    z-index: 100;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    border-bottom: 1px solid #f0f2f5;
+    button{
+      margin-right: 20px;
+    }
+  }
+  .curves-table{
+    width:100%;
+    border-bottom: 1px solid #e8e8e8;
+    border-left: 1px solid #e8e8e8;
+    text-align: center;
+    thead tr{
+      background-color: #FAFAFA;
+    }
+    td,th{
+      border-top: 1px solid #e8e8e8;
+      border-right: 1px solid #e8e8e8;
+      padding:16px;
+    }
+  }
+  #craftCanvas{
+    height: 500px;
+  }
+}
+

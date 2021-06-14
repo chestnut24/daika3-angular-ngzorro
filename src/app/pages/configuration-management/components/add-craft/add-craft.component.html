@@ -1,0 +1,197 @@
+<div class="add-craft-container">
+    <div class="top-buttons">
+        <div *ngIf="approvalStatus === 'CANCELLATION'" class="stopStatsPeople">该工艺已废止，废止时间：{{cancellationTime.cancellationTime | date:'yyyy.MM.dd HH:mm:ss'}}，废止人：{{cancellationTime.cancellationName}}。</div>
+        <!-- <button *ngIf="approvalStatus != 'SECOND_APPROVED' && craftId && !isSee" nz-button nzType="primary" (click)="approvalsCraftInfo()">{{approvalStatus | preliminaryOrFinal}}</button> -->
+        <button *ngIf="approvalStatus === 'NOT_APPROVAL' && craftId && !isSee" nz-button nzType="primary" (click)="approvalsCraftInfo()">校对</button>
+        <button *ngIf="approvalStatus === 'NOT_APPROVAL'" nz-button nzType="primary" [hidden]="isSee" (click)="saveCraft()">保存</button>
+        <button *ngIf="!approvalStatus" nz-button nzType="primary" [hidden]="isSee" (click)="saveCraft()">保存</button>
+        <button nz-button nzType="default" (click)="craftApprovals()" *ngIf="craftId">查看审批记录</button>
+    </div>
+    
+    <div>
+        <nz-card nzTitle="工艺基本信息">
+            <form nz-form [formGroup]="craftForm">
+                <nz-form-item>
+                    <nz-form-label [nzSpan]="7" nzRequired>工艺名称</nz-form-label>
+                    <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="nameErrorTpl">
+                        <input nz-input formControlName="name" placeholder="请输入" />
+                        <ng-template #nameErrorTpl let-control>
+                            <ng-container *ngIf="control.hasError('required')">
+                                工艺名称不能为空
+                            </ng-container>
+                        </ng-template>
+                    </nz-form-control>
+                </nz-form-item>
+                <nz-form-item>
+                    <nz-form-label [nzSpan]="7" nzRequired>工艺编号</nz-form-label>
+                    <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="craftNoErrorTpl">
+                        <input nz-input formControlName="craftNo" placeholder="请输入"/>
+                        <ng-template #craftNoErrorTpl let-control>
+                            <ng-container *ngIf="control.hasError('required')">
+                                工艺编号不能为空
+                            </ng-container>
+                        </ng-template>
+                    </nz-form-control>
+                </nz-form-item>
+                <nz-form-item>
+                    <nz-form-label [nzSpan]="7">材质范围</nz-form-label>
+                    <nz-form-control [nzSpan]="12">
+                        <nz-select [(ngModel)]="materialRange" [ngModelOptions]="{standalone: true}" nzMode="multiple">
+                            <nz-option *ngFor="let option of materialRangeList"
+                                       [nzValue]="option" [nzLabel]="option"></nz-option>
+                        </nz-select>
+                    </nz-form-control>
+                </nz-form-item>
+                <nz-form-item>
+                    <nz-form-label [nzSpan]="7">规格范围</nz-form-label>
+                    <nz-form-control [nzSpan]="3">
+                        <input nz-input type="number" [(ngModel)]="specificationRange.range1" [ngModelOptions]="{standalone: true}">
+                    </nz-form-control>
+                    <nz-form-control [nzSpan]="2">
+                        <nz-select [(ngModel)]="specificationRange.range2" [ngModelOptions]="{standalone: true}">
+                            <nz-option nzValue="<" nzLabel="<"></nz-option>
+                            <nz-option nzValue="≤" nzLabel="≤"></nz-option>
+                        </nz-select>
+                    </nz-form-control>
+                    <nz-form-control [nzSpan]="2" style="text-align: center">
+                        <span>直径Φ</span>
+                    </nz-form-control>
+                    <nz-form-control [nzSpan]="2">
+                        <nz-select [(ngModel)]="specificationRange.range3" [ngModelOptions]="{standalone: true}">
+                            <nz-option nzValue="<" nzLabel="<"></nz-option>
+                            <nz-option nzValue="≤" nzLabel="≤"></nz-option>
+                        </nz-select>
+                    </nz-form-control>
+                    <nz-form-control [nzSpan]="3">
+                        <input nz-input type="number" [(ngModel)]="specificationRange.range4" [ngModelOptions]="{standalone: true}">
+                    </nz-form-control>
+                </nz-form-item>
+                <nz-form-item>
+                    <nz-form-label [nzSpan]="7">硬度要求规范</nz-form-label>
+                    <nz-form-control [nzSpan]="5">
+                        <nz-input-group nzAddOnAfter="HSD" >
+                            <input nz-input type="number" [(ngModel)]="hardnessRange.range1" [ngModelOptions]="{standalone: true}"/>
+                        </nz-input-group>
+                    </nz-form-control>
+                    <nz-form-control [nzSpan]="2" style="text-align: center">
+                        <span>到</span>
+                    </nz-form-control>
+                    <nz-form-control [nzSpan]="5">
+                        <nz-input-group nzAddOnAfter="HSD">
+                            <input nz-input type="number" style="border: 1px solid #e8e8e8;" [style.borderColor]="getBorderColor" [(ngModel)]="hardnessRange.range2" [ngModelOptions]="{standalone: true}"/>
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item>
+                    <nz-form-label [nzSpan]="7">适用设备</nz-form-label>
+                    <nz-form-control [nzSpan]="12">
+                        <input nz-input formControlName="applicableDevice" placeholder="请输入"/>
+                    </nz-form-control>
+                </nz-form-item>
+                <nz-form-item>
+                    <nz-form-label [nzSpan]="7">适用台时</nz-form-label>
+                    <nz-form-control [nzSpan]="12">
+                        <input nz-input formControlName="machineHour" placeholder="请输入"/>
+                    </nz-form-control>
+                </nz-form-item>
+                <nz-form-item>
+                    <nz-form-label [nzSpan]="7">工具及工装装备</nz-form-label>
+                    <nz-form-control [nzSpan]="12">
+                        <input nz-input formControlName="tooling" placeholder="请输入"/>
+                    </nz-form-control>
+                </nz-form-item>
+                <nz-form-item>
+                    <nz-form-label [nzSpan]="7" nzRequired>正火冷却</nz-form-label>
+                    <nz-form-control [nzSpan]="12" [nzErrorTip]="NormalizingErrorTpl">
+                        <nz-radio-group formControlName="needCooling">
+                            <label nz-radio nzValue="YES">是</label>
+                            <label nz-radio nzValue="NO">否</label>
+                        </nz-radio-group>
+                        <ng-template #NormalizingErrorTpl let-control>
+                            <ng-container *ngIf="control.hasError('required')">
+                                请设定当前工艺完成后是否需要炉外正火冷却
+                            </ng-container>
+                        </ng-template>
+                    </nz-form-control>
+                </nz-form-item>
+            </form>
+        </nz-card>
+
+        <nz-card nzTitle="工艺曲线建模" style="margin-top:20px;">
+            <table class="curves-table">
+                <thead>
+                    <tr>
+                        <th style="width:50px;">步骤</th>
+                        <th>加热类型</th>
+                        <th>持续时间(min)</th>
+                        <th>温度</th>
+                        <th>温度类型</th>
+                        <th style="width: 150px;">偏差值报警</th>
+                        <th>备注</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let curve of getCurves.controls; let index = index;" [formGroup]="curve">
+                        <td> <button style="background-color: #253559;border-color: #253559;" nz-button nzType="primary" nzShape="circle">{{index+1}}</button></td>
+                        <td>
+                            <nz-select style="min-width: 100px;"
+                                       formControlName="speedupType"
+                                       (ngModelChange)="speedupTypeChange($event, curve)">
+                                <nz-option nzValue="FULL_SPEED" nzLabel="全速"></nz-option>
+                                <nz-option nzValue="NORMAL" nzLabel="常规"></nz-option>
+                                <nz-option nzValue="CONSTANT" nzLabel="恒温"></nz-option>
+                                <nz-option nzValue="FURNACE_COOLING" nzLabel="炉冷"></nz-option>
+                            </nz-select>
+                        </td>
+                        <td>
+                            <input *ngIf="curve.value.speedupType !== 'FULL_SPEED' && curve.value.speedupType !== 'FURNACE_COOLING'"
+                                   type="number" nz-input formControlName="duration" placeholder="请输入" nzSize="default" />
+                            <nz-input-group *ngIf="curve.value.speedupType === 'FURNACE_COOLING'" nzAddOnAfter="℃/h">
+                                <input nz-input type="number" formControlName="duration" placeholder="请输入" nzSize="default" />
+                            </nz-input-group>
+                            <span *ngIf="curve.value.speedupType === 'FULL_SPEED'">无</span>
+                        </td>
+                        <td>
+                            <input [style.border]="'1px solid ' + hasRedBorder(index)" nz-input type="number" formControlName="temperature" placeholder="请输入" nzSize="default" />
+                        </td>
+                        <td>
+                            <nz-select style="min-width: 100px;"
+                                       formControlName="temperatureType">
+                                <nz-option nzValue="FURNACE_TEMPERATURE" nzLabel="炉温"></nz-option>
+                                <nz-option nzValue="ROLL_TEMPERATURE" nzLabel="辊温"></nz-option>
+                            </nz-select>
+                        </td>
+                        <td>
+                            <nz-input-group *ngIf="curve.value.speedupType === 'CONSTANT'
+                                                    || curve.value.speedupType === 'FURNACE_COOLING'
+                                                    || curve.value.speedupType === 'NORMAL'"
+                                            [nzAddOnBefore]="(curve.value.speedupType === 'CONSTANT' || curve.value.speedupType === 'NORMAL') ?'±':'-'">
+                                <input nz-input type="number" formControlName="deviation" placeholder="请输入" nzSize="default"/>
+                            </nz-input-group>
+                            <span *ngIf="curve.value.speedupType === 'FULL_SPEED'">无</span>
+                            <span *ngIf="!curve.value.speedupType">无</span>
+                        </td>
+                        <td>
+                            <input nz-input formControlName="remark" placeholder="请输入" nzSize="default" />
+                        </td>
+                        <td (click)="deleteCurve(index)"><a>删除</a></td>
+                    </tr>
+                </tbody>
+            </table>
+            <button style="margin-top: 12px;" nz-button nzType="default" (click)="addCurve()">
+                <i nz-icon nzType="plus" nzTheme="outline"></i>添加步骤
+            </button>
+
+            <div id="craftCanvas">
+
+            </div>
+            <div [formGroup]="craftForm" style="padding: 10px 50px;">
+                <textarea  formControlName="remark" style="width: 100%;height:100px"></textarea>
+            </div>
+        </nz-card>
+    </div>
+
+</div>
+

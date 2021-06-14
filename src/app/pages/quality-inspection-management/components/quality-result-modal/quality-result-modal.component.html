@@ -1,0 +1,218 @@
+<div class="quality-result">
+    <div class="freight-info">
+        <span>货号：{{data.freight.freightNumber}}</span>
+        <span>生产号：{{data.productNo}}</span>
+    </div>
+    <div class="quality-info">
+        <nz-card nzType="inner" nzTitle="质检信息">
+
+            <div *ngIf="type">
+                <div class="title" *ngIf="type === '化学'">
+                    <span><b>质检人：</b>{{data.beforeQualityCheck ? data.beforeQualityCheck.chemistryCheckName : data.afterQualityCheck.chemistryCheckName}}</span>
+                    <span>
+                        <b>质检时间：</b>
+                        {{getNewTime(data.beforeQualityCheck ? data.beforeQualityCheck.chemistryCheckTime : data.afterQualityCheck.chemistryCheckTime) | date:'yyyy.MM.dd HH:mm:ss'}}
+                    </span>
+                </div>
+                <div class="title" *ngIf="type === '金相'">
+                    <span><b>质检人：</b>{{data.beforeQualityCheck ? data.beforeQualityCheck.metalCheckName : data.afterQualityCheck.metalCheckName}}</span>
+                    <span>
+                        <b>质检时间：</b>
+                        {{getNewTime(data.beforeQualityCheck ? data.beforeQualityCheck.metalCheckTime : data.afterQualityCheck.metalCheckTime) | date:'yyyy.MM.dd HH:mm:ss'}}
+                    </span>
+                </div>
+                <div class="title" *ngIf="type === '探伤'">
+                    <span><b>质检人：</b>{{data.beforeQualityCheck ? data.beforeQualityCheck.flawCheckName : data.afterQualityCheck.flawCheckName}}</span>
+                    <span>
+                        <b>质检时间：</b>
+                        {{getNewTime(data.beforeQualityCheck ? data.beforeQualityCheck.flawCheckTime : data.afterQualityCheck.flawCheckTime) | date:'yyyy.MM.dd HH:mm:ss'}}
+                    </span>
+                </div>
+                <div class="title" *ngIf="type === '硬度'">
+                    <span><b>质检人：</b>{{data.beforeQualityCheck ? data.beforeQualityCheck.hardnessCheckName : data.afterQualityCheck.hardnessCheckName}}</span>
+                    <span>
+                        <b>质检时间：</b>
+                        {{getNewTime(data.beforeQualityCheck ? data.beforeQualityCheck.hardnessCheckTime : data.afterQualityCheck.hardnessCheckTime) | date:'yyyy.MM.dd HH:mm:ss'}}
+                    </span>
+                </div>
+                <div class="title" *ngIf="type === '尺寸'">
+                    <span><b>质检人：</b>{{data.beforeQualityCheck ? data.beforeQualityCheck.sizeCheckName : data.afterQualityCheck.sizeCheckName}}</span>
+                    <span>
+                        <b>质检时间：</b>
+                        {{getNewTime(data.beforeQualityCheck ? data.beforeQualityCheck.sizeCheckTime : data.afterQualityCheck.sizeCheckTime) | date:'yyyy.MM.dd HH:mm:ss'}}
+                    </span>
+                </div>
+                <div [formGroup]="form" class="radio-groups">
+                    <div *ngIf="type === '化学'">
+                        <label>化学检验：</label>
+                        <nz-radio-group formControlName="chemistryCheck">
+                            <label nz-radio nzValue="OK">合格</label>
+                            <label nz-radio nzValue="NG">不合格</label>
+                            <label nz-radio nzValue="EXEMPT">免检</label>
+                        </nz-radio-group>
+                    </div>
+                    <div *ngIf="type === '金相'">
+                        <label>金相检验：</label>
+                        <nz-radio-group formControlName="metalCheck">
+                            <label nz-radio nzValue="OK">合格</label>
+                            <label nz-radio nzValue="NG">不合格</label>
+                            <label nz-radio nzValue="EXEMPT">免检</label>
+                        </nz-radio-group>
+                    </div>
+                    <div *ngIf="type === '探伤'">
+                        <label>探伤检验：</label>
+                        <nz-radio-group formControlName="flawCheck">
+                            <label nz-radio nzValue="OK">合格</label>
+                            <label nz-radio nzValue="NG">不合格</label>
+                            <label nz-radio nzValue="EXEMPT">免检</label>
+                        </nz-radio-group>
+                    </div>
+                    <!-- <div></div> -->
+                    <div *ngIf="type === '硬度'">
+                        <label>硬度检验：</label>
+                        <nz-radio-group formControlName="hardnessCheck">
+                            <label nz-radio nzValue="OK">合格</label>
+                            <label nz-radio nzValue="NG">不合格</label>
+                            <label nz-radio nzValue="EXEMPT">免检</label>
+                        </nz-radio-group>
+                    </div>
+                    <div *ngIf="type === '尺寸'">
+                        <label>尺寸检验：</label>
+                        <nz-radio-group formControlName="sizeCheck">
+                            <label nz-radio nzValue="OK">合格</label>
+                            <label nz-radio nzValue="NG">不合格</label>
+                            <label nz-radio nzValue="EXEMPT">免检</label>
+                        </nz-radio-group>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="!type">
+                <div *ngIf="data.beforeQualityCheck">
+                    <nz-table #basicTable [nzData]="[{}]" nzBordered [nzShowPagination]="false">
+                        <thead>
+                            <tr>
+                                <th style="text-align: center;">化学检验</th>
+                                <th style="text-align: center;">探伤检验</th>
+                                <th style="text-align: center;">硬度检验</th>
+                                <th style="text-align: center;">金相检验</th>
+                                <th style="text-align: center;">尺寸检验</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div style="text-align: center;">
+                                        {{ data.beforeQualityCheck?.chemistryCheck | qimResult }}
+                                    </div>
+                                    <div style="text-align: center;">
+                                        {{ getNewTime(data.beforeQualityCheck?.chemistryCheckTime) | date:'yyyy-MM-dd HH:mm:ss'}}<br />
+                                        {{ data.beforeQualityCheck?.chemistryCheckName}}
+                                    </div>
+                                </td>
+                                <td>
+                                    <div style="text-align: center;">
+                                        {{ data.beforeQualityCheck?.flawCheck | qimResult }}
+                                    </div>
+                                    <div style="text-align: center;">
+                                        {{ getNewTime(data.beforeQualityCheck?.flawCheckTime) | date:'yyyy.MM.dd HH:mm:ss'}}<br />
+                                        {{ data.beforeQualityCheck?.flawCheckName}}
+                                    </div>
+                                </td>
+                                <td>
+                                    <div style="text-align: center;">
+                                        {{ data.beforeQualityCheck?.hardnessCheck | qimResult }}
+                                    </div>
+                                    <div style="text-align: center;">
+                                        {{ getNewTime(data.beforeQualityCheck?.hardnessCheckTime) | date:'yyyy.MM.dd HH:mm:ss'}}<br />
+                                        {{ data.beforeQualityCheck?.hardnessCheckName}}
+                                    </div>
+                                </td>
+                                <td>
+                                    <div style="text-align: center;">
+                                        {{ data.beforeQualityCheck?.metalCheck | qimResult }}
+                                    </div>
+                                    <div style="text-align: center;">
+                                        {{ getNewTime(data.beforeQualityCheck?.metalCheckTime) | date:'yyyy.MM.dd HH:mm:ss'}}<br />
+                                        {{ data.beforeQualityCheck?.metalCheckName}}
+                                    </div>
+                                </td>
+                                <td>
+                                    <div style="text-align: center;">
+                                        {{ data.beforeQualityCheck?.sizeCheck | qimResult }}
+                                    </div>
+                                    <div style="text-align: center;">
+                                        {{ getNewTime(data.beforeQualityCheck?.sizeCheckTime) | date:'yyyy.MM.dd HH:mm:ss'}}<br />
+                                        {{ data.beforeQualityCheck?.sizeCheckName}}
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </nz-table>
+                </div>
+                <div *ngIf="data.afterQualityCheck">
+                    <nz-table #basicTable [nzData]="[{}]" nzBordered [nzShowPagination]="false">
+                        <thead>
+                            <tr>
+                                <th style="text-align: center;">化学检验</th>
+                                <th style="text-align: center;">探伤检验</th>
+                                <th style="text-align: center;">硬度检验</th>
+                                <th style="text-align: center;">金相检验</th>
+                                <th style="text-align: center;">尺寸检验</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div style="text-align: center;">
+                                        {{ data.afterQualityCheck?.chemistryCheck | qimResult }}
+                                    </div>
+                                    <div style="text-align: center;">
+                                        {{ getNewTime(data.afterQualityCheck?.chemistryCheckTime) | date:'yyyy.MM.dd HH:mm:ss'}}<br />
+                                        {{ data.afterQualityCheck?.chemistryCheckName}}
+                                    </div>
+                                </td>
+                                <td>
+                                    <div style="text-align: center;">
+                                        {{ data.afterQualityCheck?.flawCheck | qimResult }}
+                                    </div>
+                                    <div style="text-align: center;">
+                                        {{ getNewTime(data.afterQualityCheck?.flawCheckTime) | date:'yyyy.MM.dd HH:mm:ss'}}<br />
+                                        {{ data.afterQualityCheck?.flawCheckName}}
+                                    </div>
+                                </td>
+                                <td>
+                                    <div style="text-align: center;">
+                                        {{ data.afterQualityCheck?.hardnessCheck | qimResult }}
+                                    </div>
+                                    <div style="text-align: center;">
+                                        {{ getNewTime(data.afterQualityCheck?.hardnessCheckTime) | date:'yyyy.MM.dd HH:mm:ss'}}<br />
+                                        {{ data.afterQualityCheck?.hardnessCheckName}}
+                                    </div>
+                                </td>
+                                <td>
+                                    <div style="text-align: center;">
+                                        {{ data.afterQualityCheck?.metalCheck | qimResult }}
+                                    </div>
+                                    <div style="text-align: center;">
+                                        {{ getNewTime(data.afterQualityCheck?.metalCheckTime) | date:'yyyy.MM.dd HH:mm:ss'}}<br />
+                                        {{ data.afterQualityCheck?.metalCheckName}}
+                                    </div>
+                                </td>
+                                <td>
+                                    <div style="text-align: center;">
+                                        {{ data.afterQualityCheck?.sizeCheck | qimResult }}
+                                    </div>
+                                    <div style="text-align: center;">
+                                        {{ getNewTime(data.afterQualityCheck?.sizeCheckTime) | date:'yyyy-MM-dd HH:mm:ss'}}<br />
+                                        {{ data.afterQualityCheck?.sizeCheckName}}
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </nz-table>
+                </div>
+            </div>
+
+        </nz-card>
+    </div>
+</div>

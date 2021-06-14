@@ -1,0 +1,18 @@
+.device-info{
+  width: 240px;
+  border: 1px solid #E3E3E3;
+  .title{
+    text-align: center;
+    background-color: #F7F8FC;
+    padding:10px;
+  }
+  .img{
+    padding: 10px 50px;
+    outline: none;
+  }
+  .button-and-info{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+}

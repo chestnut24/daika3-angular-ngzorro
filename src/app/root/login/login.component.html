@@ -1,0 +1,67 @@
+<div class="login-container">
+  <div class="left">
+    <div class="title-group-left">
+      <div class="title-top">
+        <img src="../../../assets/images/logo-small.png" height="61" width="61"/>
+        <span>德龙轧辊</span>
+      </div>
+      <div class="title-bottom">扎根中国·服务世界</div>
+    </div>
+  </div>
+  <div class="right">
+    <div class="title-group-right">
+      <img src="../../../assets/images/logo-red.png" height="55" width="55"/>
+      <div class="title-right-content">
+        <div class="title-right-top">德龙轧辊</div>
+        <div class="title-right-bottom">DELONG MILL ROLL</div>
+      </div>
+    </div>
+    <div class="login-content">
+      <div class="login-title">
+        <div class="title-center">德龙轧辊热处理系统</div>
+        <div class="version-content">
+          <span>V1.1</span>
+          <span>Heat Treatment System</span>
+        </div>
+      </div>
+      <div class="error-message">
+        <nz-alert nzBanner nzType="warning" [nzMessage]="errorMessage" nzShowIcon *ngIf="loginFail"></nz-alert>
+      </div>
+      <form [formGroup]="loginForm" class="login-form" (ngSubmit)="submitForm()">
+        <div class="form-item" [class.error]="loginForm.get('username').dirty && loginForm.get('username').errors">
+          <div class="text">
+            <div class="info">
+              <label for="username" class="name">工号</label>
+              <div class="explain" *ngIf="loginForm.get('username').dirty && loginForm.get('username').errors" i18n="请输入正确的工号">请输入正确的工号</div>
+            </div>
+            <input id="username" type="text" placeholder="工号" formControlName="username" autocomplete="username">
+          </div>
+          <div class="icon">
+            <i nz-icon type="user"></i>
+          </div>
+        </div>
+        <div class="form-item" [class.error]="loginForm.get('password').dirty && loginForm.get('password').errors">
+          <div class="text">
+            <div class="info">
+              <label for="password" class="name">密码</label>
+              <div class="explain" *ngIf="loginForm.get('password').dirty && loginForm.get('password').errors" i18n="请输入密码">请输入密码</div>
+            </div>
+            <input id="password" type="password" placeholder="密码" formControlName="password" autocomplete="current-password">
+          </div>
+          <div class="icon">
+            <i nz-icon type="lock"></i>
+          </div>
+        </div>
+        <button (click)="loginButtonClick()" class="login-button">
+          <i nz-icon type="loading" *ngIf="isLoading"></i>
+          登录
+        </button>
+      </form>
+    </div>
+    <div class="copyright">
+      Copyright@2020.All Reserved 精诺数据 / 联系我们
+    </div>
+  </div>
+</div>
+
+

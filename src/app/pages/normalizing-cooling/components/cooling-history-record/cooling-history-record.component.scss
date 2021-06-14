@@ -1,0 +1,98 @@
+.cooling-frame {
+  width: 100%;
+  padding: 16px;
+  background-color: #fff;
+
+  .cooling-search-content {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  .cooling-search{
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    .content {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      margin-right: 30px;
+      .freightInput{
+        width: 200px;
+      }
+      #select{
+        width: 170px;
+      }
+    }
+  }
+}
+.operation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  p {
+    color: #1592E6;
+    margin-bottom: 0;
+    cursor: pointer;
+  }
+
+  span {
+    color: #aaa;
+    padding: 0 5px;
+  }
+}
+.status{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.point1{
+  width: 5px;
+  height: 5px;
+  border-radius: 2.5px;
+  background: #69CF31;
+  margin-right: 5px;
+}
+.point2{
+  width: 5px;
+  height: 5px;
+  border-radius: 2.5px;
+  background: #4065EE;
+  margin-right: 5px;
+}
+
+@media screen and (max-width: 1200px) {
+  .content{
+    margin-bottom: 20px;
+    .freightInput{
+      width: 120px !important;
+    }
+    #select{
+      width: 100px !important;
+    }
+    #datePicker{
+      width: 120px;
+    }
+    #minInput{
+      margin-left: 30px;
+    }
+  }
+  button{
+    margin-bottom: 20px;
+  }
+}
+
+// 表格内换行使用css
+.css-word{
+  word-break: break-word; /* 文本行的任意字内断开 */
+}
+.b{
+  font-weight: bold;
+}
+.table_div_word{
+  text-align: center;
+  margin: 0 auto;
+}

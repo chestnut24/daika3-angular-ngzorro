@@ -1,0 +1,11 @@
+<div class="mainBox" id="widthA">
+    <div class="div" *ngFor="let menu of menu|async;index as cnum">
+        <a (click)="goR(menu)">
+            <img class="divImg" [src]="'../../../../assets/images/welcome'+menu.url+'.png'" />
+            <div class="title">
+                {{menu.text}}
+            </div>
+        </a>
+    </div>
+    <div class="paddingBottom" [ngStyle]="{'width': BottomNum * 250 +'px'}"> 　</div>
+</div>

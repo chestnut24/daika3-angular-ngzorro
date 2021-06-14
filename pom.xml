@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>delong-phase-three</artifactId>
+        <groupId>com.jingnuo.delong.p3</groupId>
+        <version>0.0.1</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>ui</artifactId>
+    <name>德龙三期UI</name>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <main.dir>${basedir}/..</main.dir>
+    </properties>
+
+    <build>
+        <resources>
+            <resource>
+                <directory>${project.build.directory}/generated-resources</directory>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <groupId>com.github.eirslett</groupId>
+                <artifactId>frontend-maven-plugin</artifactId>
+                <version>1.0</version>
+                <configuration>
+                    <installDirectory>target</installDirectory>
+                    <workingDirectory>${basedir}</workingDirectory>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>install node and npm</id>
+                        <goals>
+                            <goal>install-node-and-npm</goal>
+                        </goals>
+                        <configuration>
+                            <nodeVersion>v12.7.0</nodeVersion>
+                            <npmVersion>6.2.0</npmVersion>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>npm install</id>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+                        <configuration>
+                            <arguments>install</arguments>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>npm-build</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.github.eirslett</groupId>
+                        <artifactId>frontend-maven-plugin</artifactId>
+                        <version>1.0</version>
+                        <configuration>
+                            <installDirectory>target</installDirectory>
+                            <workingDirectory>${basedir}</workingDirectory>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>npm build</id>
+                                <goals>
+                                    <goal>npm</goal>
+                                </goals>
+                                <configuration>
+                                    <arguments>run build</arguments>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>npm-start</id>
+            <activation>
+                <property>
+                    <name>npm-start</name>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.github.eirslett</groupId>
+                        <artifactId>frontend-maven-plugin</artifactId>
+                        <version>1.0</version>
+                        <configuration>
+                            <installDirectory>target</installDirectory>
+                            <workingDirectory>${basedir}</workingDirectory>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>npm start</id>
+                                <goals>
+                                    <goal>npm</goal>
+                                </goals>
+
+                                <configuration>
+                                    <arguments>start</arguments>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+</project>

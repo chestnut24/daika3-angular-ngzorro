@@ -1,0 +1,98 @@
+<div class="factoryMain">
+    <div class="banner1">
+        <div class="sendInput">
+            <div class="input-div1">
+                <label>时间：</label>
+                <div class="input-width1">
+                    <nz-range-picker [(ngModel)]="dateRange" (ngModelChange)="onChangeTime($event)"></nz-range-picker>
+                </div>
+            </div>
+            <div class="input-div">
+                <label>货号：</label>
+                <div class="input-width">
+                    <input nz-input placeholder="请输入货号" [(ngModel)]="sendData.freightNumber"
+                        (keyup.enter)="getListPage()" />
+                </div>
+            </div>
+            <div class="input-div">
+                <label>生产号：</label>
+                <div class="input-width">
+                    <input nz-input placeholder="请输入生产号" [(ngModel)]="sendData.productionNo"
+                        (keyup.enter)="getListPage()" />
+                </div>
+            </div>
+        </div>
+        <div class="getList">
+            <button nz-button nzType="primary" (click)="getListPage()">查询</button>
+        </div>
+    </div>
+    <div class="banner2">
+        <nz-table class="container" #fixedTable [nzData]="listOfData" nzBordered
+            [nzScroll]="{ x: '863px', y: getIframeHeight() }" [(nzPageSize)]="pageSize" [(nzPageIndex)]="pageNum"
+            (nzPageIndexChange)="getList()" (nzPageSizeChange)="pageNum = 1;getList()" [nzShowSizeChanger]="true"
+            [nzPageSizeOptions]="[10,20,30,40,50]" [nzFrontPagination]="false" [nzTotal]="tableTotal"
+            [nzShowTotal]="totalTemplate">
+            <thead>
+                <tr>
+                    <th nzWidth="147px">完成时间</th>
+                    <th nzWidth="100px">货号</th>
+                    <th nzWidth="60px">生产号</th>
+                    <th nzWidth="60px">毛坯辊</th>
+                    <th nzWidth="70px">材质</th>
+                    <th nzWidth="81px">材质代码</th>
+                    <th nzWidth="120px">尺寸(mm)</th>
+                    <th nzWidth="80px">净重(t)</th>
+                    <th nzWidth="60px" nzRight="0px">履历</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of fixedTable.data">
+                    <td>
+                        <div class="css-word table_div_word" [ngStyle]="{'width': 147-tablePadding +'px'}">
+                            {{ data.updatedDt | date:'yyyy-MM-dd HH:mm:ss'}}
+                        </div>
+                    </td>
+                    <td class="fontB">
+                        <div class="css-word table_div_word" [ngStyle]="{'width': 100-tablePadding +'px'}">
+                            {{ data.freight.freightNumber }}
+                        </div>
+                    </td>
+                    <td class="fontB">
+                        <div class="css-word table_div_word" [ngStyle]="{'width': 60-tablePadding +'px'}">
+                            {{ data.productNo }}
+                        </div>
+                    </td>
+                    <td>
+                        <div class="css-word table_div_word" [ngStyle]="{'width': 60-tablePadding +'px'}">
+                            {{{'YES':'是','NO':'否'}[data.isBlank]}}
+                        </div>
+                    </td>
+                    <td>
+                        <div class="css-word table_div_word" [ngStyle]="{'width': 70-tablePadding +'px'}">
+                            {{ data.freight.material }}
+                        </div>
+                    </td>
+                    <td>
+                        <div class="css-word table_div_word" [ngStyle]="{'width': 81-tablePadding +'px'}">
+                            {{ data.freight.materialCode }}
+                        </div>
+                    </td>
+                    <td>
+                        <div class="css-word table_div_word" [ngStyle]="{'width': 120-tablePadding +'px'}">
+                            {{ data.freight.size }}
+                        </div>
+                    </td>
+                    <td>
+                        <div class="css-word table_div_word" [ngStyle]="{'width': 70-tablePadding +'px'}">
+                            {{ data.freight.netWeight }}
+                        </div>
+                    </td>
+                    <td nzRight="0px">
+                        <a (click)="goPersonal(data)">查看</a>
+                    </td>
+                </tr>
+            </tbody>
+        </nz-table>
+        <ng-template #totalTemplate let-total>共 {{ total }} 条记录</ng-template>
+    </div>
+</div>

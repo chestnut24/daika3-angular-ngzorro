@@ -1,0 +1,17 @@
+<div>
+    <div nz-row nzType="flex" >
+        <div nz-col *ngFor="let access of accessList" [nzSpan]="8" style="margin-bottom: 16px">
+            <div style="font-weight: bold;padding:5px;">
+                <span>{{access.name}}</span>
+            </div>
+            <ng-container *ngFor="let everyAccess of access.children">
+                <div>
+                    <label nz-checkbox
+                           [nzDisabled]="isDisable"
+                           [ngModel]="isTrue(everyAccess.id)"
+                           (ngModelChange)="checkChange(everyAccess.id)">{{everyAccess.name}}</label>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+</div>

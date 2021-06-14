@@ -1,0 +1,82 @@
+<div class="container">
+    <div nzType="flex" nz-row nzJustify="space-between" class="top-container">
+        <div nz-col class="search-container">
+            <div class="search-left">
+                <span>货号：</span>
+                <input [(ngModel)]="searchText" type="text" nz-input placeholder="请输入货号" (keyup.enter)="searchClick()">
+            </div>
+            <button nz-button nzType="primary" (click)="searchClick()">查询</button>
+        </div>
+        <div nz-col>
+            <button nz-button nzType="primary" (click)="addFreight()"><i nz-icon nzType="plus"></i>增加货号</button>
+        </div>
+    </div>
+    <div class="content">
+        <app-delong-table [titleList]="titleList" [nzScrollX]="'1328px'" [nzScrollY]="getIframeHeight()" (pageChange)="pageChange()">
+            <tr *ngFor="let data of delongTable.tableData">
+                <td>
+                    <div class="css-word table_div_word" [ngStyle]="{'width': 147-tablePadding +'px'}">
+                        {{ data.createdDt | date:'yyyy-MM-dd HH:mm:ss'}}
+                    </div>
+                </td>
+                <td>
+                    <div class="css-word table_div_word" [ngStyle]="{'width': 60-tablePadding +'px'}">
+                        {{ data.createdUser.name }}
+                    </div>
+                </td>
+                <td>
+                    <div class="css-word table_div_word" [ngStyle]="{'width': 100-tablePadding +'px'}">
+                        {{ data.freightNumber}}
+                    </div>
+                </td>
+                <td>
+                    <div class="css-word table_div_word" [ngStyle]="{'width': 70-tablePadding +'px'}">
+                        {{ data.material}}
+                    </div>
+                </td>
+                <td>
+                    <div class="css-word table_div_word" [ngStyle]="{'width': 81-tablePadding +'px'}">
+                        {{ data.materialCode }}
+                    </div>
+                </td>
+                <td>
+                    <div class="css-word table_div_word" [ngStyle]="{'width': 120-tablePadding +'px'}">
+                        {{ data.size }}
+                    </div>
+                </td>
+                <td>
+                    <div class="css-word table_div_word" [ngStyle]="{'width': 70-tablePadding +'px'}">
+                        {{ data.netWeight }}
+                    </div>
+                </td>
+                <td>
+                    <div class="css-word table_div_word" [ngStyle]="{'width': 110-tablePadding +'px'}">
+                        {{ data.bodyHardness }}
+                    </div>
+                </td>
+                <td>
+                    <div class="css-word table_div_word" [ngStyle]="{'width': 110-tablePadding +'px'}">
+                        {{ data.neckHardness }}
+                    </div>
+                </td>
+                <td>
+                    <div class="css-word table_div_word" [ngStyle]="{'width': 70-tablePadding +'px'}">
+                        {{ data.productionUnit }}
+                    </div>
+                </td>
+                <td>
+                    <div class="css-word table_div_word" [ngStyle]="{'width': 75-tablePadding +'px'}">
+                        {{ data.client }}
+                    </div>
+                </td>
+                <td nzWidth="50px" nzRight="0">
+                    <div class="operation">
+                        <p (click)="modifyFreight(data)">修改</p>
+                        <!-- <span>|</span>
+                        <p (click)="deleteFreight(data.id)">删除</p> -->
+                    </div>
+                </td>
+            </tr>
+        </app-delong-table>
+    </div>
+</div>

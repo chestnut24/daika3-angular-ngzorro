@@ -1,0 +1,32 @@
+
+<div [formGroup]="usersTableModal">
+    <nz-form-item [hidden]="onlyOne">
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="name">用户组名</nz-form-label>
+        <nz-form-control [nzSm]="15">
+            <input nz-input formControlName="name" id="name">
+            <nz-form-explain *ngIf="usersTableModal.get('name').dirty && usersTableModal.get('name').errors">不能为空</nz-form-explain>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item [hidden]="onlyOne">
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="group">班组</nz-form-label>
+        <nz-form-control [nzSm]="15">
+            <input nz-input formControlName="group" id="group">
+            <nz-form-explain *ngIf="usersTableModal.get('group').dirty && usersTableModal.get('group').errors">不能为空</nz-form-explain>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="users">包含用户</nz-form-label>
+        <nz-form-control [nzSm]="15">
+            <nz-select formControlName="users" id="users" style="width: 100%" nzMode="multiple" nzPlaceHolder="请选择用户">
+                <nz-option *ngFor="let option of userArr" [nzLabel]="option.name" [nzValue]="option.id"></nz-option>
+            </nz-select>
+            <nz-form-explain *ngIf="usersTableModal.get('users').dirty && usersTableModal.get('users').errors">不能为空</nz-form-explain>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item [hidden]="onlyOne">
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="remark">备注</nz-form-label>
+        <nz-form-control [nzSm]="15">
+            <textarea nz-input formControlName="remark" id="remark"></textarea>
+        </nz-form-control>
+    </nz-form-item>
+</div>

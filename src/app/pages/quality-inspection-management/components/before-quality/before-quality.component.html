@@ -1,0 +1,78 @@
+<app-qim-search-params (pageChange)="pageChange()"></app-qim-search-params>
+<app-delong-table [titleList]="titleList" [nzScrollX]="'1153px'" [nzScrollY]="getIframeHeight()"
+    (pageChange)="pageChange()">
+    <tr *ngFor="let data of delongTable.tableData">
+        <td
+            *ngIf="(data.beforeQualityCheck ? data.beforeQualityCheck?.result : data.afterQualityCheck?.result) != 'NOT_CHECK'">
+            <div class="css-word table_div_word" [ngStyle]="{'width': 147-tablePadding +'px'}">
+                {{(data.beforeQualityCheck ? data.beforeQualityCheck?.updatedDt : data.afterQualityCheck?.updatedDt) | date:'yyyy.MM.dd HH:mm:ss'}}
+            </div>
+        </td>
+        <td
+            *ngIf="(data.beforeQualityCheck ? data.beforeQualityCheck?.result : data.afterQualityCheck?.result) == 'NOT_CHECK'">
+            - </td>
+        <td>
+            <div class="css-word b table_div_word" [ngStyle]="{'width': 100-tablePadding +'px'}">
+                {{data.freight.freightNumber}}
+            </div>
+        </td>
+        <td>
+            <div class="css-word b table_div_word" [ngStyle]="{'width': 60-tablePadding +'px'}">
+                {{data.productNo}}
+            </div>
+        </td>
+        <td>
+            <div class="css-word table_div_word" [ngStyle]="{'width': 81-tablePadding +'px'}">
+                {{data.freight.material}}
+            </div>
+        </td>
+        <td>
+            <div class="css-word table_div_word" [ngStyle]="{'width': 75-tablePadding +'px'}">
+                {{data.freight.materialCode}}
+            </div>
+        </td>
+        <td>
+            <div class="css-word table_div_word" [ngStyle]="{'width': 120-tablePadding +'px'}">
+                {{data.freight.size}}
+            </div>
+        </td>
+        <td>
+            <div class="css-word table_div_word" [ngStyle]="{'width': 60-tablePadding +'px'}">
+                {{data.freight.netWeight}}
+            </div>
+        </td>
+        <!-- <td>{{data.beforeQualityCheck ? data.beforeQualityCheck.checkUser?.name : data.afterQualityCheck.checkUser?.name}}</td> -->
+        <td><a
+                (click)="qualityResult(data, '化学')">{{toFontFormCheck(data.beforeQualityCheck ? data.beforeQualityCheck?.chemistryCheck : data.afterQualityCheck?.chemistryCheck)}}</a>
+        </td>
+        <td><a
+                (click)="qualityResult(data, '金相')">{{toFontFormCheck(data.beforeQualityCheck ? data.beforeQualityCheck?.metalCheck : data.afterQualityCheck?.metalCheck)}}</a>
+        </td>
+        <td><a
+                (click)="qualityResult(data, '探伤')">{{toFontFormCheck(data.beforeQualityCheck ? data.beforeQualityCheck?.flawCheck : data.afterQualityCheck?.flawCheck)}}</a>
+        </td>
+        <td><a
+                (click)="qualityResult(data, '硬度')">{{toFontFormCheck(data.beforeQualityCheck ? data.beforeQualityCheck?.hardnessCheck : data.afterQualityCheck?.hardnessCheck)}}</a>
+        </td>
+        <td><a
+                (click)="qualityResult(data, '尺寸')">{{toFontFormCheck(data.beforeQualityCheck ? data.beforeQualityCheck?.sizeCheck : data.afterQualityCheck?.sizeCheck)}}</a>
+        </td>
+        <td nzWidth="110px" nzRight="80px">
+            <button nz-button [disabled]="true">
+                <!-- <button nz-button (click)="qualityResult(data)"
+                [disabled]="(data.beforeQualityCheck ? data.beforeQualityCheck.result === 'IGNORE' : data.afterQualityCheck.result === 'IGNORE') || data['processStatus'] === 'COMPLETED'"> -->
+                <a
+                    *ngIf="(data.beforeQualityCheck ? data.beforeQualityCheck?.result : data.afterQualityCheck?.result) != 'NOT_CHECK'">{{(data.beforeQualityCheck ? data.beforeQualityCheck?.result : data.afterQualityCheck?.result)| qimResult}}</a>
+                <a
+                    *ngIf="(data.beforeQualityCheck ? data.beforeQualityCheck?.result : data.afterQualityCheck?.result) == 'NOT_CHECK'">未填写</a>
+            </button>
+        </td>
+        <td nzWidth="80px" nzRight="0px">
+            <a style="color: #fff;" [routerLink]="['/rollDetail/rollResume/entry', data.id]">
+                <button nz-button nzType="primary">
+                    查看
+                </button>
+            </a>
+        </td>
+    </tr>
+</app-delong-table>

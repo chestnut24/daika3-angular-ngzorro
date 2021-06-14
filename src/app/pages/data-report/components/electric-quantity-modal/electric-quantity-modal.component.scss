@@ -1,0 +1,14 @@
+.eq-container{
+  display: flex;
+  &>div>div{
+    padding: 8px;
+  }
+  .active{
+    background-color: #E6F7FF !important;
+  }
+  .right-table{
+    td{
+      padding:5px 10px;
+    }
+  }
+}

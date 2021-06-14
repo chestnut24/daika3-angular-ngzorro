@@ -1,0 +1,85 @@
+<div class="self-checking">
+    <app-self-checking [EntryRecord]="EntryRecord" [disabled]="disabled" [hardnessTime]="hardnessTime"
+        [hardnessUser]="hardnessUser" [IfChecking]="IfChecking" [title]="title" [checkUser]="checkUser"
+        [currentTime]="currentTime" [Hardness0721]="Hardness0721">
+    </app-self-checking>
+    <!-- [Hardness0721]="Hardness0721" -->
+</div>
+
+<div class="after-quality">
+    <div class="checking-title">
+        <span>热前质检</span>
+    </div>
+    <app-resume-table [titleList]="beforeQualityList" class="delongTable"
+        *ngIf="resumeTable?.tableData[0]?.beforeQualityCheck">
+        <tr *ngFor="let data of resumeTable?.tableData">
+            <td>{{ data.beforeQualityCheck?.updatedDt | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+            <td>{{ data.beforeQualityCheck?.checkUser?.name }}</td>
+            <td>
+                <div style="text-align: center;">{{ data.beforeQualityCheck?.chemistryCheck | qimResult }}</div>
+                <div style="text-align: center;">{{ data.beforeQualityCheck?.chemistryCheckTime| date:'yyyy.MM.dd HH:mm:ss'}}
+                    {{ data.beforeQualityCheck?.chemistryCheckName}}
+                </div>
+            </td>
+            <td>
+                <div style="text-align: center;">{{ data.beforeQualityCheck?.flawCheck | qimResult }}</div>
+                <div style="text-align: center;">{{ data.beforeQualityCheck?.flawCheckTime| date:'yyyy.MM.dd HH:mm:ss'}}
+                    {{ data.beforeQualityCheck?.flawCheckName}}
+                </div>
+            </td>
+            <td>
+                <div style="text-align: center;">{{ data.beforeQualityCheck?.hardnessCheck | qimResult }}</div>
+                <div style="text-align: center;">{{ data.beforeQualityCheck?.hardnessCheckTime| date:'yyyy.MM.dd HH:mm:ss'}}
+                    {{ data.beforeQualityCheck?.hardnessCheckName}}
+                </div>
+            </td>
+            <td>
+                <div style="text-align: center;">{{ data.beforeQualityCheck?.metalCheck | qimResult }}</div>
+                <div style="text-align: center;">{{ data.beforeQualityCheck?.metalCheckTime| date:'yyyy.MM.dd HH:mm:ss'}}
+                    {{ data.beforeQualityCheck?.metalCheckName}}
+                </div>
+            </td>
+            <td>
+                <div style="text-align: center;">{{ data.beforeQualityCheck?.sizeCheck | qimResult }}</div>
+                <div style="text-align: center;">{{ data.beforeQualityCheck?.sizeCheckTime| date:'yyyy.MM.dd HH:mm:ss'}}
+                    {{ data.beforeQualityCheck?.sizeCheckName}}
+                </div>
+            </td>
+            <td>{{ data.beforeQualityCheck?.result | qimResult }}</td>
+        </tr>
+    </app-resume-table>
+</div>
+
+<div class="unQualifyDone">
+    <div class="checking-title">
+        <span>不合格品处理</span>
+    </div>
+    <app-resume-table [titleList]="unQualifyList" class="delongTable"
+        *ngIf="UnqualifiedProducts[0].checkUser !== null">
+        <tr *ngFor="let data of UnqualifiedProducts">
+            <td>{{ data?.updatedDt | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+            <td>{{ data?.checkUser?.name }}</td>
+            <td>{{ data?.result | qimResult}}</td>
+            <td>{{ data?.remark }}</td>
+        </tr>
+    </app-resume-table>
+</div>
+
+<div class="secondQuality">
+    <div class="checking-title">
+        <span>二次质检</span>
+    </div>
+    <app-resume-table [titleList]="secondQualityList" class="delongTable"
+        *ngIf="SecondCheck[0].checkUser !== null">
+        <tr *ngFor="let data of SecondCheck">
+            <td>{{ data?.updatedDt | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+            <td>{{ data?.checkUser?.name }}</td>
+            <td>{{ data?.chemistryCheck | qimResult }}</td>
+            <td>{{ data?.flawCheck | qimResult }}</td>
+            <td>{{ data?.hardnessCheck | qimResult }}</td>
+            <td>{{ data?.metalCheck | qimResult }}</td>
+            <td>{{ data?.sizeCheck | qimResult }}</td>
+            <td>{{ data?.result | qimResult }}</td>
+        </tr>
+    </app-resume-table>
+</div>

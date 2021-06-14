@@ -1,0 +1,18 @@
+.resume-container{
+  background-color: #fff;
+  width: 100%;
+  tr{
+    td,th{
+      padding:16px;
+      text-align: center;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      min-width:80px;
+      max-width:300px;
+    }
+    &:hover{
+      background-color: #e6f7ff;
+    }
+  }
+}

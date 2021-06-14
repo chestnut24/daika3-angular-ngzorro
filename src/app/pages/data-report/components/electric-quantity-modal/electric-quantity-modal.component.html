@@ -1,0 +1,28 @@
+<div class="eq-container">
+    <div style="width:20%;border-right: 1px solid #e8e8e8;max-height: 500px; overflow-y: auto;">
+        <div *ngFor="let item of leftList" (click)="leftClick(item)" [class.active]="item.isActive">
+            {{item.typeName}}
+        </div>
+    </div>
+    <div style="width:20%;border-right: 1px solid #e8e8e8;max-height: 500px; overflow-y: auto;">
+        <div *ngFor="let mid of midList" [class.active]="mid.isActive" (click)="midClick(mid)">
+            {{mid.name}}
+        </div>
+    </div>
+    <div style="width:60%;max-height: 500px; overflow-y: auto;">
+        <table class="right-table">
+            <tr *ngFor="let right of rightList">
+                <td>{{right.name}}</td>
+                <td>
+                    <input type="number" nz-input [(ngModel)]="right.powerMultiple">
+                </td>
+                <td>
+                    <button nz-button nzType="danger" (click)="delete(right)">
+                        <i nz-icon nzType="delete" nzTheme="outline"></i>
+                    </button>
+                </td>
+            </tr>
+        </table>
+
+    </div>
+</div>

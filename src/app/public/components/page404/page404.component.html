@@ -1,0 +1,10 @@
+<div style="padding:16px;background-color: #fff;">
+  <app-delong-table [titleList]="titleList">
+    <tr *ngFor="let data of delongTable.tableData">
+      <td>{{ data.name}}</td>
+      <td>{{ data.id }}</td>
+      <td>{{ data.phone }}</td>
+    </tr>
+  </app-delong-table>
+</div>
+

@@ -1,0 +1,27 @@
+<div class="mainBox">
+    <div class="leftBox">
+        <div class="list_ul">
+            <div *ngFor="let type of deviceType">
+                　{{type.typeName}}
+                <div *ngIf="type.list&&type.list.length">
+                    <div *ngFor="let ctype of type.list">
+                        <div (click)="clickType(ctype)" [class]="leftChoose === ctype.id?'list_li colorGray':'list_li'">
+                            {{ctype.typeName}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="rightBox">
+        <div>
+            <div *ngFor="let device of deviceList">
+                <div (click)="clickList(device)" [class]="rightChoose === device.id?'list_li colorGray':'list_li'" style="text-align: center;">
+                    {{device.name}}
+                </div>
+            </div>
+            <div *ngIf="!deviceList.length" class="tipBox">
+                暂无数据，请选择设备类型。
+            </div>
+        </div>
+    </div>
+</div>

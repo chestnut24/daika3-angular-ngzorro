@@ -1,0 +1,19 @@
+<div class="title">
+    <span>
+        货号: {{data.freight.freightNumber}}
+    </span>
+    <span>
+        生产号: {{data.productNo}}
+    </span>
+</div>
+<app-self-checking
+        [checkUser]="data.beforeSelfCheck ? data.beforeSelfCheck.exteriorUser?.name : data.afterSelfCheck.exteriorUser?.name"
+        [EntryRecord]="data.beforeSelfCheck ? data.beforeSelfCheck : data.afterSelfCheck"
+        [showTime]="true"
+        [currentTime]="data.beforeSelfCheck ? data.beforeSelfCheck.exteriorCheckTime : data.afterSelfCheck.exteriorCheckTime"
+        [disabled]="disabled"
+        [hardnessUser]="data.beforeSelfCheck ? data.beforeSelfCheck.hardnessUser?.name : data.afterSelfCheck.hardnessUser?.name"
+        [hardnessTime]="data.beforeSelfCheck ? data.beforeSelfCheck.hardnessCheckTime : data.afterSelfCheck.hardnessCheckTime"
+        [IfChecking]="!!data.beforeSelfCheck"
+        [Hardness0721]="data.freight"
+></app-self-checking>

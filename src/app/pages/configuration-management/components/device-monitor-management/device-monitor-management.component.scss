@@ -1,0 +1,214 @@
+.gray {
+  background: #fff;
+  color: #fff;
+}
+.f-l {
+  float: left;
+}
+
+.device {
+  min-width: 950px;
+  .banner_left {
+    width: 270px;
+    height: 100%;
+    margin-right: 16px;
+  }
+  .banner_middle {
+    width: 40px;
+    height: 100%;
+  }
+  .banner_right {
+    width: calc(100% - 290px);
+
+    padding-right: 16px;
+    overflow-x: auto;
+  }
+}
+.black04 {
+  color: rgba(0, 0, 0, 0.4);
+}
+
+.nodeChildren {
+  float: right;
+  i {
+    margin: 0 5px;
+  }
+}
+
+.dis-flex {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  float: right;
+}
+.f-r {
+  float: right;
+}
+
+.custom-node {
+  cursor: pointer;
+  line-height: 24px;
+  margin-left: 4px;
+  display: inline-block;
+  margin: 0 -1000px;
+  padding: 0 1000px;
+}
+
+.file-name,
+.folder-name {
+  margin-left: 4px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.file-name {
+  width: 80px;
+  display: block;
+}
+
+.file-desc,
+.folder-desc {
+  padding: 0 8px;
+  display: inline-block;
+  color: #000;
+  position: relative;
+  right: 5px;
+  margin-left: 30px;
+  margin-top: 4px;
+}
+
+.f-r {
+  float: right;
+}
+.banner1 {
+  overflow: hidden;
+}
+.input-width {
+  width: 178px;
+  display: inline-block;
+}
+.m-r-10 {
+  margin-right: 10px;
+}
+.m-r-20 {
+  margin-right: 16px;
+}
+.m-b-20 {
+  margin-bottom: 12px;
+}
+.table_span {
+  display: inline-block;
+  padding: 2px 5px;
+  background: #999;
+  color: #fff;
+  border-radius: 5px;
+  margin: 2px 5px;
+  font-size: 12px;
+}
+
+.bgFFF {
+  background: #fff;
+  padding: 16px;
+  // min-height: 700px;
+}
+.m-h-7{
+  min-height: 700px;
+}
+.dis-block {
+  display: block;
+}
+.dis-flexf {
+  display: flex;
+}
+.input-width-415 {
+  width: 415px;
+}
+
+.loadingDiv {
+  width: 100%;
+  min-height: 80px;
+  text-align: center;
+}
+
+// 11-22新版css
+.banner_left_11 {
+  width: 270px;
+  height: 100%;
+  margin-right: 14px;
+  background: #fff;
+  min-height: 700px;
+  padding: 14px;
+}
+:host ::ng-deep .ant-tree {
+  overflow: hidden;
+}
+
+:host ::ng-deep .ant-tree li {
+  line-height: 40px;
+  position: relative;
+}
+:host ::ng-deep .ant-tree li span.ant-tree-switcher,
+.ant-tree li span.ant-tree-iconEle {
+  line-height: 40px;
+  float: left;
+}
+.tree {
+  display: block;
+  width: calc(100% - 30px);
+  padding-left: 5px;
+  line-height: 40px;
+
+  cursor: pointer;
+  margin: 0 -1000px;
+  padding: 0 1000px;
+  width: 220px;
+  height: 40px;
+}
+.hang {
+  height: 40px;
+  width: 220px;
+  display: flex;
+  position: absolute;
+  left: 25px;
+  justify-content: space-between;
+  .title {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  .w-80 {
+    width: 100px;
+  }
+  .w-120 {
+    width: 120px;
+  }
+}
+
+.active {
+  background: #eff7ff;
+}
+.iconBtnW-80 {
+  display: block;
+  margin-right: 32px;
+  i {
+    padding: 0 5px;
+  }
+}
+.iconBtnW-120 {
+  display: block;
+  margin-right: 50px;
+  i {
+    padding: 0 5px;
+  }
+}
+// 表格内换行使用css
+.css-word{
+  word-break: break-word; /* 文本行的任意字内断开 */
+}
+.b{
+  font-weight: bold;
+}
+.table_div_word{
+  text-align: center;
+  margin: 0 auto;
+}

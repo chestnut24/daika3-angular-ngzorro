@@ -1,0 +1,94 @@
+<div class="container">
+    <div nzType="flex" nz-row nzJustify="space-between" class="top-container">
+        <div nz-col class="search-container">
+            <div class="search-item">
+                <span>货号：</span>
+                <input [(ngModel)]="searchFreight" type="text" nz-input placeholder="请输入货号" (keyup.enter)="searchClick()">
+            </div>
+            <div class="search-item">
+                <span>生产号：</span>
+                <input [(ngModel)]="searchNo" type="text" nz-input placeholder="请输入生产号" (keyup.enter)="searchClick()">
+            </div>
+<!--            <div class="search-item">-->
+<!--                <span>轧辊状态：</span>-->
+<!--                <input [(ngModel)]="searchStatus" type="text" nz-input placeholder="轧辊状态" disabled>-->
+<!--            </div>-->
+            <button  nz-button nzType="primary" (click)="searchClick()">查询</button>
+        </div>
+    </div>
+    <div class="table-content">
+        <app-delong-table [titleList]="titleList" *ngIf="delongTable.tableData" [nzScrollX]="'1860px'" [nzScrollY]="getIframeHeight()" (pageChange)="pageChange()">
+            <ng-container *ngFor="let data of delongTable.tableData">
+                <tr>
+                    <td>{{ data.freightNumber }} </td>
+                    <td>{{ data.productNo }} </td>
+                    <td>{{ data.isBlank }} </td>
+                    <td>{{ data.size }} </td>
+                    <td>{{ data.netWeight }} </td>
+                    <td>{{ data.processStatus | processStatus }} </td>
+                    <td>{{ data.status | rollStatus }} </td>
+                    <td>
+                        <span *ngIf="data.beforeQualityCheck == 0" class="router-link-process">热前&nbsp; &nbsp; </span>
+                        <span
+                                *ngIf="data.beforeQualityCheck == 1"
+                                class="router-link"
+                                [routerLink]="['/rollDetail/rollResume/beforeQuality', data.rollId]">热前&nbsp; &nbsp; </span>
+                        <span *ngIf="data.afterQualityCheck == 0" class="router-link-process">热后</span>
+                        <span
+                                *ngIf="data.afterQualityCheck == 1"
+                                class="router-link"
+                                [routerLink]="['/rollDetail/rollResume/afterQuality', data.rollId]">热后</span>
+                    </td>
+                    <td>
+                        <span *ngIf="data.FurnacePlan?.length == 0" class="router-link-process">————</span>
+                        <div
+                                *ngFor="let plans of data.FurnacePlan"
+                                class="router-link"
+                                [routerLink]="['/rollDetail/rollResume/chargingPlan', data.rollId]">{{ plans[0].slice(5) }}</div>
+                    </td>
+                    <td>
+                        <span *ngIf="data.rollWorkRecordInto?.length == 0" class="router-link-process">————</span>
+                        <div
+                                *ngFor="let put of data.rollWorkRecordInto"
+                                class="router-link"
+                                [routerLink]="['/rollDetail/rollResume/enterFurnace', data.rollId]">{{ put[0].slice(5) }}</div>
+                    </td>
+                    <td>
+                        <span *ngIf="data.rollHt != true" class="router-link-process">————</span>
+                        <span
+                                *ngIf="data.rollHt == true"
+                                class="router-link"
+                                [routerLink]="['/rollDetail/rollResume/heatTreatment', data.rollId]">查看</span>
+                    </td>
+                    <td>
+                        <span *ngIf="data.rollWorkRecordReleased?.length == 0" class="router-link-process">————</span>
+                        <div
+                                *ngFor="let take of data.rollWorkRecordReleased"
+                                class="router-link"
+                                [routerLink]="['/rollDetail/rollResume/takeFurnace', data.rollId]">{{ take[0].slice(5) }}</div>
+                    </td>
+                    <td>
+                        <span *ngIf="data.rollCooling != true" class="router-link-process">————</span>
+                        <span
+                                *ngIf="data.rollCooling == true"
+                                class="router-link"
+                                [routerLink]="['/rollDetail/rollResume/normalizingCooling', data.rollId]">查看</span>
+                    </td>
+                    <td>
+                        <span *ngIf="data.rollConversion?.length == 0" class="router-link-process">————</span>
+                        <div
+                                *ngFor="let conversion of data.rollConversion"
+                                class="router-link"
+                                [routerLink]="['/rollDetail/rollResume/record', data.rollId]"
+                        >
+                            {{ conversion[0]| date:'MM-dd HH:mm:ss' }}
+                        </div>
+                    </td>
+                    <td nzRight="0px">
+                        <div class="router-link" [routerLink]="['/rollDetail/rollResume/entry', data.rollId]">查看</div>
+                    </td>
+                </tr>
+            </ng-container>
+        </app-delong-table>
+    </div>
+</div>

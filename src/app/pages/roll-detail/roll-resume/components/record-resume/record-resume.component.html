@@ -1,0 +1,7 @@
+<app-resume-table [titleList]="titleList" class="delongTable">
+    <tr *ngFor="let data of resumeTable?.tableData">
+        <td>{{ data?.updatedDt | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+        <td>{{ data?.updatedUser?.name }}</td>
+    </tr>
+</app-resume-table>
+

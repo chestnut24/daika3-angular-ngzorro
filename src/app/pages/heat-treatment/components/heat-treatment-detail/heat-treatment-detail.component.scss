@@ -1,0 +1,149 @@
+.ht-container{
+  nz-card{
+    margin-bottom: 20px;
+  }
+  .top{
+    display: flex;
+    .left{
+      margin-right: 20px;
+      width: calc(100% - 350px);
+      .top-title{
+        display: flex;
+        justify-content: space-between;
+        height: 48px;
+        line-height: 48px;
+        border: 1px solid #e8e8e8;
+        &>div{
+          span{
+            margin-left: 20px;
+          }
+          button{
+            margin-right: 20px;
+          }
+        }
+        .standard-process-curve{
+          color:#1890FF;
+          &:hover{
+            cursor: pointer;
+          }
+        }
+      }
+      .temperature-list{
+        border: 1px solid #E3E3E3;
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+        .title{
+          width:30px;
+          background-color: #F0F2F5;
+          writing-mode:vertical-lr;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        .position{
+          width: calc(100% - 50px);
+          margin-right: 10px;
+          &>div:nth-child(1){
+            text-align: center;
+          }
+          &>div:nth-child(2){
+            display: flex;
+            &>div:nth-child(1),&>div:nth-child(3){
+              width: 20px;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+            }
+            &>div:nth-child(2){
+              width:calc(100% - 40px);
+            }
+          }
+          &>div:nth-child(3){
+            text-align: center;
+          }
+          .device-list{
+            display: flex;
+            overflow-x: auto;
+          }
+        }
+      }
+      .canvas-container{
+        padding:16px;
+        #canvasContainer{
+          width: 100%;
+          height: 100%;
+        }
+      }
+    }
+    .right{
+      $padding_margin: 12px;
+      background-color: #FAFAFA;
+      width: 350px;
+      padding:$padding_margin;
+      .device{
+        margin-bottom:$padding_margin;
+        .device-title{
+          height: 40px;
+          line-height: 40px;
+          text-align: center;
+          background-color: #F0F2F5;
+        }
+        .device-img{
+          background-color: #fff;
+          padding:20px;
+          border-left: 1px solid #e8e8e8;
+          border-bottom: 1px solid #e8e8e8;
+          border-right: 1px solid #e8e8e8;
+          text-align: center;
+        }
+      }
+      .otherInfo{
+        .furnace-roll{
+          display: flex;
+          border: 1px solid #e8e8e8;
+          background-color: #fff;
+          margin-bottom: $padding_margin;
+          &>div{
+            width: 50%;
+            padding:10px;
+            &:first-child{
+              border-right: 1px solid #e8e8e8;
+            }
+          }
+        }
+        .alarm-count{
+          display: flex;
+          justify-content: space-between;
+          background-color: #fff;
+          border: 1px solid #e8e8e8;
+          padding: $padding_margin;
+          margin-bottom: $padding_margin;
+          .sign-and-count{
+            display: flex;
+          }
+          .watch-detail{
+            line-height: 50px;
+            color: #218DFF;
+            >span{
+              &:hover{
+                cursor: pointer;
+              }
+            }
+          }
+        }
+        .alarm-time{
+          display: flex;
+          justify-content: space-between;
+          background-color: #fff;
+          padding: $padding_margin;
+          margin-bottom: $padding_margin;
+        }
+        .stop-button{
+          display: flex;
+          justify-content: space-between;
+        }
+      }
+    }
+  }
+}

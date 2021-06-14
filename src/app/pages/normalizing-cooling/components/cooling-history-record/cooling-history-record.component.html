@@ -1,0 +1,97 @@
+<div class="cooling-frame">
+    <div class="cooling-frame-inside">
+        <div class="cooling-search-content">
+            <div class="cooling-search">
+                <div class="content">
+                    <span class="begin-cooling-time">开始冷却时间：</span>
+                    <nz-date-picker [(ngModel)]="SearchParams.date" id="datePicker" (ngModelChange)="search()"></nz-date-picker>
+                </div>
+                <div class="content">
+                    <span>货号：</span>
+                    <input nz-input placeholder="请输入货号" (keyup.enter)="search()" [(ngModel)]="SearchParams.freightNo" class="freightInput"/>
+                </div>
+                <div class="content">
+                    <span class="product-number">生产号：</span>
+                    <input nz-input placeholder="请输入生产号" (keyup.enter)="search()" [(ngModel)]="SearchParams.productNo" class="freightInput"/>
+                </div>
+                <div class="content">
+                    <span>冷却状态：</span>
+                    <nz-select nzPlaceHolder="全部" id="select" [(ngModel)]="SearchParams.coolingStatus" (ngModelChange)="search()">
+                        <nz-option  *ngFor="let list of coolingStatus" [nzLabel]="list.status" [nzValue]="list.status" ></nz-option>
+                    </nz-select>
+                </div>
+                <div class="content">
+                    <span  class="stop-cooling-time">结束温度：</span>
+                    <input nz-input placeholder="最小" (keyup.enter)="search()" style="width: 100px" [(ngModel)]="SearchParams.startTemp" id="minInput"/>
+                    <span style="margin: 0 5px">~</span>
+                    <input nz-input placeholder="最大" (keyup.enter)="search()" style="width: 100px" [(ngModel)]="SearchParams.endTemp" id="maxInput"/>
+                </div>
+                <button nz-button nzType="primary" style="margin-left: 10px;" (click)="search()">查询</button>
+            </div>
+        </div>
+        <app-delong-table [titleList]="titleList" [nzScrollX]="'1124px'" [nzScrollY]="getIframeHeight()" (pageChange)="pageChange()">
+            <tr *ngFor="let data of delongTable.tableData">
+                <td>
+                    <div class="css-word table_div_word" [ngStyle]="{'width': 147-tablePadding +'px'}">
+                        {{ data.startTime | date:'yyyy-MM-dd HH:mm:ss'}}
+                    </div>
+                </td>
+                <td>
+                    <div class="css-word table_div_word" [ngStyle]="{'width': 147-tablePadding +'px'}">
+                        {{ data.endTime | date:'yyyy-MM-dd HH:mm:ss'}}
+                    </div>
+                </td>
+                <td>
+                    <div class="css-word b table_div_word" [ngStyle]="{'width': 100-tablePadding +'px'}">
+                        {{ data.roll.freight.freightNumber }}
+                    </div>
+                </td>
+                <td>
+                    <div class="css-word b table_div_word" [ngStyle]="{'width': 60-tablePadding +'px'}">
+                        {{ data.roll.productNo }}
+                    </div>
+                </td>
+                <td>
+                    <div class="css-word table_div_word" [ngStyle]="{'width': 120-tablePadding +'px'}">
+                        {{ data.roll.freight.size }}
+                    </div>
+                </td>
+                <td>
+                    <div class="css-word table_div_word" [ngStyle]="{'width': 80-tablePadding +'px'}">
+                        {{ data.roll.freight.netWeight }}
+                    </div>
+                </td>
+                <td>
+                    <div class="css-word table_div_word" [ngStyle]="{'width': 60-tablePadding +'px'}">
+                        {{ data.operator.name }}
+                    </div>
+                </td>
+                <td>
+                    <div class="css-word table_div_word" [ngStyle]="{'width': 115-tablePadding +'px'}">
+                        {{ data.targetTemp }}
+                    </div>
+                </td>
+                <td>
+                    <div class="css-word table_div_word" [ngStyle]="{'width': 115-tablePadding +'px'}">
+                        {{ data.actualEndTemp }}
+                    </div>
+                </td>
+                <td>
+                    <div class="status" [ngSwitch]="data.status">
+                        <div class="point1"  *ngSwitchCase= "'WIN'"></div>
+                        <div class="point2"  *ngSwitchCase= "'COERCE_WIN'"></div>
+                        <div>
+                            {{checkStatus(data.status)}}
+                        </div>
+                    </div>
+                </td>
+                <td nzWidth="60px"  nzRight="0px">
+                    <div class="operation">
+                        <p  (click)="startCooling(data)">查看</p>
+                    </div>
+                </td>
+            </tr>
+        </app-delong-table>
+    </div>
+</div>
+

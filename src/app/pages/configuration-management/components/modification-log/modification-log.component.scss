@@ -1,0 +1,44 @@
+.tableContent {
+  padding: 16px;
+  background-color: #fff;
+}
+.search-content{
+  width: 100%;
+  margin-bottom: 12px;
+  display: flex;
+  position: relative;
+  justify-content: flex-start;
+  .search-content-left{
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    width: 85%;
+    span{
+      margin-right: 30px;
+    }
+  }
+
+  #search{
+    margin-left: 25px;
+  }
+}
+@media screen and (max-width: 1200px){
+  .rangePicker{
+    width: 200px;
+  }
+  span{
+    padding:10px;
+  }
+
+}
+// 表格内换行使用css
+.css-word{
+  word-break: break-word; /* 文本行的任意字内断开 */
+}
+.b{
+  font-weight: bold;
+}
+.table_div_word{
+  text-align: center;
+  margin: 0 auto;
+}

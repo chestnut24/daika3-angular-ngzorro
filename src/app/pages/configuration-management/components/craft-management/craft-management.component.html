@@ -1,0 +1,84 @@
+<div class="cm-container">
+    <div class="top-search">
+        <div class="disF">
+            <div>
+                工艺： <input nz-input placeholder="请搜索工艺名称或编号" [(ngModel)]="searchText"
+                    (ngModelChange)="searchTextChange()" />
+            </div>
+            <div>
+                状态检索：
+                <nz-select [(ngModel)]="searchSelect" placeholder="全部" style="width: 150px" id="select"
+                    (ngModelChange)="searchTextChange()">
+                    <nz-option *ngFor="let list of statsLIst" [nzLabel]="list.val" [nzValue]="list.data"></nz-option>
+                </nz-select>
+                <button class="m-l-10" nz-button nzType="primary"
+                    (click)="delongTable.search();pageChange()">查询</button>
+            </div>
+        </div>
+        <div>
+            <button nz-button nzType="primary" [routerLink]="['/configuration/addCraft']">
+                <i nz-icon nzType="plus" nzTheme="outline"></i> 添加工艺
+            </button>
+        </div>
+    </div>
+    <app-delong-table [titleList]="titleList" [nzScrollX]="'1260px'" [nzScrollY]="getIframeHeight()"
+        (pageChange)="pageChange()">
+        <tr *ngFor="let data of delongTable.tableData">
+            <td>
+                <div class="css-word table_div_word" [ngStyle]="{'width': 147-tablePadding +'px'}">
+                    {{data['createdDt'] | date:'yyyy.MM.dd HH:mm:ss'}}
+                </div>
+            </td>
+            <td>
+                <div class="css-word table_div_word" [ngStyle]="{'width': 60-tablePadding +'px'}">
+                    {{data.createdUser.name}}
+                </div>
+            </td>
+            <td>
+                <div class="css-word table_div_word" [ngStyle]="{'width': 150-tablePadding +'px'}">{{data.name}}</div>
+            </td>
+            <td>
+                <div class="css-word table_div_word" [ngStyle]="{'width': 75-tablePadding +'px'}">
+                    {{data.craftNo}}
+                </div>
+            </td>
+            <td>
+                <div class="css-word table_div_word" [ngStyle]="{'width': 217-tablePadding +'px'}">
+                    <ng-container *ngIf="data.materialRange">
+                        <nz-tag *ngFor="let tag of data.materialRange.split(',')" [nzColor]="'#253559'">
+                            {{tag}}
+                        </nz-tag>
+                    </ng-container>
+                </div>
+            </td>
+            <td>
+                <div class="css-word table_div_word" [ngStyle]="{'width': 90-tablePadding +'px'}">
+                    {{data.specificationRange}}
+                </div>
+            </td>
+            <td>
+                <div class="css-word table_div_word" [ngStyle]="{'width': 100-tablePadding +'px'}">
+                    {{data.hardnessRange ? data.hardnessRange.split(',').join(' ~ ') + ' HDS' : data.hardnessRange}}
+                </div>
+            </td>
+            <td>
+                <div class="css-word table_div_word" [ngStyle]="{'width': 147-tablePadding +'px'}">
+                    {{data['approvalTime'] | date:'yyyy.MM.dd HH:mm:ss'}}
+                </div>
+            </td>
+            <td>
+                <div class="css-word table_div_word" [ngStyle]="{'width': 60-tablePadding +'px'}">
+                    {{data.approvalName}}
+                </div>
+            </td>
+            <td nzRight='120px' [style.color]="data.approvalStatus == 'APPROVAL' ? 'green' : 'red'">
+                {{data.approvalStatus | approvalStatus}}</td>
+            <td nzWidth="120px" nzRight="0px">
+                <a [routerLink]="['/configuration/addCraft', data.id]">查看/编辑</a>
+                <span *ngIf="data.approvalStatus === 'NOT_APPROVAL' || data.approvalStatus === 'APPROVAL'" style="color: #e8e8e8"> | </span>
+                <a *ngIf="data.approvalStatus === 'NOT_APPROVAL'" (click)="deleteCraft(data.id)">删除</a>
+                <a *ngIf="data.approvalStatus === 'APPROVAL'" (click)="deleteCraftF(data.id)">废止</a>
+            </td>
+        </tr>
+    </app-delong-table>
+</div>

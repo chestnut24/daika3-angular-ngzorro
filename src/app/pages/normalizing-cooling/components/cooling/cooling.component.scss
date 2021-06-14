@@ -1,0 +1,102 @@
+.cooling-frame{
+  width: 100%;
+  padding:16px;
+  background-color: #fff;
+  .cooling-search-content{
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  .cooling-search-up{
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+    .content{
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      margin-right: 30px;
+      #datePicker{
+        width: 200px;
+      }
+      input{
+        width: 200px;
+      }
+    }
+    #select{
+      width: 150px;
+    }
+    #search{
+      margin-right: 30px;
+    }
+  }
+}
+.operation{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  p{
+    color: #1592E6;
+    margin-bottom: 0;
+    cursor: pointer;
+  }
+  span{
+    color: #aaa;
+    padding: 0 5px;
+  }
+}
+.status{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.point1{
+  width: 5px;
+  height: 5px;
+  border-radius: 2.5px;
+  background: red;
+  margin-right: 5px;
+}
+.point2{
+  width: 5px;
+  height: 5px;
+  border-radius: 2.5px;
+  background: #F8B415;
+  margin-right: 5px;
+}
+.point3{
+  width: 5px;
+  height: 5px;
+  border-radius: 2.5px;
+  background: #F8B415;
+  margin-right: 5px;
+}
+@media screen and (max-width: 1200px) {
+  .content{
+    margin-bottom: 20px;
+  }
+  button{
+    margin-bottom: 20px;
+    margin-left: 30px;
+  }
+  #select{
+    width: 174px;
+    margin-left: 25px;
+  }
+}
+
+// 表格内换行使用css
+.css-word{
+  word-break: break-word; /* 文本行的任意字内断开 */
+}
+.b{
+  font-weight: bold;
+}
+.table_div_word{
+  text-align: center;
+  margin: 0 auto;
+}
+

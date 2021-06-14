@@ -1,0 +1,63 @@
+.self-checking{
+  background: white;
+}
+td{
+  text-align:center;
+}
+.after-quality{
+  background: white;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #E2E2E2;
+  border-radius: 10px;
+  margin-top: 25px;
+  .checking-title{
+    width: 100%;
+    height: 40px;
+    background: #FAFAFA;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    span{
+      margin-left: 10px;
+    }
+  }
+}
+.unQualifyDone{
+  background: white;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #E2E2E2;
+  border-radius: 10px;
+  margin-top: 25px;
+  .checking-title{
+    width: 100%;
+    height: 40px;
+    background: #FAFAFA;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    span{
+      margin-left: 10px;
+    }
+  }
+}
+.secondQuality{
+  background: white;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #E2E2E2;
+  border-radius: 10px;
+  margin-top: 25px;
+  .checking-title{
+    width: 100%;
+    height: 40px;
+    background: #FAFAFA;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    span{
+      margin-left: 10px;
+    }
+  }
+}

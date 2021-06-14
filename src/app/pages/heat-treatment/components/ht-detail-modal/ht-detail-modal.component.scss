@@ -1,0 +1,22 @@
+.ht-container{
+  .title{
+    display: flex;
+    justify-content: space-between;
+    background-color: #FAFAFA;
+    border: 1px solid #e8e8e8;
+    padding: 16px;
+  }
+  .ht-detail{
+    margin-top:10px;
+    border: 1px solid #e8e8e8;
+    &>div{
+      text-align: center;
+      border-top: 1px solid #E8E8E8;
+      padding:16px;
+    }
+    &>div:first-child{
+      background-color: #FAFAFA;
+      border: 0;
+    }
+  }
+}

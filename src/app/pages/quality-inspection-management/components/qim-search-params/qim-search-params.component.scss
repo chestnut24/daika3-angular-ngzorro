@@ -1,0 +1,13 @@
+.search-container{
+  display: flex;
+  justify-content: space-between;
+  &>div>span{
+    margin-bottom: 20px;
+    margin-right:30px;
+  }
+  .search-condition{
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+}

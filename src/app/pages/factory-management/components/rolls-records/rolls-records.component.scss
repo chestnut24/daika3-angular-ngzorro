@@ -1,0 +1,84 @@
+.factoryMain {
+  background: #fff;
+  padding: 14px;
+  width: 100%;
+}
+
+.banner1 {
+  display: flex;
+  justify-content: space-between;
+  .getList {
+    width: 60px;
+    margin-top: 5px;
+  }
+  .sendInput {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+  }
+}
+.input-div {
+  width: 231px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 5px 10px;
+}
+.input-div1 {
+  width: 360px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 5px 10px;
+}
+.input-width {
+  width: 174px;
+}
+.input-width1 {
+  width: 311px;
+}
+.banner2 {
+  margin-top: 10px;
+  width: 100%;
+}
+.fontB{
+  font-weight: bold;
+}
+
+.container{
+  background-color: #fff;
+  width: 100%;
+  tr{
+    td,th{
+      padding:7.5px;
+      text-align: center;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      min-width:80px;
+      max-width:300px;
+    }
+    &:hover{
+      background-color: #e6f7ff;
+    }
+  }
+  tr:nth-child(even){
+    background-color: #f9f9f9;
+  }
+
+}
+
+tr:nth-child(even) td.ant-table-td-right-sticky,tr:nth-child(even) td.ant-table-td-left-sticky{
+  background: #f9f9f9;
+}
+// 表格内换行使用css
+.css-word{
+  word-break: break-word; /* 文本行的任意字内断开 */
+}
+.b{
+  font-weight: bold;
+}
+.table_div_word{
+  text-align: center;
+  margin: 0 auto;
+}

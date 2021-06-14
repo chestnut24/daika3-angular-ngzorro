@@ -1,0 +1,459 @@
+<nz-tabset [nzType]="'card'" [nzSelectedIndex]="index" [nzTabBarExtraContent]="extraTemplate">
+    <nz-tab *ngFor="let tab of tabsList;index as tabIndex" [nzTitle]="titleTemplate">
+        <ng-template #titleTemplate>
+            <div>{{ tab.titleName }}<i
+                    *ngIf="planOtherInfo.status != 'EXECUTING' && planOtherInfo.status != 'TO_BE_EXECUTED'" nz-icon
+                    nzType="close" class="ant-tabs-close-x" (click)="closeTab(tab)"></i>
+            </div>
+        </ng-template>
+        <!-- 新增页面 -->
+        <div *ngIf="tab.isAdd" class="mainBox">
+            <div class="banner1">
+                <!-- <div class="f-r">
+                    <button nz-button nzType="primary" (click)="saveSubmit(tab,tab.dataForm.valid)"
+                        title="仅保存当前环节">保存</button>
+                </div> -->
+                <div class="f-r">
+                    <button nz-button nzType="primary" (click)="lookPaidate()">查看排期</button>
+                </div>
+            </div>
+            <div *ngFor="let form of tab.dataForm.controls;index as formNum">
+                <form nz-form [formGroup]="form" class="ant-advanced-search-form">
+                    <div class="banner2">
+                        <nz-card nzType="inner" nzTitle="环节基本信息">
+                            <div nz-row [nzGutter]="24">
+                                <div nz-col [nzSpan]="7">
+                                    <nz-form-item nzFlex>
+                                        <nz-form-label [nzSpan]="10" nzRequired>生产日期</nz-form-label>
+                                        <nz-form-control [nzSpan]="14">
+                                            <nz-date-picker placeholder="请选择生产日期" formControlName="startTime"
+                                                name="startTime" [nzDisabled]="!Pshow">
+                                            </nz-date-picker>
+                                        </nz-form-control>
+                                    </nz-form-item>
+                                </div>
+                                <div nz-col [nzSpan]="6">
+                                    <nz-form-item nzFlex>
+                                        <nz-form-label [nzSpan]="8" nzRequired>使用设备</nz-form-label>
+                                        <nz-form-control [nzSpan]="16">
+                                            <div *ngIf="Pshow">
+                                                <div nz-popover [nzPopoverContent]="contentTemplate"
+                                                    nzPopoverTrigger="click"
+                                                    [(nzVisible)]="tab.deviceDialog[formNum].show"
+                                                    nzPopoverPlacement="bottomRight" class="deviceBtn">
+                                                    <div
+                                                        [class]="form.value.deviceName?'deviceBtnFont':'fontGary deviceBtnFont'">
+                                                        {{form.value.deviceName ||'请选择设备'}}</div>
+                                                    <div class="chooseBtn">
+                                                        <i nz-icon nzType="down" nzTheme="outline"></i>
+                                                    </div>
+                                                </div>
+                                                <ng-template #contentTemplate>
+                                                    <div style="width: 400px;" *ngIf="tab.deviceDialog[formNum].show">
+                                                        <app-add-device-choose #deviceDialog [tadIndex]="tabIndex"
+                                                            [formIndex]="formNum" (notify)="deviceDialogClose($event)">
+                                                        </app-add-device-choose>
+                                                    </div>
+                                                </ng-template>
+                                            </div>
+                                            <div *ngIf="!Pshow">
+                                                <nz-form-control [nzSpan]="16">
+                                                    <input nz-input [placeholder]="form.value.deviceName || '未选择设备'"
+                                                        disabled />
+                                                </nz-form-control>
+                                            </div>
+                                        </nz-form-control>
+                                    </nz-form-item>
+                                </div>
+                                <div nz-col [nzSpan]="6">
+                                    <nz-form-item nzFlex>
+                                        <nz-form-label [nzSpan]="8">选择工艺</nz-form-label>
+                                        <nz-form-control [nzSpan]="16">
+                                            <div *ngIf="!Tshow">
+                                                <nz-select [nzPlaceHolder]="form.value.craftName || '请选择工艺'">
+                                                    <nz-option nzValue="jack" nzLabel="请选择工艺"></nz-option>
+                                                </nz-select>
+                                            </div>
+                                            <div *ngIf="Tshow">
+                                                <div class="deviceBtn" (click)="openGongYi(form)">
+                                                    <div [class]="form.value.craftName?'':'fontGary'">
+                                                        {{form.value.craftName||'请选择工艺'}}</div>
+                                                    <div class="chooseBtn">
+                                                        <i nz-icon nzType="down" nzTheme="outline"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </nz-form-control>
+                                    </nz-form-item>
+                                </div>
+                                <div nz-col [nzSpan]="5">
+                                    <nz-form-item nzFlex>
+                                        <nz-form-label [nzSpan]="8">调度员</nz-form-label>
+                                        <nz-form-control [nzSpan]="16">
+                                            <input nz-input [placeholder]="planOtherInfo.planner.name" disabled />
+                                        </nz-form-control>
+                                    </nz-form-item>
+                                </div>
+                            </div>
+                            <div nz-row [nzGutter]="24">
+                                <div nz-col [nzSpan]="7">
+                                    <nz-form-item nzFlex>
+                                        <nz-form-label [nzSpan]="10" nzRequired>预计结束时间</nz-form-label>
+                                        <nz-form-control [nzSpan]="14">
+                                            <nz-date-picker placeholder="请选择时间" formControlName="endTime" name="endTime"
+                                                [nzDisabled]="!Pshow">
+                                            </nz-date-picker>
+                                        </nz-form-control>
+                                    </nz-form-item>
+                                </div>
+                                <div nz-col [nzSpan]="6">
+                                    <nz-form-item nzFlex>
+                                        <nz-form-label [nzSpan]="8" nzRequired>作业区域</nz-form-label>
+                                        <nz-form-control [nzSpan]="16">
+                                            <nz-select nzDisabled formControlName="areaId" name="areaId" nzAllowClear
+                                                nzPlaceHolder="请选择作业区域">
+                                                <nz-option *ngFor="let item of areaList" [nzValue]="item.id"
+                                                    [nzLabel]="item.areaName"></nz-option>
+                                            </nz-select>
+                                        </nz-form-control>
+                                    </nz-form-item>
+                                </div>
+                                <div nz-col [nzSpan]="6">
+                                    <nz-form-item nzFlex>
+                                        <nz-form-label [nzSpan]="8">工艺编号</nz-form-label>
+                                        <nz-form-control [nzSpan]="16">
+                                            <input nz-input [placeholder]="form.value.craftNo || '请选择工艺'" disabled />
+                                        </nz-form-control>
+                                    </nz-form-item>
+                                </div>
+                                <div nz-col [nzSpan]="5">
+                                    <nz-form-item nzFlex>
+                                        <nz-form-label [nzSpan]="8">技术员</nz-form-label>
+                                        <nz-form-control [nzSpan]="16">
+                                            <input nz-input
+                                                [placeholder]="planOtherInfo.technician?planOtherInfo.technician.name:'技术员姓名'"
+                                                disabled />
+                                        </nz-form-control>
+                                    </nz-form-item>
+                                </div>
+                            </div>
+                            <div nz-row [nzGutter]="24">
+                                <div nz-col [nzSpan]="18">
+                                    <nz-form-item nzFlex>
+                                        <nz-form-label [nzSpan]="2">备注</nz-form-label>
+                                        <nz-form-control [nzSpan]="20">
+                                            <input nz-input formControlName="remark" name="remark" />
+                                        </nz-form-control>
+                                    </nz-form-item>
+                                </div>
+                                <div nz-col [nzSpan]="6">
+                                    <nz-form-item nzFlex>
+                                        <nz-form-label [nzSpan]="10">当前状态</nz-form-label>
+                                        <nz-form-control [nzSpan]="14">
+                                            <nz-badge
+                                                [nzColor]="{'TO_BE_ADDED':'red','TO_BE_EXECUTED':'orange','EXECUTING':'blue','COMPLETED':'green', 'PLAN_UPDATE':'red'}[planOtherInfo.status]"
+                                                [nzText]="{'TO_BE_ADDED':'待补充','TO_BE_EXECUTED':'待执行','EXECUTING':'执行中','COMPLETED':'完成', 'PLAN_UPDATE':'计划变更'}[planOtherInfo.status]">
+                                            </nz-badge>
+                                        </nz-form-control>
+                                    </nz-form-item>
+                                </div>
+                            </div>
+                            <div nz-row>
+                            </div>
+                        </nz-card>
+                    </div>
+                </form>
+                <!-- 新增的时候可改，非新增不可改 -->
+                <!-- *ngIf="planOtherInfo.status != 'EXECUTING' && planOtherInfo.status != 'TO_BE_EXECUTED'" -->
+                <div class="banner3 m-t-20">
+                    <div>
+                        <nz-table #basicTable [nzData]="[{A:1,B:2}]" nzBordered [nzFrontPagination]="false"
+                            [nzShowPagination]="false">
+                            <thead>
+                                <tr>
+                                    <th nzWidth="70px">序号</th>
+                                    <th>货号</th>
+                                    <th>生产号</th>
+                                    <th>材质</th>
+                                    <th>材质代码</th>
+                                    <th>尺寸(mm)</th>
+                                    <th>数量(支)</th>
+                                    <th>单净重(t)</th>
+                                    <th>总净重(t)</th>
+                                    <th nzWidth="80px">操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let data of tab.rollsList[formNum].list;let i = index">
+                                    <td><button style="background-color: #253559;border-color: #253559;" nz-button
+                                            nzType="primary" nzShape="circle">{{i+1}}</button></td>
+                                    <td>{{data.freight.freightNumber}}</td>
+                                    <td>
+                                        <div class="deviceBtn" (click)="addFormOne(tab.rollsList[formNum].list, tab, formNum)">
+                                            <div class="deviceBtnFont">
+                                                <div class="selectBtn" *ngFor="let item of data.numChoose">{{item}}
+                                                </div>
+                                            </div>
+                                            <div class="chooseBtn">
+                                                <i nz-icon nzType="down" nzTheme="outline"></i>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>{{data.freight.material}}</td>
+                                    <td>{{data.freight.materialCode}}</td>
+                                    <td>
+                                        <div [class]="data.freight.isBig?'fontRed':''">{{data.freight.size}}</div>
+                                    </td>
+                                    <td>{{data.numChoose.length}}</td>
+                                    <td>
+                                        {{data.freight.netWeight | number:"0.1-2"}}
+                                    </td>
+                                    <td>
+                                        {{myNumber(data.freight.netWeight) * data.numChoose.length | number:"0.1-2"}}
+                                    </td>
+                                    <td>
+                                        <a (click)="delTableRolls(data,tab.rollsList[formNum].list)">删除</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </nz-table>
+                    </div>
+                    <div class="m-t-10 m-b-20">
+                        <button nz-button (click)="addFormOne(tab.rollsList[formNum].list, tab, formNum)"><i nz-icon
+                                nzType="plus"></i>添加序号</button>
+                        <div class="f-r" *ngIf="formNum !==0">
+                            <button nz-button nzType="dashed" (click)="delDataFormOne(tab,formNum)">删除本环节装炉计划</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- *ngIf="planOtherInfo.status === 'EXECUTING' || planOtherInfo.status === 'TO_BE_EXECUTED'" -->
+                <!-- <div class="banner3 m-t-20">
+                    <div>
+                        <nz-table #basicTable [nzData]="[{A:1,B:2}]" nzBordered [nzFrontPagination]="false"
+                            [nzShowPagination]="false">
+                            <thead>
+                                <tr>
+                                    <th nzWidth="70px">序号</th>
+                                    <th>货号</th>
+                                    <th>生产号</th>
+                                    <th>材质</th>
+                                    <th>材质代码</th>
+                                    <th>尺寸(mm)</th>
+                                    <th>数量(支)</th>
+                                    <th>单净重(t)</th>
+                                    <th>总净重(t)</th>
+                                    <th nzWidth="80px">操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let data of tab.rollsList[formNum].list;let i = index">
+                                    <td><button style="background-color: #253559;border-color: #253559;" nz-button
+                                            nzType="primary" nzShape="circle">{{i+1}}</button></td>
+                                    <td>{{data.freight.freightNumber}}</td>
+                                    <td>
+                                        <span *ngFor="let item of data.numChoose">{{item}}　</span>
+                                    </td>
+                                    <td>{{data.freight.material}}</td>
+                                    <td>{{data.freight.materialCode}}</td>
+                                    <td>
+                                        <div [class]="data.freight.isBig?'fontRed':''">{{data.freight.size}}</div>
+                                    </td>
+                                    <td>{{data.numChoose.length}}</td>
+                                    <td>
+                                        {{data.freight.netWeight | number:"0.1-2"}}
+                                    </td>
+                                    <td>
+                                        {{myNumber(data.freight.netWeight) * data.numChoose.length | number:"0.1-2"}}
+                                    </td>
+                                    <td>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </nz-table>
+                    </div>
+                    <div class="m-t-10 m-b-20">
+                    </div>
+                </div> -->
+            </div>
+            <div class="banner4"
+                *ngIf="planOtherInfo.status != 'EXECUTING' && planOtherInfo.status != 'TO_BE_EXECUTED'">
+                <button nz-button nzBlock nzType="dashed" (click)="addDataFormOne(tab)"><i nz-icon
+                        nzType="plus"></i>追加本环节装炉计划</button>
+            </div>
+        </div>
+        <!-- 展示页面 -->
+        <div *ngIf="!tab.isAdd" class="mainBox">
+            <div class="banner1">
+                <div class="f-r">
+
+                </div>
+                <div class="f-r m-r-20">
+                    <button nz-button nzType="primary" (click)="lookPaidate()">查看排期</button>
+                </div>
+            </div>
+            <div *ngFor="let form of tab.dataForm.controls;index as formNum">
+                <form nz-form [formGroup]="form" class="ant-advanced-search-form">
+                    <div class="banner2">
+                        <nz-card nzType="inner" nzTitle="环节基本信息">
+                            <div nz-row [nzGutter]="24">
+                                <div nz-col [nzSpan]="7">
+                                    <nz-form-item nzFlex>
+                                        <nz-form-label [nzSpan]="10" nzRequired>生产日期</nz-form-label>
+                                        <nz-form-control [nzSpan]="14">
+                                            <nz-date-picker nzDisabled placeholder="请选择生产日期" formControlName="startTime"
+                                                name="startTime"></nz-date-picker>
+                                        </nz-form-control>
+                                    </nz-form-item>
+                                </div>
+                                <div nz-col [nzSpan]="6">
+                                    <nz-form-item nzFlex>
+                                        <nz-form-label [nzSpan]="8" nzRequired>使用设备</nz-form-label>
+                                        <nz-form-control [nzSpan]="16">
+                                            <input nz-input [placeholder]="form.value.deviceName" disabled />
+                                        </nz-form-control>
+                                    </nz-form-item>
+                                </div>
+                                <div nz-col [nzSpan]="6">
+                                    <nz-form-item nzFlex>
+                                        <nz-form-label [nzSpan]="8">选择工艺</nz-form-label>
+                                        <nz-form-control [nzSpan]="16">
+                                            <nz-select nzPlaceHolder="请选择工艺" nzDisabled>
+                                                <nz-option nzValue="jack" nzLabel="请选择工艺"></nz-option>
+                                            </nz-select>
+                                        </nz-form-control>
+                                    </nz-form-item>
+                                </div>
+                                <div nz-col [nzSpan]="5">
+                                    <nz-form-item nzFlex>
+                                        <nz-form-label [nzSpan]="8">调度员</nz-form-label>
+                                        <nz-form-control [nzSpan]="16">
+                                            <input nz-input [placeholder]="planOtherInfo.planner.name" disabled />
+                                        </nz-form-control>
+                                    </nz-form-item>
+                                </div>
+                            </div>
+                            <div nz-row [nzGutter]="24">
+                                <div nz-col [nzSpan]="7">
+                                    <nz-form-item nzFlex>
+                                        <nz-form-label [nzSpan]="10" nzRequired>预计结束时间</nz-form-label>
+                                        <nz-form-control [nzSpan]="14">
+                                            <nz-date-picker nzDisabled placeholder="请选择时间" formControlName="endTime"
+                                                name="endTime"></nz-date-picker>
+                                        </nz-form-control>
+                                    </nz-form-item>
+                                </div>
+                                <div nz-col [nzSpan]="6">
+                                    <nz-form-item nzFlex>
+                                        <nz-form-label [nzSpan]="8" nzRequired>作业区域</nz-form-label>
+                                        <nz-form-control [nzSpan]="16">
+                                            <nz-select nzDisabled formControlName="areaId" name="areaId" nzAllowClear
+                                                nzPlaceHolder="请选择作业区域">
+                                                <nz-option *ngFor="let item of areaList" [nzValue]="item.id"
+                                                    [nzLabel]="item.areaName"></nz-option>
+                                            </nz-select>
+                                        </nz-form-control>
+                                    </nz-form-item>
+                                </div>
+                                <div nz-col [nzSpan]="6">
+                                    <nz-form-item nzFlex>
+                                        <nz-form-label [nzSpan]="8">工艺编号</nz-form-label>
+                                        <nz-form-control [nzSpan]="16">
+                                            <input nz-input placeholder="工艺编号" disabled />
+                                        </nz-form-control>
+                                    </nz-form-item>
+                                </div>
+                                <div nz-col [nzSpan]="5">
+                                    <nz-form-item nzFlex>
+                                        <nz-form-label [nzSpan]="8">技术员</nz-form-label>
+                                        <nz-form-control [nzSpan]="16">
+                                            <input nz-input
+                                                [placeholder]="planOtherInfo.technician?planOtherInfo.technician.name:'技术员姓名'"
+                                                disabled />
+                                        </nz-form-control>
+                                    </nz-form-item>
+                                </div>
+                            </div>
+                            <div nz-row [nzGutter]="24">
+                                <div nz-col [nzSpan]="18">
+                                    <nz-form-item nzFlex>
+                                        <nz-form-label [nzSpan]="2">备注</nz-form-label>
+                                        <nz-form-control [nzSpan]="20">
+                                            <input nz-input formControlName="remark" name="remark" disabled />
+                                        </nz-form-control>
+                                    </nz-form-item>
+                                </div>
+                                <div nz-col [nzSpan]="6">
+                                    <nz-form-item nzFlex>
+                                        <nz-form-label [nzSpan]="10">当前状态</nz-form-label>
+                                        <nz-form-control [nzSpan]="14">
+                                            <nz-badge
+                                                [nzColor]="{'TO_BE_ADDED':'red','TO_BE_EXECUTED':'orange','EXECUTING':'blue','COMPLETED':'green', 'PLAN_UPDATE':'red'}[planOtherInfo.status]"
+                                                [nzText]="{'TO_BE_ADDED':'待补充','TO_BE_EXECUTED':'待执行','EXECUTING':'执行中','COMPLETED':'完成', 'PLAN_UPDATE':'计划变更'}[planOtherInfo.status]">
+                                            </nz-badge>
+                                        </nz-form-control>
+                                    </nz-form-item>
+                                </div>
+                            </div>
+                            <div nz-row>
+                            </div>
+                        </nz-card>
+                    </div>
+                </form>
+                <div class="banner3 m-t-20">
+                    <div>
+                        <nz-table #basicTable [nzData]="[{A:1,B:2}]" nzBordered [nzFrontPagination]="false"
+                            [nzShowPagination]="false">
+                            <thead>
+                                <tr>
+                                    <th nzWidth="70px">序号</th>
+                                    <th>货号</th>
+                                    <th>生产号</th>
+                                    <th>材质</th>
+                                    <th>材质代码</th>
+                                    <th>尺寸(mm)</th>
+                                    <th>数量(支)</th>
+                                    <th>单净重(t)</th>
+                                    <th>总净重(t)</th>
+                                    <th nzWidth="80px">操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let data of tab.rollsList[formNum].list;let i = index">
+                                    <td><button style="background-color: #253559;border-color: #253559;" nz-button
+                                            nzType="primary" nzShape="circle">{{i+1}}</button></td>
+                                    <td>{{data.freight.freightNumber}}</td>
+                                    <td>
+                                        <span *ngFor="let item of data.numChoose">{{item}}　</span>
+                                    </td>
+                                    <td>{{data.freight.material}}</td>
+                                    <td>{{data.freight.materialCode}}</td>
+                                    <td>
+                                        <div [class]="data.freight.isBig?'fontRed':''">{{data.freight.size}}</div>
+                                    </td>
+                                    <td>{{data.numChoose.length}}</td>
+                                    <td>
+                                        {{data.freight.netWeight | number:"0.1-2"}}
+                                    </td>
+                                    <td>
+                                        {{myNumber(data.freight.netWeight) * data.numChoose.length | number:"0.1-2"}}
+                                    </td>
+                                    <td>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </nz-table>
+                    </div>
+                    <div class="m-t-10 m-b-20">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nz-tab>
+</nz-tabset>
+<ng-template #extraTemplate>
+    <button nz-button (click)="newTab()"
+        *ngIf="planOtherInfo.status != 'EXECUTING' && planOtherInfo.status != 'TO_BE_EXECUTED'"><i nz-icon
+            nzType="plus"></i>新增环节</button>
+    <button style="margin-left: 15px;" nz-button nzType="primary" (click)="saveSubmitAll()">保存</button>
+</ng-template>

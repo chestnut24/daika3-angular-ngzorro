@@ -1,0 +1,11 @@
+<app-delong-table [titleList]="titleList" class="delongTable">
+    <tr *ngFor="let data of delongTable.tableData ">
+        <td>{{ data.updatedDt | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+        <td><b>{{ data.freightNumber }}</b></td>
+        <td><b>{{ data.productNo}}</b></td>
+        <td>{{ data.isBlank }}</td>
+        <td>{{ data.userName }}</td>
+        <td>{{ data.createdBy }}</td>
+        <td>{{ data.remark }}</td>
+    </tr>
+</app-delong-table>

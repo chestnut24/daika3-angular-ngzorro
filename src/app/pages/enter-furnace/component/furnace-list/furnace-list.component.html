@@ -1,0 +1,150 @@
+<div class="container">
+    <div nzType="flex" nz-row nzJustify="space-between" class="top-container">
+        <div nz-col class="search-container">
+            <div class="search-item">
+                <span>计划创建时间：</span>
+                <nz-date-picker [(ngModel)]="createdDate" (keyup.enter)="searchClick()"></nz-date-picker>
+            </div>
+            <div class="search-item">
+                <span>计划生产时间：</span>
+                <nz-date-picker [(ngModel)]="startDate" (keyup.enter)="searchClick()"></nz-date-picker>
+            </div>
+            <div class="search-item">
+                <span>货号：</span>
+                <input [(ngModel)]="searchText" type="text" nz-input placeholder="请输入货号" (keyup.enter)="searchClick()">
+            </div>
+            <button nz-button nzType="primary" (click)="searchClick()">查询</button>
+        </div>
+    </div>
+    <div class="content">
+        <app-delong-table [titleList]="titleList" *ngIf="delongTable.tableData" [nzScrollX]="'1420px'"
+            [nzScrollY]="getIframeHeight()" (pageChange)="pageChange()">
+            <ng-container *ngFor="let plan of delongTable.tableData; let planIndex = index">
+                <ng-container *ngFor="let link of plan.links;let linkIndex = index">
+                    <tr *ngFor="let detail of link.details; let detailIndex = index">
+                        <td *ngIf="linkIndex == 0 && detailIndex == 0" [rowSpan]="plan.totalTr">
+                            <div class="css-word table_div_word" [ngStyle]="{'width': 147-tablePadding +'px'}">
+                                {{ plan.createdDt | date:'yyyy.MM.dd HH:mm:ss'}}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="css-word table_div_word" [ngStyle]="{'width': 100-tablePadding +'px'}">
+                                {{ detail.startTime | date:'yyyy.MM.dd' }}
+                            </div>
+                        </td>
+                        <td *ngIf="detailIndex == 0" [rowSpan]="link.details.length">
+                            <div class="css-word table_div_word" [ngStyle]="{'width': 70-tablePadding +'px'}">
+                                {{ link.name }}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="css-word b table_div_word" [ngStyle]="{'width': 105-tablePadding +'px'}">
+                                {{ detail.device.name }}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="css-word table_div_word" [ngStyle]="{'width': 120-tablePadding +'px'}">
+                                {{ detail.craft.name }}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="css-word b table_div_word" [ngStyle]="{'width': 300-tablePadding +'px'}">
+                                <div *ngFor="let freight of detail.freights">
+                                    {{ freight.freightNumber }}
+                                    <span>(
+                                        <span *ngFor="let roll of freight.detailRolls">{{ roll.roll.productNo }} </span>
+                                        &nbsp;)</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td nzRight="220px">
+                            <div *ngIf="putOrTake == 'put'">
+                                <!-- || detail.isCooling == 1 -->
+                                <!--                                置灰条件：炉中已有轧辊，但本环节的轧辊尚未入炉；热处理中、将要结束、结束状态；全部出炉状态；待正火冷却或冷却中-->
+                                <!-- 0918版 -->
+                                <div class="router-link-process" *ngIf="detail.device.htRecord && detail.device.htRecord.startTime ||
+                                 ( detail.totalFreight - detail.totalNotPut == detail.totalFreight && detail.status == 'TO_BE_OUT')">
+                                    <span>入炉</span>
+                                    <span>({{ detail.totalFreight - detail.totalNotPut }}/{{ detail.totalFreight }})</span>
+                                </div>
+                                <!-- 老版 -->
+                                <!-- <div *ngIf="(detail.device.isPut == 1 && detail.totalNotPut === 0) && (detail.device.isPut == 1 && detail.totalNotTake == 0) || detail.device.htStatus == 'PROCESSING' || detail.device.htStatus == 'END' || detail.device.htStatus == 'COMING_TO_END' || detail.totalOut == detail.totalFreight"
+                                    class="router-link-process">
+                                    <span>入炉</span>
+                                    <span>({{ detail.totalFreight - detail.totalNotPut }}/{{ detail.totalFreight }})</span>
+                                </div> -->
+                                <!-- && detail.isCooling == 0 -->
+                                <!-- && detail.totalNotTake != 0 -->
+                                <!--                                置蓝条件：（炉中有轧辊，但本环节的轧辊已经入炉；炉中无轧辊，且不是全部出炉）且 未开始、将要开始，且未正火冷却或者结束-->
+                                <!-- 全部 置蓝——来自0918日改动 -->
+                                <!--【原判断条件】 *ngIf="((detail.device.isPut == 1 && detail.totalNotPut !== 0) || (detail.device.isPut == 1 && detail.totalNotTake !== 0) || (detail.device.isPut == 0 && (detail.totalOut != detail.totalFreight))) && (detail.device.htStatus == 'NOT_START' || detail.device.htStatus == 'COMING_SOON')" -->
+                                <!-- detail.device.htRecord && detail.device.htRecord.startTime -->
+                                <div class="router-link" *ngIf="!(detail.device.htRecord && detail.device.htRecord.startTime)" [routerLink]="['/enterFurnace/operation', detail.id]">
+                                    <span>入炉</span>
+                                    <span>({{ detail.totalFreight - detail.totalNotPut }}/{{ detail.totalFreight }})</span>
+                                </div>
+                                <!--                                <div class="router-link" [routerLink]="['/enterFurnace/operation', detail.id]">-->
+                                <!--                                    <span>入炉查看</span>-->
+                                <!--                                </div>-->
+                            </div>
+                            <div *ngIf="putOrTake == 'take'">
+                                <!-- || detail.totalNotPut != 0 -->
+                                <div *ngIf="detail.device.htStatus != 'END' || detail.totalNotTake == 0"
+                                    class="router-link-process">
+                                    <!--                                <div class="router-link" [routerLink]="['/takeFurnace/operation', detail.id]">-->
+                                    <span>出炉</span>
+                                    <span>({{ detail.totalOut }}/{{ detail.totalFreight }})</span>
+                                </div>
+                                <!-- <div *ngIf="detail.device.htStatus == 'END' && detail.totalNotPut == 0 && detail.totalNotTake != 0" -->
+                                <div *ngIf="detail.device.htStatus == 'END' && detail.totalNotTake != 0"
+                                    class="router-link" [routerLink]="['/takeFurnace/operation', detail.id]">
+                                    <span>出炉</span>
+                                    <span>({{ detail.totalOut }}/{{ detail.totalFreight }})</span>
+                                </div>
+                                <!--                                <div class="router-link" [routerLink]="['/takeFurnace/operation', detail.id]">-->
+                                <!--                                    <span>出炉查看</span>-->
+                                <!--                                </div>-->
+                            </div>
+                        </td>
+                        <td nzRight="0px">
+                            <ng-container *ngIf="putOrTake=='put'">
+                                <b>
+                                    <div *ngIf="detail.totalOut == detail.totalFreight">轧辊已全部出炉</div>
+                                    <div *ngIf="detail.totalOut != detail.totalFreight && detail.totalNotPut==0">无待入炉轧辊
+                                    </div>
+                                </b>
+                                <ng-container *ngFor="let freight of detail.freights">
+                                    <b>
+                                        <div *ngIf="freight.notPutRolls.length!=1">
+                                            {{ freight.freightNumber }}
+                                            <span>(
+                                                <span *ngFor="let roll of freight.notPutRolls">{{ roll }} </span>
+                                                &nbsp; &nbsp;)</span>
+                                        </div>
+                                    </b>
+                                </ng-container>
+                            </ng-container>
+                            <ng-container *ngIf="putOrTake=='take'">
+                                <b>
+                                    <div *ngIf="detail.totalOut == detail.totalFreight">轧辊已全部出炉</div>
+                                    <div *ngIf="detail.totalOut != detail.totalFreight && detail.totalNotTake==0">轧辊尚未入炉
+                                    </div>
+                                </b>
+                                <ng-container *ngFor="let freight of detail.freights">
+                                    <b>
+                                        <div *ngIf="freight.notTakeRolls.length!=1">
+                                            {{ freight.freightNumber }}
+                                            <span>(
+                                                <span *ngFor="let roll of freight.notTakeRolls">{{ roll }} </span>
+                                                &nbsp;)</span>
+                                        </div>
+                                    </b>
+                                </ng-container>
+                            </ng-container>
+                        </td>
+                    </tr>
+                </ng-container>
+            </ng-container>
+        </app-delong-table>
+    </div>
+</div>

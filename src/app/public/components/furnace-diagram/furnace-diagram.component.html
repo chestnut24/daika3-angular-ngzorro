@@ -1,0 +1,158 @@
+<div class="container">
+    <div class="content-title">
+        <span>装炉图</span>
+    </div>
+    <div class="content" [ngStyle]="{'justify-content': readOnly ? 'center' : 'space-between'}">
+        <div class="furnace-container" [ngStyle]="{'width': readOnly ? '100%' : '80%'}">
+            <div class="Ya-gun-list">
+                <div class="Ya-gun-item" (click)="changeYa(ya)" [ngClass]="yaGunIndex === ya?'ya-blue':''"
+                    *ngFor="let ya of yaGunList">
+                    <div class="item-name">{{ya}}#压辊标记</div>
+                    <div class="item-picture"
+                        [ngStyle]="{background: yaGunGuoList.indexOf(ya) === -1? '#fff': '#F5F5F5'}">
+                        <img class="item-img" src="../../../../../../../assets/images/YaGun2x.png">
+                    </div>
+                </div>
+            </div>
+            <div class="bs-E8">
+                <div class="top-direction">
+                    <span style="justify-content: center">西</span>
+                    <span style="justify-content: flex-end">炉前 ←</span>
+                </div>
+                <div class="center-content">
+                    <span>前</span>
+                    <div class="furnace-group">
+                        <div class="furnace" *ngFor="let furNo of furnaceList">
+                            <div class="furnace-title">
+                                <span>上</span><span>中</span><span>下</span>
+                            </div>
+                            <div class="furnace-item" nz-row>
+                                <ul nz-col nzSpan="8" *ngFor="let furItem of furNo">
+                                    <li (click)="selectFurnace(furItem)"
+                                        [ngClass]="{'furnace-select':furItem == selectFur}"
+                                        *ngIf="!furnaceListPutted[furItem]"></li>
+                                    <li (click)="selectFurnace(furItem)"
+                                        [ngClass]="{'furnace-put-select':furItem == selectFur}"
+                                        class="furnace-put YaGunPR" *ngIf="furnaceListPutted[furItem]">
+                                        <ng-container *ngFor="let detail of furnaceListPutted[furItem]?.detailRolls">
+                                            <ng-container
+                                                *ngIf="detail.pushNum && furItem == detail.position && (detail.status === 'IN_FURNACE' || detail.status === 'EXECUTING')">
+                                                <div class="YaGun">
+                                                    <div class="YaGunImg">
+                                                        <img src="../../../../../../../assets/images/YaGun.png">
+                                                    </div>
+                                                    <div class="YaGunNum">{{detail.pushNum}}</div>
+                                                </div>
+                                            </ng-container>
+                                        </ng-container>
+
+                                        <div class="furnace-img"><img
+                                                src="../../../../../../../assets/images/furnace-roll.png"></div>
+                                        <div class="furnace-put-freight">
+                                            {{ furnaceListPutted[furItem]?.freightNumber }}-
+                                            <ng-container
+                                                *ngFor="let detail of furnaceListPutted[furItem]?.detailRolls">
+                                                <ng-container
+                                                    *ngIf="furItem == detail.position && (detail.status === 'IN_FURNACE' || detail.status === 'EXECUTING')">
+                                                    {{ detail.roll.productNo }}</ng-container>
+                                            </ng-container>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <span>后</span>
+                </div>
+                <div class="bottom-direction">
+                    <span>东</span>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="newTableData?.freights" class="number-container h7-oy"
+            [ngStyle]="{'display': readOnly ? 'none' : 'block'}">
+            <ng-container *ngFor="let freight of newTableData?.freights">
+                <ng-container *ngFor="let rollDetail of freight.detailRolls">
+                    <ng-container *ngIf="putOrTake=='put'">
+                        <div class="freight-item-put" *ngIf="rollDetail.status=='IN_FURNACE'"
+                            (click)="selectFreightPut()">
+                            <img src="../../../../../../../assets/images/furnace-roll.png">
+                            <div class="freight-detail">
+                                <div class="freight-number">
+                                    {{ freight.freightNumber }}-<span>{{ rollDetail.roll.productNo }}</span>
+                                </div>
+                                <div class="fre-state">
+                                    <div class="fre-dot-put"></div>
+                                    <span>已装</span>
+                                </div>
+                                <div class="put-detail">
+                                    <span
+                                        *ngIf="rollDetail.roll.putDt">{{ rollDetail.roll.putDt | date: 'yyyy.MM.dd' }}</span>
+                                    <span *ngIf="rollDetail.roll.putBy">{{ rollDetail.roll.putBy }}</span>
+                                </div>
+                            </div>
+                            <div class="cancel-button" (click)="selectCancel(freight, rollDetail)"><span>撤销</span></div>
+                        </div>
+                    </ng-container>
+                    <ng-container *ngIf="putOrTake=='take'">
+                        <div class="freight-item-put" *ngIf="rollDetail.status=='OUT_FURNACE'"
+                            (click)="selectFreightPut()">
+                            <img src="../../../../../../../assets/images/furnace-roll.png">
+                            <div class="freight-detail">
+                                <div class="freight-number">
+                                    {{ freight.freightNumber }}-<span>{{ rollDetail.roll.productNo }}</span>
+                                </div>
+                                <div class="fre-state">
+                                    <div class="fre-dot-put"></div>
+                                    <span>已出炉</span>
+                                </div>
+                                <div class="put-detail">
+                                    <span
+                                        *ngIf="rollDetail.roll.putDt">{{ rollDetail.roll.putDt | date: 'yyyy.MM.dd' }}</span>
+                                    <span *ngIf="rollDetail.roll.putBy">{{ rollDetail.roll.putBy }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-container>
+                </ng-container>
+            </ng-container>
+            <ng-container *ngFor="let freight of newTableData.freights">
+                <ng-container *ngFor="let rollDetail of freight.detailRolls">
+                    <ng-container *ngIf="putOrTake=='put'">
+                        <div class="freight-item-ready" *ngIf="rollDetail.status=='NOT_PUT'"
+                            (click)="selectFreight(freight, rollDetail)"
+                            [ngClass]="{'item-select':selectFre == freight.freightNumber && selectPro == rollDetail.roll.productNo}">
+                            <img src="../../../../../../../assets/images/furnace-roll.png">
+                            <div class="freight-detail">
+                                <div class="freight-number">
+                                    {{ freight.freightNumber }}-<span>{{ rollDetail.roll.productNo }}</span>
+                                </div>
+                                <div class="fre-state">
+                                    <div class="fre-dot-ready"></div>
+                                    <span>未装</span>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-container>
+                    <ng-container *ngIf="putOrTake=='take'">
+                        <div class="freight-item-ready"
+                            *ngIf="rollDetail.status=='IN_FURNACE' || rollDetail.status=='EXECUTING'"
+                            (click)="selectFreight(freight, rollDetail)"
+                            [ngClass]="{'item-select':selectFre == freight.freightNumber && selectPro == rollDetail.roll.productNo}">
+                            <img src="../../../../../../../assets/images/furnace-roll.png">
+                            <div class="freight-detail">
+                                <div class="freight-number">
+                                    {{ freight.freightNumber }}-<span>{{ rollDetail.roll.productNo }}</span>
+                                </div>
+                                <div class="fre-state">
+                                    <div class="fre-dot-ready"></div>
+                                    <span>未出炉</span>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-container>
+                </ng-container>
+            </ng-container>
+        </div>
+    </div>
+</div>

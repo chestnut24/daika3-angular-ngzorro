@@ -1,0 +1,167 @@
+<div class="ht-container" id="htContainer">
+    <nz-card nzTitle="监控信息">
+        <div class="top">
+            <div class="left">
+                <div class="top-title">
+                    <div>
+                        <span>执行工艺：{{dataDetail?.linkDetail.craft.name}}</span>
+                        <span>工艺编号：{{dataDetail?.linkDetail.craft.craftNo}}</span>
+                        <span class="standard-process-curve" (click)="standardProcessCurve()"><i nz-icon
+                                nzType="info-circle" nzTheme="outline"></i> 标准工艺曲线</span>
+                    </div>
+                    <div>
+                        <button nz-button nzType="primary"
+                            [routerLink]="'/heatTreatment/' + deviceId + '/seeCraft/' + dataDetail?.linkDetail?.craft?.id">查看工艺详情</button>
+                    </div>
+                </div>
+                <div style="height: 404px;" class="canvas-container">
+                    <div id="canvasContainer">
+
+                    </div>
+                </div>
+                <div class="temperature-list">
+                    <div class="title">
+                        炉 温
+                    </div>
+                    <!-- <div class="position">
+                        <div>
+                            西
+                        </div>
+                        <div>
+                            <div>前</div>
+                            <div class="device-list">
+                                <app-heat-position-temperature style="margin-right:16px;"
+                                                               *ngFor="let furnaceDevice of furnaceDevices;let index = index"
+                                                               [monitorList]="furnaceDevice"
+                                                                (changeDevice)="changeDevice(0, index, $event)"></app-heat-position-temperature>
+                            </div>
+                            <div>后</div>
+                        </div>
+                        <div>
+                            东
+                        </div>
+                    </div> -->
+                    <div class="position">
+                        <div>
+                            <div style="width: 10px;height: 10px;"> </div>
+                            <div class="device-list">
+                                <app-heat-position-temperature style="margin-right:6px;"
+                                    *ngFor="let furnaceDevice of furnaceDevices;let index = index"
+                                    [monitorList]="furnaceDevice" (changeDevice)="changeDevice(0, index, $event)">
+                                </app-heat-position-temperature>
+                            </div>
+                            <div style="width: 10px;height: 10px;"> </div>
+                        </div>
+                    </div>
+                </div>
+                <div style="height:20px;"></div>
+                <div class="temperature-list">
+                    <div class="title">
+                        辊 温
+                    </div>
+                    <div class="position">
+                        <div>
+                            <div style="width: 10px;height: 10px;"> </div>
+                            <div class="device-list">
+                                <app-heat-position-temperature style="margin-right:6px;"
+                                    *ngFor="let rollDevice of rollDevices;let index = index" [monitorList]="rollDevice"
+                                    (changeDevice)="changeDevice(1, index, $event)"></app-heat-position-temperature>
+                            </div>
+                            <div style="width: 10px;height: 10px;"> </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="right">
+                <div class="device">
+                    <div class="device-title">
+                        {{dataDetail?.device.name}}
+                    </div>
+                    <div class="device-img">
+                        <img src="../../../../../assets/images/resistance-furnace.png" style="width: 50%;">
+                    </div>
+                </div>
+                <div class="otherInfo">
+                    <div class="furnace-roll">
+                        <div *ngIf="!dataDetail?.htRecord.endTime">炉温：{{dataDetail?.htRecord.furnaceTemp}}℃</div>
+                        <div *ngIf="dataDetail?.htRecord.endTime">炉温：— ℃</div>
+                        <div>辊温：{{dataDetail?.htRecord.rollTemp}}℃</div>
+                    </div>
+                    <div class="alarm-count">
+                        <div class="sign-and-count">
+                            <div>
+                                <img src="../../../../../assets/images/yellow-warning.png" width="50" />
+                            </div>
+                            <div style="margin-left:12px;">
+                                <b
+                                    style="font-size: 20px;">{{dataDetail?.htRecord.htAlarms?.length ? getAlarmsLength(dataDetail?.htRecord.htAlarms) : 0}}</b>
+                                <br>
+                                <span>报警：</span>
+                            </div>
+                        </div>
+                        <div class="watch-detail">
+                            <span (click)="alarmRecord()">查看详情</span>
+                        </div>
+                    </div>
+                    <div class="alarm-time">
+                        <span>开始时间：</span>
+                        <b>{{dataDetail?.htRecord.startTime | date:'yyyy.MM.dd HH:mm:ss'}}</b>
+                    </div>
+                    <div class="alarm-time">
+                        <span>执行时长：</span>
+                        <b *ngIf="!dataDetail?.htRecord.endTime">
+                            {{(nowTime -  dataDetail?.htRecord.startTime - otherTimes) | minuteSecond:[nowTime, dataDetail?.htRecord.startTime, 'HOUR']}}
+                        </b>
+                        <b
+                            *ngIf="dataDetail?.htRecord.endTime">{{(dataDetail?.htRecord.endTime - dataDetail?.htRecord.startTime - getPauseTime()) | minuteSecond:[dataDetail?.htRecord.startTime, dataDetail?.htRecord.endTime, 'HOUR']}}</b>
+                    </div>
+                    <div class="stop-button">
+                        <button nz-button nzType="primary" nzSize="large"
+                                (click)="startBeforeMonitor()">{{startSuperviseHt?.superviseType === 'START' ? '停止-热处理监测' : '开始-热处理监测'}}</button>
+                        <nz-spin [nzSpinning]="start0713Show">
+                            <button nz-button nzType="primary" nzSize="large" [disabled]="dataDetail?.htRecord.endTime"
+                                (click)="startOrEndMonitor()">{{dataDetail?.htRecord.startTime ? '停止-执行工艺' : '开始-执行工艺'}}</button>
+                        </nz-spin>
+                        <!--<button nz-button nzType="primary" nzSize="large"
+                            (click)="pauseMonitor(dataDetail?.htRecord.htPauses.length % 2 === 0 ? 'START' : 'END')"
+                            [disabled]="!dataDetail?.htRecord.startTime || dataDetail?.htRecord.endTime">
+                            {{dataDetail?.htRecord.htPauses.length % 2 === 0 ? '暂停-热处理监控' : '恢复-热处理监控'}}
+                        </button>-->
+                    </div>
+                    <nz-divider></nz-divider>
+                    <div>
+                        <div style="margin-bottom: 8px;">时间矫正</div>
+                        <nz-input-group nzCompact>
+                            <nz-select [(ngModel)]="dataDetail?.htRecord.correctSign" nzPlaceHolder="请选择"
+                                style="width: 110px;">
+                                <nz-option [nzLabel]="'+ '" [nzValue]="'POSITIVE'"></nz-option>
+                                <nz-option [nzLabel]="'- '" [nzValue]="'NEGATIVE'"></nz-option>
+                            </nz-select>
+                            <input nz-input placeholder="请输入" style="width: 120px;" [(ngModel)]="correctTime" />
+                            &nbsp;
+                            &nbsp;
+                            <button nz-button nzType="primary" (click)="updateMonitor()">提交</button>
+                        </nz-input-group>
+                    </div>
+                    <nz-divider></nz-divider>
+                    <div>
+                        <b>监控标准设置</b>
+                        <nz-radio-group [(ngModel)]="dataDetail?.htRecord.monitorStandard"
+                            (ngModelChange)="updateNumber()">
+                            <label nz-radio nzValue="AVG">平均值</label>
+                            <label nz-radio nzValue="MIN">最小值</label>
+                            <label nz-radio nzValue="MAX">最大值</label>
+                        </nz-radio-group>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nz-card>
+    <nz-card nzTitle="装炉信息">
+        <app-furnace-form [tableData]="dataDetail?.linkDetail" [putOrTake]="'put'" [readOnly]="true"></app-furnace-form>
+    </nz-card>
+    <nz-card nzTitle="装炉图">
+        <app-furnace-diagram [putOrTake]="'put'" [readOnly]="true" [tableData]="dataDetail?.linkDetail">
+        </app-furnace-diagram>
+    </nz-card>
+</div>

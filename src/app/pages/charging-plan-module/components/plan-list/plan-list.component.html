@@ -1,0 +1,168 @@
+<div class="planList bgFFF">
+    <div class="banner1 m-b-20">
+        <label>
+            创建时间：
+            <div class="input-width m-r-20">
+                <nz-date-picker nzFormat="yyyy/MM/dd" [(ngModel)]="sendData.start" (ngModelChange)="changeTime()"
+                    (keyup.enter)="getListPage()">
+                </nz-date-picker>
+            </div>
+        </label>
+        <label>
+            计划生产时间：
+            <div class="input-width m-r-20">
+                <nz-date-picker nzFormat="yyyy/MM/dd" [(ngModel)]="sendData.end" (ngModelChange)="changeTimeEnd()"
+                    (keyup.enter)="getListPage()">
+                </nz-date-picker>
+            </div>
+        </label>
+        <label>
+            货号：
+            <div class="input-width m-r-20">
+                <input nz-input placeholder="请输入货号" [(ngModel)]="sendData.freightNumber"
+                    (keyup.enter)="getListPage()" />
+            </div>
+        </label>
+        <label>
+            计划单状态：
+            <div class="input-width m-r-20">
+                <nz-select style="width:150px;" [(ngModel)]="sendData.status" nzAllowClear nzPlaceHolder="请选择"
+                    (ngModelChange)="getListPage()">
+                    <nz-option *ngFor="let option of statusList" [nzValue]="option.value" [nzLabel]="option.label">
+                    </nz-option>
+                </nz-select>
+            </div>
+        </label>
+        <button nz-button nzType="primary" (click)="getListPage()">查询</button>
+        <div class="f-r" *ngIf="!UserTechnician || UserPlanner">
+            <button nz-button nzType="primary" (click)="addListData(0)"><i nz-icon nzType="plus"></i>装炉计划</button>
+        </div>
+    </div>
+    <!-- 列表 -->
+    <div class="banner2">
+        <nz-table class="container" [nzBordered]="1" [nzData]="newTableList" [(nzPageSize)]="delongTable.pageSize"
+            [(nzPageIndex)]="delongTable.pageNum" (nzPageIndexChange)="getList()"
+            (nzPageSizeChange)="delongTable.pageNum = 1;getList()" [nzShowSizeChanger]="true"
+            [nzPageSizeOptions]="[5,10,15,20]" [nzFrontPagination]="false" [nzTotal]="delongTable.tableTotal"
+            [nzScroll]="{x : '1524px', y : getIframeHeight() }" [nzShowTotal]="totalTemplate">
+            <thead>
+                <tr>
+                    <th [nzShowSort]="title.canSort" [nzSortKey]="title.sortField" *ngFor="let title of titleList"
+                        [nzWidth]="title.width" [nzRight]="title.right">
+                        {{title.name}}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of newTableList">
+                    <td [attr.rowspan]="data.fatherLen" *ngIf="data.fatherLen&&data.planList">
+                        <div class="css-word table_div_word" [ngStyle]="{'width': 92-tablePadding +'px'}">
+                            {{data.planList.createdDt | date:'yyyy-MM-dd'}}
+                        </div>
+                    </td>
+                    <td [attr.rowspan]="data.detailRowspan" *ngIf="data.detailRowspan">
+                        <div class="css-word table_div_word" [ngStyle]="{'width': 100-tablePadding +'px'}">
+                            {{data.detailStartTime | date:'yyyy-MM-dd'}}
+                        </div>
+                    </td>
+                    <td [attr.rowspan]="data.craftRowspan" *ngIf="data.craftRowspan">
+                        <div class="css-word table_div_word" [ngStyle]="{'width': 70-tablePadding +'px'}">
+                            {{data.craftName}}
+                        </div>
+                    </td>
+                    <td class="fontB" [attr.rowspan]="data.detailRowspan" *ngIf="data.detailRowspan">
+                        <div class="css-word table_div_word" [ngStyle]="{'width': 105-tablePadding +'px'}">
+                            {{data.detailDevice}}
+                        </div>
+                    </td>
+                    <td [attr.rowspan]="data.detailRowspan" *ngIf="data.detailRowspan">
+                        <div *ngIf="data.detailCraft" class="css-word table_div_word"
+                            [ngStyle]="{'width': 120-tablePadding +'px'}">
+                            {{data.detailCraft}}
+                        </div>
+                        <div class="textCenter" *ngIf="!data.detailCraft">————</div>
+                    </td>
+                    <td class="fontB">
+                        <div class="css-word b table_div_word" [ngStyle]="{'width': 300-tablePadding +'px'}"
+                            *ngIf="data.freightList&&data.freightList.length">
+                            {{data.freightNumber}} (
+                            <span *ngFor="let product of data.freightList;index as productI">{{product.roll.productNo}}
+                                <span *ngIf="productI !== data.freightList.length-1">&nbsp;&nbsp;</span>
+                            </span>
+                            )
+                        </div>
+                        <div class="textCenter" *ngIf="!data.freightList&&data.freightList.length">————</div>
+                    </td>
+                    <td [attr.rowspan]="data.fatherLen" *ngIf="data.fatherLen&&data.planList">
+                        <div class="css-word table_div_word" [ngStyle]="{'width': 60-tablePadding +'px'}">
+                            {{data.planList.planner.name}}
+                        </div>
+                    </td>
+                    <td [attr.rowspan]="data.fatherLen" *ngIf="data.fatherLen&&data.planList">
+                        <div class="textCenter" *ngIf="data.planList.technician" class="css-word table_div_word"
+                            [ngStyle]="{'width': 60-tablePadding +'px'}">{{data.planList.technician.name}}</div>
+                        <div class="textCenter" *ngIf="!data.planList.technician">————</div>
+                    </td>
+                    <td>
+                        <div class="textCenter" *ngIf="data.freightList&&data.freightList.length" [ngStyle]="{'width': 250-tablePadding +'px'}">
+                            <a class="m-r-20"
+                                (click)="goEntryPage(data.detailID, 1, data.planList.status)">入炉({{data.status1.length}}/{{data.freightList.length}})</a>
+                            <a class="m-r-20"
+                                (click)="goEntryPage(data.detail.device.id, 2, data.planList.status)">执行({{data.status2.length}}/{{data.freightList.length}})</a>
+                            <a
+                                (click)="goEntryPage(data.detailID, 3, data.planList.status)">出炉({{data.status3.length}}/{{data.freightList.length}})</a>
+                        </div>
+                        <div class="textCenter" *ngIf="!data.freightList&&data.freightList.length">————</div>
+                    </td>
+                    <td [attr.rowspan]="data.fatherLen" *ngIf="data.fatherLen&&data.planList">
+                        <nz-badge
+                            [nzColor]="{'TO_BE_ADDED':'red','TO_BE_EXECUTED':'orange','EXECUTING':'blue','COMPLETED':'green', 'PLAN_UPDATE':'red'}[data.planList.status]"
+                            [nzText]="{'TO_BE_ADDED':'待补充','TO_BE_EXECUTED':'待执行','EXECUTING':'执行中','COMPLETED':'完成', 'PLAN_UPDATE':'计划变更'}[data.planList.status]">
+                        </nz-badge>
+                    </td>
+                    <td class="action" *ngIf="data.fatherLen" [attr.rowspan]="data.fatherLen" nzWidth="117px"
+                        nzRight="0px">
+                        <div><a (click)="goSchedulePage(data.planList.id)">查看明细</a></div>
+                        <div *ngIf="UserTechnician">
+                            <div *ngIf="data.planList.status == 'TO_BE_ADDED' || data.planList.status == 'PLAN_UPDATE'"><a
+                                    (click)="addAllPlan(data.planList.id)">补充工艺信息</a></div>
+                        </div>
+
+                        <div class="edit">
+                            <div *ngIf="data.planList.status == 'TO_BE_ADDED'">
+                                <div *ngIf="UserPlanner && !UserTechnician">
+                                    <div><a (click)="addListData(data.planList.id)">修改环节</a></div>
+                                </div>
+                                <div *ngIf="UserPlanner && UserTechnician">
+                                    <div><a (click)="addListData(data.planList.id)">修改环节</a></div>
+                                </div>
+                            </div>
+                            <div *ngIf="data.planList.status == 'TO_BE_EXECUTED'">
+                                <div *ngIf="UserTechnician && !UserPlanner"><a
+                                        (click)="addAllPlan(data.planList.id)">修改装炉计划</a></div>
+                                <div *ngIf="UserPlanner && !UserTechnician">
+                                    <div><a (click)="addListData(data.planList.id)">修改装炉计划</a></div>
+                                </div>
+                                <div *ngIf="UserPlanner && UserTechnician">
+                                    <div><a (click)="editData(data.planList.id)">修改装炉计划</a></div>
+                                </div>
+                            </div>
+                            <div *ngIf="data.planList.status == 'EXECUTING' && data.listCanEdit">
+                                <div *ngIf="UserPlanner && !UserTechnician">
+                                    <div><a (click)="addListData(data.planList.id)">修改未执行环节</a></div>
+                                </div>
+                                <div *ngIf="UserPlanner && UserTechnician">
+                                    <div><a (click)="editData(data.planList.id)">修改未执行环节</a></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div *ngIf="data.planList.status == 'EXECUTING' || data.planList.status == 'COMPLETED'"><a
+                                (click)="goPlanInfo(data.planList.id)">查看装炉计划</a></div>
+                        <div *ngIf="data.planList.status == 'TO_BE_ADDED' || data.planList.status == 'TO_BE_EXECUTED'">
+                            <a (click)="delPlan(data.planList.id)">撤销</a></div>
+                    </td>
+                </tr>
+            </tbody>
+        </nz-table>
+        <ng-template #totalTemplate let-total>共 {{ total }} 条记录</ng-template>
+    </div>
+</div>

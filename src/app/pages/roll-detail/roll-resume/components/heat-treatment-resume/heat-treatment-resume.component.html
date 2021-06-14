@@ -1,0 +1,17 @@
+<div class="outside-frame">
+    <app-delong-table [titleList]="titleList" class="delongTable" [nzScrollX]="'800px'">
+        <tr *ngFor="let data of delongTable.tableData ">
+            <td>{{ data.startTime | date:'yyyy-MM-dd '}}</td>
+            <td>{{ data.endTime | date:'yyyy-MM-dd '}}</td>
+            <td>{{ data.duration}}</td>
+            <td>{{ data.police}}</td>
+            <td>{{ data.planLinkName}}</td>
+            <td>{{ data.productionName}}</td>
+            <td>{{ data.craftName}}</td>
+            <td>{{ data.startName}}</td>
+            <td>{{ data.endName}}</td>
+            <td style="color:#36A7FF "><a [routerLink]="['/rollDetail/rollResume/entry/'+ rollId +'/heatTreat/' + data['htRecordId']]">{{ data.processRecord}}</a>
+            </td>
+        </tr>
+    </app-delong-table>
+</div>

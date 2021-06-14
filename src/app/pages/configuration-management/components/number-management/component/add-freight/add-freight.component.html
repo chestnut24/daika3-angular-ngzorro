@@ -1,0 +1,78 @@
+<form nz-form [formGroup]="freightForm">
+    <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="freightNumber">货号</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+            <input nz-input placeholder="请输入货号" formControlName="freightNumber" id="freightNumber">
+            <nz-form-explain *ngIf="freightForm.get('freightNumber').dirty && freightForm.get('freightNumber').errors">
+                不能为空</nz-form-explain>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="material">材质</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+            <input nz-input placeholder="请输入材质" formControlName="material" id="material">
+            <nz-form-explain *ngIf="freightForm.get('material').dirty && freightForm.get('material').errors">不能为空
+            </nz-form-explain>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="materialCode">材质代码</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+            <input nz-input placeholder="请输入材质代码" formControlName="materialCode" id="materialCode">
+            <nz-form-explain *ngIf="freightForm.get('materialCode').dirty && freightForm.get('materialCode').errors">
+                不能为空</nz-form-explain>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="size">尺寸(mm)</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+            <input placeholder="请输入直径*辊身长度*总长度" nz-input formControlName="size" id="size">
+            <nz-form-explain *ngIf="freightForm.get('size').hasError('weightError')">请输入直径*辊身长度*总长度</nz-form-explain>
+
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="netWeight">净重(吨)</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+            <input placeholder="请输入净重" nz-input formControlName="netWeight" id="netWeight">
+            <nz-form-explain *ngIf="freightForm.get('netWeight').hasError('sizeError')">请输入正数数字</nz-form-explain>
+        </nz-form-control>
+    </nz-form-item>
+
+    <!-- 0710++ -->
+    <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="bodyHardness">辊身硬度要求</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+            <input nz-input placeholder="请输入辊身硬度要求" formControlName="bodyHardness" id="bodyHardness">
+            <nz-form-explain *ngIf="freightForm.get('bodyHardness').dirty && freightForm.get('bodyHardness').errors">
+                辊身硬度要求</nz-form-explain>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="neckHardness">辊颈硬度要求</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+            <input nz-input placeholder="请输入辊颈硬度要求" formControlName="neckHardness" id="neckHardness">
+            <nz-form-explain *ngIf="freightForm.get('neckHardness').dirty && freightForm.get('neckHardness').errors">
+                辊颈硬度要求</nz-form-explain>
+        </nz-form-control>
+    </nz-form-item>
+    <!-- 0710++ -->
+
+    <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="productionUnit">生产单位</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+            <input placeholder="请输入生产单位" nz-input formControlName="productionUnit" id="productionUnit">
+            <nz-form-explain
+                *ngIf="freightForm.get('productionUnit').dirty && freightForm.get('productionUnit').errors">不能为空
+            </nz-form-explain>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="client">用户信息</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+            <input placeholder="请输入用户信息" nz-input formControlName="client" id="client">
+            <nz-form-explain *ngIf="freightForm.get('client').dirty && freightForm.get('client').errors">不能为空
+            </nz-form-explain>
+        </nz-form-control>
+    </nz-form-item>
+</form>

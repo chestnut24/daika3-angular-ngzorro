@@ -1,0 +1,58 @@
+<div [ngSwitch]="htStatus">
+    <div *ngSwitchCase="'NOT_START'">
+       <div style="text-align: center">暂无装炉计划</div>
+    </div>
+    <div *ngSwitchCase="'PROCESSING'" class="ht-container">
+        <div class="title">
+            <div>生产日期：{{htInfo.linkDetail.startTime | date:'yyyy.MM.dd'}} - {{htInfo.linkDetail.endTime | date:'yyyy.MM.dd'}}</div>
+            <div>工艺名称：{{htInfo.linkDetail.craft.name}}</div>
+            <div>已加热：<span style="color: #FB5F1E;">{{(nowTime - htInfo.htRecord.startTime - getPauseTime()) | minuteSecond:[nowTime, htInfo.htRecord.startTime, 'HOUR']}}</span></div>
+        </div>
+        <div class="ht-detail">
+            <div>加热轧辊</div>
+            <div *ngFor="let data of htInfo.linkDetail?.freights">
+                {{data.freightNumber}} （<span *ngFor="let position of data.detailRolls">{{position.roll.productNo}} </span>）
+            </div>
+        </div>
+    </div>
+    <div *ngSwitchCase="'COMING_TO_END'" class="ht-container">
+        <div class="title">
+            <div>生产日期：{{htInfo.linkDetail.startTime | date:'yyyy.MM.dd'}} - {{htInfo.linkDetail.endTime | date:'yyyy.MM.dd'}}</div>
+            <div>工艺名称：{{htInfo.linkDetail.craft.name}}</div>
+            <div>已加热：<span style="color: #FB5F1E;">{{(nowTime - htInfo.htRecord.startTime - getPauseTime()) | minuteSecond:[nowTime, htInfo.htRecord.startTime, 'HOUR']}}</span></div>
+        </div>
+        <div class="ht-detail">
+            <div>加热轧辊</div>
+            <div *ngFor="let data of htInfo.linkDetail?.freights">
+                {{data.freightNumber}} （<span *ngFor="let position of data.detailRolls">{{position.roll.productNo}} </span>）
+            </div>
+        </div>
+    </div>
+    <div *ngSwitchCase="'COMING_SOON'" class="ht-container">
+        <div class="title">
+            <div>生产日期：{{htInfo.linkDetail.startTime | date:'yyyy.MM.dd'}} - {{htInfo.linkDetail.endTime | date:'yyyy.MM.dd'}}</div>
+            <div>工艺名称：{{htInfo.linkDetail.craft.name}}</div>
+            <div></div>
+        </div>
+        <div class="ht-detail">
+            <div>加热轧辊</div>
+            <div *ngFor="let data of htInfo.linkDetail?.freights">
+                {{data.freightNumber}}（<span *ngFor="let position of data.detailRolls">{{position.roll.productNo}}</span>）
+            </div>
+        </div>
+    </div>
+    <div *ngSwitchCase="'END'" class="ht-container">
+        <div class="title">
+            <div>生产日期：{{htInfo.linkDetail.startTime | date:'yyyy.MM.dd'}} - {{htInfo.linkDetail.endTime | date:'yyyy.MM.dd'}}</div>
+            <div>工艺名称：{{htInfo.linkDetail.craft.name}}</div>
+            <div></div>
+        </div>
+        <div class="ht-detail">
+            <div>加热轧辊</div>
+            <div *ngFor="let data of htInfo.linkDetail?.freights">
+                {{data.freightNumber}} （<span *ngFor="let position of data.detailRolls">{{position.roll.productNo}} </span>）
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,38 @@
+.container{
+  background-color: #fff;
+  width: 100%;
+  tr{
+    td,th{
+      padding:7.5px;
+      text-align: center;
+      overflow: hidden;
+      // white-space: nowrap;
+      text-overflow: ellipsis;
+      min-width:60px;
+      max-width:300px;
+      word-break: break-word; /* 文本行的任意字内断开 */
+      word-wrap: break-word; /* IE */
+      box-sizing: border-box;
+    }
+    &:hover{
+      background-color: #e6f7ff;
+    }
+  }
+  tr:nth-child(even){
+    background-color: #f9f9f9;
+  }
+
+}
+
+tr:nth-child(even) td.ant-table-td-right-sticky,tr:nth-child(even) td.ant-table-td-left-sticky{
+  background: #f9f9f9;
+}
+
+tr:nth-child(even) ::ng-deep.ant-table-td-left-sticky, tr:nth-child(even) ::ng-deep.ant-table-td-right-sticky{
+  background: #f9f9f9;
+}
+
+// div.ant-table-scroll div.ant-table-header{
+  // width: calc(100% - 1px) !important;
+  // background-color: red !important;
+// }

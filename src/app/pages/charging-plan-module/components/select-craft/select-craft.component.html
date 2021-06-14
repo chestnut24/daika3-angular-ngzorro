@@ -1,0 +1,51 @@
+<div class="mainBox">
+    <div class="leftBox f-l">
+        <div class="banner1">
+            <label>
+                工艺编号：
+                <div class="input-width m-r-20">
+                    <nz-input-group [nzSuffix]="suffixIconSearch">
+                        <input nz-input placeholder="请输入工艺编号" [(ngModel)]="sendData.searchText" />
+                    </nz-input-group>
+                    <ng-template #suffixIconSearch>
+                        <i style="cursor: pointer;" nz-icon nzType="search" (click)="getCraftList()"></i>
+                    </ng-template>
+                </div>
+            </label>
+        </div>
+        <div class="table">
+            <nz-table #basicTable [nzData]="leftcraftsList" nzBordered [nzFrontPagination]="false"
+                [nzShowPagination]="false">
+                <thead>
+                    <tr>
+                        <th>工艺编号</th>
+                        <th>工艺名称</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of basicTable.data;let i = index" [class]="data.isChoose?'chooseCraft':''"
+                        (click)="getCraft(data)">
+                        <td>{{data.craftNo}}</td>
+                        <td>{{data.name}}</td>
+                    </tr>
+                </tbody>
+            </nz-table>
+        </div>
+    </div>
+    <div class="rightBox f-l">
+        <div class="title">
+            <div class="f-r titleFont">曲线预览</div>
+        </div>
+        <div class="img">
+            <img *ngIf="chooseCraft" class="imgBox" [src]="chooseCraft.curveImgPath" />
+            <div *ngIf="!chooseCraft" class="imgBox">
+                暂无预览
+            </div>
+        </div>
+        <div class="textarea">
+            <textarea *ngIf="chooseCraft" placeholder="备注" rows="4" nz-input
+                [(ngModel)]="chooseCraft.remark"></textarea>
+            <textarea *ngIf="!chooseCraft" placeholder="备注" rows="4" nz-input [(ngModel)]="inputValue"></textarea>
+        </div>
+    </div>
+</div>

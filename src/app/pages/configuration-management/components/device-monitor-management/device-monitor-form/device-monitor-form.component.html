@@ -1,0 +1,124 @@
+<form nz-form class="ant-advanced-search-form" [formGroup]="dataForm">
+    <!-- 第一部分 -->
+    <nz-card nzType="inner" nzTitle="设备基本信息">
+        <div nz-row [nzGutter]="24">
+            <div nz-col [nzSpan]="8">
+                <nz-form-item>
+                    <nz-form-label nzRequired>设备名称</nz-form-label>
+                    <nz-form-control>
+                        <input nz-input placeholder="请输入设备名称" formControlName="name" name="name" />
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+            <div nz-col [nzSpan]="8">
+                <nz-form-item>
+                    <nz-form-label nzRequired>设备编号</nz-form-label>
+                    <nz-form-control>
+                        <input nz-input placeholder="请输入设备编号" formControlName="number" name="number" />
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+            <div nz-col [nzSpan]="8">
+                <nz-form-item>
+                    <nz-form-label nzRequired>设备类型</nz-form-label>
+                    <nz-form-control>
+                        <div *ngIf="nzOptions.length">
+                            <nz-cascader [nzShowSearch]="true" name="typeIdArr" nzPlaceHolder="请选择设备类型"
+                                formControlName="typeIdArr" [nzOptions]="nzOptions" (ngModelChange)="onChanges($event)"
+                                [nzLabelProperty]="'title'" [nzValueProperty]="'key'">
+                            </nz-cascader>
+                        </div>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+        </div>
+        <div nz-row [nzGutter]="24">
+            <div nz-col [nzSpan]="8">
+                <nz-form-item>
+                    <nz-form-label>生产厂家</nz-form-label>
+                    <nz-form-control>
+                        <input nz-input placeholder="请输入生产厂家" formControlName="productionManufacturers"
+                            name="productionManufacturers" />
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+            <div nz-col [nzSpan]="8">
+                <nz-form-item>
+                    <nz-form-label>负责人</nz-form-label>
+                    <nz-form-control>
+                        <input nz-input placeholder="请输入负责人" formControlName="responsibleUser" name="responsibleUser" />
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+            <div nz-col [nzSpan]="8">
+                <nz-form-item>
+                    <nz-form-label>所有区域</nz-form-label>
+                    <nz-form-control>
+                        <input formControlName="areaName" nz-input placeholder="未关联生产设备" disabled />
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+        </div>
+        <div nz-row [nzGutter]="24">
+            <div nz-col [nzSpan]="8">
+                <nz-form-item>
+                    <nz-form-label>设备UUID</nz-form-label>
+                    <nz-form-control>
+                        <input nz-input placeholder="请输入设备UUID" formControlName="jcUuid" name="jcUuid" />
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+            <div nz-col [nzSpan]="8">
+                <nz-form-item>
+                    <nz-form-label>设备属性</nz-form-label>
+                    <nz-form-control>
+                        <input nz-input placeholder="请输入设备属性" formControlName="jcAttribute" name="jcAttribute" />
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+            <div nz-col [nzSpan]="8">
+
+            </div>
+        </div>
+    </nz-card>
+    <!-- 第二部分-仅在有的时候展示 -->
+    <div class="table">
+        <h3 class="title">关联生产设备</h3>
+        <div *ngIf="showData.length">
+            <nz-table #basicTable [nzData]="[1,2]" nzBordered [nzShowPagination]="false">
+                <thead>
+                    <tr>
+                        <th>设备名称</th>
+                        <th>所属类型</th>
+                        <th>设备编号</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of showData;">
+                        <td>{{data.name}}</td>
+                        <td>{{data.type}}</td>
+                        <td>{{data.number}}</td>
+                    </tr>
+                </tbody>
+            </nz-table>
+        </div>
+        <div *ngIf="!showData.length">
+            <nz-table #basicTable nzNoResult="未关联生产设备" [nzData]="showData" nzBordered [nzShowPagination]="false">
+                <thead>
+                    <tr>
+                        <th>设备名称</th>
+                        <th>所属类型</th>
+                        <th>设备编号</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of showData;">
+                        <td>{{data.name}}</td>
+                        <td>{{data.type}}</td>
+                        <td>{{data.number}}</td>
+                    </tr>
+                </tbody>
+            </nz-table>
+        </div>
+    </div>
+</form>

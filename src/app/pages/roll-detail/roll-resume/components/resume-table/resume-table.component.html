@@ -1,0 +1,24 @@
+<nz-table class="resume-container"
+          [nzBordered]="1"
+          [nzLoading]="dlLoading && resumeTable.isLoading"
+          [nzData]="resumeTable.tableData"
+          [(nzPageSize)] = "resumeTable.pageSize"
+          [(nzPageIndex)] = "resumeTable.pageNum"
+          (nzPageIndexChange)="resumeTable.search()"
+          (nzPageSizeChange)="resumeTable.pageNum = 1;resumeTable.search()"
+          [nzShowSizeChanger]="true"
+          [nzPageSizeOptions]="[10,20,30,40,50]"
+          [nzFrontPagination]="false"
+          [nzTotal]="resumeTable.tableTotal">
+    <thead (nzSortChange)="sort($event)" nzSingleSort>
+    <tr>
+        <th [nzShowSort]="title.canSort" [nzSortKey]="title.sortField"
+            *ngFor="let title of titleList" [nzWidth]="title.width" [nzRight]="title.right">{{title.name}}</th>
+    </tr>
+    </thead>
+    <tbody>
+    <ng-content></ng-content>
+    </tbody>
+</nz-table>
+
+

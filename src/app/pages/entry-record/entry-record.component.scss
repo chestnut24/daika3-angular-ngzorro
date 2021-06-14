@@ -1,0 +1,83 @@
+.tableContent{
+  padding: 16px;
+  background-color: #fff;
+}
+.table-search-content{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .search-content-left{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    span{
+      margin-right: 30px;
+     }
+   }
+  .search-content-right{
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    width: 20%;
+    #search{
+      width: 100px;
+    }
+  }
+}
+
+.operation{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    p{
+      color: #1592E6;
+      margin-bottom: 0;
+      cursor: pointer;
+    }
+    span{
+      color: #aaa;
+      padding: 0 5px;
+    }
+}
+@media screen and (max-width: 1200px) {
+  .table-content-frame{
+    .search-content-left{
+      width: 90%;
+    }
+    .search-content-right{
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      #search{
+        width: 110px;
+        margin-bottom: 15px;
+      }
+      button{
+        width: 110px;
+      }
+    }
+    #productNum{
+      margin-left: 15px;
+      margin-top: 15px;
+    }
+
+  }
+
+}
+
+// 表格内换行使用css
+.css-word{
+  word-break: break-word; /* 文本行的任意字内断开 */
+}
+.b{
+  font-weight: bold;
+}
+.table_div_word{
+  text-align: center;
+  margin: 0 auto;
+}
+
+

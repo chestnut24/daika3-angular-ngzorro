@@ -1,0 +1,24 @@
+<div class="search-container">
+    <div class="search-condition">
+       <span>
+        质检时间：<nz-range-picker style="width:300px;" [(ngModel)]="dateRange" (keyup.enter)="search()"></nz-range-picker>
+        </span>
+            <span>
+            货号：<input style="width:150px;"  nz-input placeholder="请输入货号" [(ngModel)]="freightNumber" (keyup.enter)="search()">
+        </span>
+            <span>
+            生产号：<input style="width:150px;" nz-input placeholder="请输入生产号" [(ngModel)]="productNo" (keyup.enter)="search()">
+        </span>
+            <span *ngIf="hasQualityInspectionResult">
+            质检结果：<nz-select style="width:150px;" [(ngModel)]="selectedValue" nzAllowClear nzPlaceHolder="请选择" (ngModelChange)="search()">
+                        <nz-option *ngFor="let option of qualityInspectionResultList" [nzValue]="option.value" [nzLabel]="option.label"></nz-option>
+                    </nz-select>
+        </span>
+    </div>
+
+    <div>
+        <button nz-button nzType="primary" (click)="search()">
+            查询
+        </button>
+    </div>
+</div>

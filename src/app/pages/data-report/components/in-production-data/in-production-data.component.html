@@ -1,0 +1,7 @@
+<div style="padding: 16px; background-color: #fff;">
+    <nz-tabset style="background-color: #fff">
+        <nz-tab *ngFor="let tab of tabList" [nzTitle]="tab.name">
+            <iframe width="100%" [height]="dataReport.getIframeHeight - 32 + 'px'" [src]="tab.src | safeHtml" frameborder="0"></iframe>
+        </nz-tab>
+    </nz-tabset>
+</div>

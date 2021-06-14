@@ -1,0 +1,15 @@
+<div class="outside-frame">
+    <app-delong-table [titleList]="titleList" class="delongTable" [nzScrollX]="'800px'">
+        <tr *ngFor="let data of delongTable.tableData ">
+            <td>{{ data.updateDt | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+            <td>{{ data.startTime | date:'yyyy-MM-dd '}}</td>
+            <td>{{ data.endTime | date:'yyyy-MM-dd '}}</td>
+            <td>{{ data.planLinkName}}</td>
+            <td>{{ data.productionName }}</td>
+            <td><p (click)="checkCraft(data)">{{ data.craftName}}</p></td>
+            <td>{{ data.plannerName}}</td>
+            <td>{{ data.technicianName}}</td>
+        </tr>
+    </app-delong-table>
+</div>
+

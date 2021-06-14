@@ -1,0 +1,58 @@
+<app-qim-search-params [hasQualityInspectionResult]="false" (pageChange)="pageChange()"></app-qim-search-params>
+<app-delong-table [titleList]="titleList" [nzScrollX]="'913px'" [nzScrollY]="getIframeHeight()"
+    (pageChange)="pageChange()">
+    <tr *ngFor="let data of delongTable.tableData">
+        <td *ngIf="(data.beforeSelfCheck ? data.beforeSelfCheck.result : data.afterSelfCheck.result) != 'NOT_CHECK'">
+            <div class="css-word table_div_word" [ngStyle]="{'width': 147-tablePadding +'px'}">
+                {{(data.beforeSelfCheck ? data.beforeSelfCheck['updatedDt'] : data.afterSelfCheck['updatedDt']) | date:'yyyy.MM.dd HH:mm:ss'}}
+            </div>
+        </td>
+        <td *ngIf="(data.beforeSelfCheck ? data.beforeSelfCheck.result : data.afterSelfCheck.result) == 'NOT_CHECK'"> -
+        </td>
+        <td>
+            <div class="css-word b table_div_word" [ngStyle]="{'width': 100-tablePadding +'px'}">
+                {{data.freight.freightNumber}}
+            </div>
+        </td>
+        <td>
+            <div class="css-word b table_div_word" [ngStyle]="{'width': 60-tablePadding +'px'}">
+                {{data.productNo}}
+            </div>
+        </td>
+        <td>
+            <div class="css-word table_div_word" [ngStyle]="{'width': 81-tablePadding +'px'}">
+                {{data.freight.material}}
+            </div>
+        </td>
+        <td>
+            <div class="css-word table_div_word" [ngStyle]="{'width': 75-tablePadding +'px'}">
+                {{data.freight.materialCode}}
+            </div>
+        </td>
+        <td>
+            <div class="css-word table_div_word" [ngStyle]="{'width': 120-tablePadding +'px'}">
+                {{data.freight.size}}
+            </div>
+        </td>
+        <td>
+            <div class="css-word table_div_word" [ngStyle]="{'width': 60-tablePadding +'px'}">
+                {{data.freight.netWeight}}
+            </div>
+        </td>
+        <td>
+            <div class="css-word table_div_word" [ngStyle]="{'width': 60-tablePadding +'px'}">
+                {{checkWitchIsUser(data.beforeSelfCheck ? data.beforeSelfCheck : data.afterSelfCheck)}}
+            </div>
+        </td>
+        <td nzWidth="110px" nzRight="80px"><button [disabled]="data['status'] === 'DELIVERED'" nz-button
+                (click)="selfTestResult(data)"><a>{{(data.beforeSelfCheck ? data.beforeSelfCheck.result : data.afterSelfCheck.result) | qimResult}}</a></button>
+        </td>
+        <td nzWidth="80px" nzRight="0px">
+            <a style="color: #fff;" [routerLink]="['/rollDetail/rollResume/entry', data.id]">
+                <button nz-button nzType="primary">
+                    查看
+                </button>
+            </a>
+        </td>
+    </tr>
+</app-delong-table>

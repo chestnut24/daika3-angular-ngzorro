@@ -1,0 +1,14 @@
+<div class="approvals-info">
+    <div>工艺名称：{{craft.name}}</div>
+    <div>工艺编号：{{craft.craftNo}}</div>
+    <div>审批状态：{{craft.approvalStatus | approvalStatus}}</div>
+</div>
+<app-delong-table [titleList]="titleList">
+    <tr *ngFor="let data of delongTable.tableData">
+        <td>{{data['createdDt'] | date:'yyyy.MM.dd HH:mm:ss'}}</td>
+        <td>{{data.createdUser.name}}</td>
+        <!-- <td>{{data.stage}}</td> -->
+        <td>{{data.result | passOrReject}}</td>
+        <td>{{data.comments}}</td>
+    </tr>
+</app-delong-table>

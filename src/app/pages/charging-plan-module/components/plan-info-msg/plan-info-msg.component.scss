@@ -1,0 +1,43 @@
+.mainBox {
+    width: 100%;
+    background: #fff;
+    min-height: 700px;
+    margin-top: -16px;
+    border: 1px solid #e8e8e8;
+    border-top: 0;
+    padding: 20px;
+  
+    .banner1 {
+      overflow: hidden;
+      margin-bottom: 15px;
+    }
+  }
+  
+  .f-r {
+    float: right;
+  }
+  .m-r-20 {
+    margin-right: 20px;
+  }
+  .m-t-10 {
+    margin-top: 10px;
+  }
+  .m-t-20 {
+    margin-top: 20px;
+  }
+  .m-b-20 {
+    margin-bottom: 20px;
+  }
+  
+  .addBtn {
+    float: left;
+    border: 1px solid #e8e8e8;
+    background: #fafafa;
+  }
+  .ant-table-placeholder {
+    padding: 0;
+  }
+  .fontRed {
+    color: #ff5f56;
+  }
+  

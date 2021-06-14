@@ -1,0 +1,84 @@
+<div class="record-frame">
+    <div class="fundamental-information">
+        <div class="information-title">
+            <span>轧辊基本信息</span>
+        </div>
+        <div class="select-frame" [formGroup]="information">
+            <div class="product-number">
+                <nz-form-label nzFor="itemNum" nzRequired>货号</nz-form-label>
+                <nz-form-control>
+                    <nz-select nzShowSearch placeholder="itemPlaceHolder" style="width: 100%" formControlName="itemNum"
+                        (ngModelChange)="showAttribute($event)">
+                        <nz-option *ngFor="let list of menuList" [nzLabel]="list.freightNumber"
+                            [nzValue]="list.freightNumber"></nz-option>
+                    </nz-select>
+                    <nz-form-explain *ngIf="information.get('itemNum').dirty && information.get('itemNum').errors">不能为空
+                    </nz-form-explain>
+                </nz-form-control>
+            </div>
+            <!-- 老版本 -->
+            <!-- <div class="product-number">
+                <nz-form-label nzFor="productNum" nzRequired>生产号</nz-form-label>
+                <nz-form-control>
+                    <input nz-input placeholder="请输入生产号" nzSize="default" style="width: 100%"
+                        formControlName="productNum" />
+                    <nz-form-explain
+                        *ngIf="information.get('productNum').dirty && information.get('productNum').errors">不能为空
+                    </nz-form-explain>
+                </nz-form-control>
+            </div> -->
+            <!-- 新版本 -->
+            <div class="product-number">
+                <nz-form-label nzRequired>生产号</nz-form-label>
+                <nz-form-control>
+                    <input nz-input placeholder="请输入生产号" [disabled]="proNumShow" style="width: 100%" formControlName="productNum"
+                        id="productNum" [readOnly]="proNumShow" />
+                    <nz-form-explain
+                        *ngIf="information.get('productNum').dirty && information.get('productNum').errors && information.get('productNum').errors.required"
+                        (click)="ceshi(information.get('productNum'))">不能为空
+                    </nz-form-explain>
+                    <nz-form-explain
+                        *ngIf="information.get('productNum').dirty && information.get('productNum').errors && information.get('productNum').errors.confirm">
+                        生产号数字字符具有唯一性，该数字已重复
+                    </nz-form-explain>
+                </nz-form-control>
+            </div>
+            <!-- 新版本 -->
+            <div class="product-number">
+                <nz-form-label nzFor="submitUser" nzRequired>交送人</nz-form-label>
+                <nz-form-control>
+                    <nz-select nzShowSearch [nzPlaceHolder]="submitPlaceHolder" style="width: 100%"
+                        formControlName="submitUser">
+                        <nz-option *ngFor="let list of submitUsers" [nzLabel]="list.name" [nzValue]="list.name">
+                        </nz-option>
+                    </nz-select>
+                    <nz-form-explain
+                        *ngIf="information.get('submitUser').dirty && information.get('submitUser').errors">不能为空
+                    </nz-form-explain>
+                </nz-form-control>
+            </div>
+        </div>
+        <div class="remark-information">
+            <p>备注信息（选填）:</p>
+            <input nz-input placeholder="请填入备注信息" nzSize="default" style="width: 65%"
+                [(ngModel)]="EntryRecord.remark" />
+            <label nz-checkbox [(ngModel)]="EntryRecord.isBlank" style="margin-left: 30px"
+                (ngModelChange)="isBlank()">毛坯辊</label>
+        </div>
+    </div>
+    <div class="product-information">
+        <div class="information-title">
+            <span>货号信息</span>
+        </div>
+        <div class="information-frame">
+            <div *ngFor="let item of itemList" class="product-attribute" nz-row>
+                <span nz-col nzSpan="8">{{item.title}} </span>
+                <span nz-col nzSpan="16" style="color: #BFBFBF">{{item.content}}</span>
+            </div>
+        </div>
+    </div>
+    <div class="self-checking">
+        <app-self-checking [EntryRecord]="EntryRecord" [disabled]="disabled" [checkUser]="checkUser"
+            [hardnessUser]="hardnessUser" [Hardness0721]="Hardness0721"></app-self-checking>
+    </div>
+</div>
